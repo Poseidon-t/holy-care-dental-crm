@@ -68,31 +68,31 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="bg-primary-900/95 backdrop-blur-md sticky top-0 z-50 border-b border-primary-800">
+      <nav className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-orange-100 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
               <span className="text-2xl">🦷</span>
-              <span className="font-bold text-white text-lg hidden sm:inline">Holy Care Dental</span>
-              <span className="font-bold text-white text-lg sm:hidden">Holy Care</span>
+              <span className="font-bold text-primary-800 text-lg hidden sm:inline">Holy Care Dental</span>
+              <span className="font-bold text-primary-800 text-lg sm:hidden">Holy Care</span>
             </div>
             <div className="hidden md:flex items-center gap-8">
-              <a href="#services" className="text-sm font-medium text-primary-200 hover:text-white transition-colors">Services</a>
-              <a href="#about" className="text-sm font-medium text-primary-200 hover:text-white transition-colors">About</a>
-              <a href="#gallery" className="text-sm font-medium text-primary-200 hover:text-white transition-colors">Gallery</a>
-              <a href="#results" className="text-sm font-medium text-primary-200 hover:text-white transition-colors">Results</a>
-              <a href="#contact" className="text-sm font-medium text-primary-200 hover:text-white transition-colors">Contact</a>
+              <a href="#services" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Services</a>
+              <a href="#about" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">About</a>
+              <a href="#gallery" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Gallery</a>
+              <a href="#results" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Results</a>
+              <a href="#contact" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
             </div>
-            <a href="tel:+917977257779" className="bg-amber-400 text-primary-900 px-5 py-3 rounded-lg text-sm font-bold hover:bg-amber-300 transition-colors min-h-[44px] inline-flex items-center shadow-lg shadow-amber-400/20">
+            <a href="tel:+917977257779" className="bg-primary-500 text-white px-5 py-3 rounded-lg text-sm font-bold hover:bg-primary-600 transition-colors min-h-[44px] inline-flex items-center shadow-lg shadow-primary-500/20">
               Call Now
             </a>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section — Bold Dark Blue */}
+      {/* Hero Section — Bold Amber Orange */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-500 to-amber-400" />
         <div className="absolute inset-0">
           <Image
             src="/images/clinic-exterior-1.jpg"
@@ -102,30 +102,30 @@ export default function HomePage() {
             priority
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/90 via-primary-900/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-700/80 via-primary-600/40 to-transparent" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 bg-amber-400/15 backdrop-blur-sm text-amber-300 px-4 py-2 rounded-full text-sm mb-6 font-medium border border-amber-400/20">
-                <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
+              <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-6 font-medium border border-white/20">
+                <span className="w-2 h-2 bg-yellow-300 rounded-full animate-pulse" />
                 Specialist in Braces &amp; Aligners
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
                 Your Smile,<br />
-                <span className="text-amber-400">Our Passion</span>
+                <span className="text-yellow-200">Our Passion</span>
               </h1>
-              <p className="mt-4 text-lg md:text-xl text-primary-200 leading-relaxed max-w-xl tamil">
+              <p className="mt-4 text-lg md:text-xl text-orange-100 leading-relaxed max-w-xl tamil">
                 உங்கள் புன்னகை, எங்கள் அர்ப்பணிப்பு
               </p>
-              <p className="mt-4 text-base md:text-lg text-primary-300 leading-relaxed max-w-xl">
+              <p className="mt-4 text-base md:text-lg text-white/80 leading-relaxed max-w-xl">
                 Expert dental and orthodontic care with a gentle touch. From routine check-ups to advanced braces and aligners, we&apos;re here to give you a healthy, beautiful smile.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <a href="tel:+917977257779" className="bg-amber-400 text-primary-900 px-8 py-4 rounded-xl text-base font-bold hover:bg-amber-300 transition-colors text-center shadow-lg shadow-amber-400/25">
+                <a href="tel:+917977257779" className="bg-white text-primary-700 px-8 py-4 rounded-xl text-base font-bold hover:bg-yellow-50 transition-colors text-center shadow-lg shadow-black/10">
                   Call for Appointment
                 </a>
-                <a href="#services" className="border-2 border-white/20 text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-white/10 transition-colors text-center backdrop-blur-sm">
+                <a href="#services" className="border-2 border-white/30 text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-white/10 transition-colors text-center backdrop-blur-sm">
                   View Services
                 </a>
               </div>
@@ -133,7 +133,7 @@ export default function HomePage() {
 
             {/* Hero image card */}
             <div className="hidden md:block">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border-2 border-white/10">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30 border-2 border-white/15">
                 <Image
                   src="/images/clinic-interior-glass.jpg"
                   alt="Holy Care Dental Clinic - Modern interior with dental logo"
@@ -144,7 +144,7 @@ export default function HomePage() {
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary-900/80 to-transparent p-6">
                   <p className="text-white font-bold text-lg">Holy Care Dental &amp; Orthodontics Clinic</p>
-                  <p className="text-primary-200 text-sm">Kavalkinaru, Tamil Nadu</p>
+                  <p className="text-orange-200 text-sm">Kavalkinaru, Tamil Nadu</p>
                 </div>
               </div>
             </div>
@@ -152,24 +152,24 @@ export default function HomePage() {
         </div>
 
         {/* Stats bar */}
-        <div className="relative bg-primary-800/50 backdrop-blur-sm border-t border-primary-700/50">
+        <div className="relative bg-primary-800/60 backdrop-blur-sm border-t border-white/10">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
-                <div className="text-3xl font-bold text-amber-400">MDS</div>
-                <div className="text-sm text-primary-300 mt-1">Specialist Qualified</div>
+                <div className="text-3xl font-bold text-yellow-300">MDS</div>
+                <div className="text-sm text-orange-100 mt-1">Specialist Qualified</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-amber-400">10,000+</div>
-                <div className="text-sm text-primary-300 mt-1">Happy Patients</div>
+                <div className="text-3xl font-bold text-yellow-300">10,000+</div>
+                <div className="text-sm text-orange-100 mt-1">Happy Patients</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-amber-400">Braces</div>
-                <div className="text-sm text-primary-300 mt-1">&amp; Aligners Expert</div>
+                <div className="text-3xl font-bold text-yellow-300">Braces</div>
+                <div className="text-sm text-orange-100 mt-1">&amp; Aligners Expert</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-amber-400">A-34195</div>
-                <div className="text-sm text-primary-300 mt-1">Registered Practitioner</div>
+                <div className="text-3xl font-bold text-yellow-300">A-34195</div>
+                <div className="text-sm text-orange-100 mt-1">Registered Practitioner</div>
               </div>
             </div>
           </div>
@@ -177,7 +177,7 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 bg-gray-50">
+      <section id="services" className="py-20 bg-orange-50/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-primary-600 font-bold text-sm uppercase tracking-wider mb-2">What We Offer</p>
@@ -192,7 +192,7 @@ export default function HomePage() {
             {SERVICES.map((service) => (
               <div
                 key={service.title}
-                className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary-300 hover:shadow-xl hover:shadow-primary-100/30 transition-all duration-300 group"
+                className="bg-white rounded-2xl p-6 border border-orange-100 hover:border-primary-300 hover:shadow-xl hover:shadow-primary-100/30 transition-all duration-300 group"
               >
                 <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:bg-primary-100 group-hover:scale-110 transition-all duration-300">
                   {service.icon}
@@ -222,9 +222,9 @@ export default function HomePage() {
                 />
               </div>
               {/* Floating badge */}
-              <div className="absolute -bottom-6 -right-4 md:right-4 bg-white rounded-2xl shadow-xl p-4 border border-gray-100">
+              <div className="absolute -bottom-6 -right-4 md:right-4 bg-white rounded-2xl shadow-xl p-4 border border-orange-100">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
                     <span className="text-2xl">🎓</span>
                   </div>
                   <div>
@@ -233,7 +233,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary-600 rounded-2xl -z-10 opacity-20" />
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary-400 rounded-2xl -z-10 opacity-20" />
             </div>
 
             {/* Content */}
@@ -279,7 +279,7 @@ export default function HomePage() {
       </section>
 
       {/* Clinic Gallery */}
-      <section id="gallery" className="py-20 bg-gray-50">
+      <section id="gallery" className="py-20 bg-orange-50/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-primary-600 font-bold text-sm uppercase tracking-wider mb-2">Take a Look</p>
@@ -319,8 +319,8 @@ export default function HomePage() {
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary-900/80 to-transparent p-8">
                 <p className="text-white font-bold text-xl">Community Dental Health Camps</p>
-                <p className="text-primary-200 text-sm mt-1">Dr. Pinky Vijay actively conducts free dental health camps, bringing quality dental care to the community.</p>
-                <p className="text-primary-300 text-sm tamil mt-1">இலவச பல் மருத்துவ முகாம்கள்</p>
+                <p className="text-orange-100 text-sm mt-1">Dr. Pinky Vijay actively conducts free dental health camps, bringing quality dental care to the community.</p>
+                <p className="text-orange-200 text-sm tamil mt-1">இலவச பல் மருத்துவ முகாம்கள்</p>
               </div>
             </div>
           </div>
@@ -341,7 +341,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Case 1 */}
-            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all group">
+            <div className="bg-orange-50/50 rounded-2xl overflow-hidden border border-orange-100 shadow-sm hover:shadow-xl transition-all group">
               <div className="relative overflow-hidden">
                 <Image
                   src="/images/before-after-1.jpg"
@@ -355,14 +355,14 @@ export default function HomePage() {
                 <h3 className="font-bold text-gray-900 text-lg">Orthodontic Braces Treatment</h3>
                 <p className="text-sm text-gray-500 mt-1">Complex tooth alignment corrected with fixed braces</p>
                 <div className="mt-3 flex gap-2">
-                  <span className="bg-primary-600 text-white px-3 py-1 rounded-full text-xs font-bold">Braces</span>
-                  <span className="bg-primary-600 text-white px-3 py-1 rounded-full text-xs font-bold">Alignment</span>
+                  <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-bold">Braces</span>
+                  <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-bold">Alignment</span>
                 </div>
               </div>
             </div>
 
             {/* Case 2 */}
-            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all group">
+            <div className="bg-orange-50/50 rounded-2xl overflow-hidden border border-orange-100 shadow-sm hover:shadow-xl transition-all group">
               <div className="relative overflow-hidden">
                 <Image
                   src="/images/before-after-2.jpg"
@@ -376,8 +376,8 @@ export default function HomePage() {
                 <h3 className="font-bold text-gray-900 text-lg">Jaw &amp; Bite Correction</h3>
                 <p className="text-sm text-gray-500 mt-1">Cephalometric X-ray showing significant jaw alignment improvement with orthodontic treatment</p>
                 <div className="mt-3 flex gap-2">
-                  <span className="bg-primary-600 text-white px-3 py-1 rounded-full text-xs font-bold">Orthodontics</span>
-                  <span className="bg-primary-600 text-white px-3 py-1 rounded-full text-xs font-bold">Jaw Alignment</span>
+                  <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-bold">Orthodontics</span>
+                  <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-bold">Jaw Alignment</span>
                 </div>
               </div>
             </div>
@@ -386,7 +386,7 @@ export default function HomePage() {
       </section>
 
       {/* Working Hours & Contact */}
-      <section id="hours" className="py-20 bg-gray-50">
+      <section id="hours" className="py-20 bg-orange-50/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-primary-600 font-bold text-sm uppercase tracking-wider mb-2">Visit Us</p>
@@ -396,9 +396,9 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Working Hours */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+            <div className="bg-white rounded-2xl p-8 border border-orange-100 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center text-2xl text-white">🕐</div>
+                <div className="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center text-2xl text-white">🕐</div>
                 <div>
                   <h3 className="font-bold text-gray-900 text-lg">Working Hours</h3>
                   <p className="text-sm text-gray-500 tamil">வேலை நேரம்</p>
@@ -406,21 +406,21 @@ export default function HomePage() {
               </div>
               <div className="space-y-4">
                 {WORKING_HOURS.map((item) => (
-                  <div key={item.day} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                  <div key={item.day} className="flex items-center justify-between py-3 border-b border-orange-100 last:border-0">
                     <span className="font-semibold text-gray-800">{item.day}</span>
                     <span className="text-gray-500 text-sm text-right">{item.hours}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-6 bg-amber-50 rounded-xl p-4 text-sm text-amber-800 border border-amber-100">
+              <div className="mt-6 bg-amber-50 rounded-xl p-4 text-sm text-amber-800 border border-amber-200">
                 <strong>Emergency?</strong> Call us at <a href="tel:+917977257779" className="underline font-bold">+91 79772 57779</a>. We prioritize dental emergencies.
               </div>
             </div>
 
             {/* Contact Card */}
-            <div id="contact" className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+            <div id="contact" className="bg-white rounded-2xl p-8 border border-orange-100 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center text-2xl text-white">📍</div>
+                <div className="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center text-2xl text-white">📍</div>
                 <div>
                   <h3 className="font-bold text-gray-900 text-lg">Find Us</h3>
                   <p className="text-sm text-gray-500 tamil">எங்களைக் கண்டறியவும்</p>
@@ -458,7 +458,7 @@ export default function HomePage() {
               </div>
 
               {/* Google Maps embed */}
-              <div className="mt-6 rounded-xl overflow-hidden h-44 border border-gray-100">
+              <div className="mt-6 rounded-xl overflow-hidden h-44 border border-orange-100">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.5!2d77.39!3d8.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOCtyNSUyNy4wJTIyTiA3NyUyMzknMjcuMCUyMkU!5e0!3m2!1sen!2sin!4v1"
                   width="100%"
@@ -476,9 +476,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section — Bold dark blue with gold */}
+      {/* CTA Section — Bold amber orange */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-500 to-amber-400" />
         <div className="absolute inset-0">
           <Image
             src="/images/clinic-exterior-1.jpg"
@@ -488,25 +488,25 @@ export default function HomePage() {
           />
         </div>
         <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: 'radial-gradient(circle, rgba(251,191,36,0.3) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }} />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white">Ready for a Healthier Smile?</h2>
-          <p className="text-amber-400 mt-2 tamil text-lg">ஆரோக்கியமான புன்னகைக்கு தயாரா?</p>
-          <p className="mt-4 text-primary-200 text-lg max-w-2xl mx-auto">
+          <p className="text-yellow-200 mt-2 tamil text-lg">ஆரோக்கியமான புன்னகைக்கு தயாரா?</p>
+          <p className="mt-4 text-white/80 text-lg max-w-2xl mx-auto">
             Schedule your visit today. Whether it&apos;s a routine check-up, braces, or a complete smile makeover, we&apos;re here to help.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:+917977257779" className="bg-amber-400 text-primary-900 px-8 py-4 rounded-xl text-base font-bold hover:bg-amber-300 transition-colors shadow-lg shadow-amber-400/25 inline-flex items-center justify-center gap-2">
+            <a href="tel:+917977257779" className="bg-white text-primary-700 px-8 py-4 rounded-xl text-base font-bold hover:bg-yellow-50 transition-colors shadow-lg shadow-black/10 inline-flex items-center justify-center gap-2">
               <span>📞</span> Call +91 79772 57779
             </a>
           </div>
         </div>
       </section>
 
-      {/* Footer — Premium dark */}
-      <footer className="bg-primary-900 text-primary-300 py-12">
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-400 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
@@ -518,7 +518,7 @@ export default function HomePage() {
                 Quality dental &amp; orthodontic care for the entire family. Specialist in braces and aligners. Your trusted dental clinic in Kavalkinaru.
               </p>
               <p className="mt-3">
-                <a href="tel:+917977257779" className="text-amber-400 hover:text-amber-300 font-bold text-sm">
+                <a href="tel:+917977257779" className="text-primary-400 hover:text-primary-300 font-bold text-sm">
                   +91 79772 57779
                 </a>
               </p>
@@ -540,18 +540,18 @@ export default function HomePage() {
                 <p>8/277, Rachel Enclave</p>
                 <p>Kavalkinaru Main Road</p>
                 <p>Kavalkinaru - 627105</p>
-                <p className="mt-3 text-xs text-primary-400">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
+                <p className="mt-3 text-xs text-gray-500">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-primary-800 mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="border-t border-gray-800 mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs">
               &copy; {new Date().getFullYear()} Holy Care Dental &amp; Orthodontic Clinic. All rights reserved.
             </p>
             <Link
               href="/login"
-              className="text-xs text-primary-500 hover:text-primary-400 transition-colors"
+              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
             >
               Staff Login
             </Link>
