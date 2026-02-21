@@ -90,9 +90,9 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Hero Section — Bold Amber Orange */}
+      {/* Hero Section — Dark Yellow */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-500 to-amber-400" />
+        <div className="absolute inset-0 bg-gradient-to-br from-yellow-600 via-yellow-500 to-amber-400" />
         <div className="absolute inset-0">
           <Image
             src="/images/clinic-exterior-1.jpg"
@@ -102,7 +102,7 @@ export default function HomePage() {
             priority
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-700/80 via-primary-600/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-yellow-700/80 via-yellow-600/40 to-transparent" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -142,9 +142,9 @@ export default function HomePage() {
                   className="object-cover w-full h-[400px]"
                   priority
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary-900/80 to-transparent p-6">
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-yellow-900/80 to-transparent p-6">
                   <p className="text-white font-bold text-lg">Holy Care Dental &amp; Orthodontics Clinic</p>
-                  <p className="text-orange-200 text-sm">Kavalkinaru, Tamil Nadu</p>
+                  <p className="text-yellow-200 text-sm">Kavalkinaru, Tamil Nadu</p>
                 </div>
               </div>
             </div>
@@ -152,7 +152,7 @@ export default function HomePage() {
         </div>
 
         {/* Stats bar */}
-        <div className="relative bg-primary-800/60 backdrop-blur-sm border-t border-white/10">
+        <div className="relative bg-yellow-700/60 backdrop-blur-sm border-t border-white/10">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
