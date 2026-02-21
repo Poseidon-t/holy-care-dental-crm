@@ -66,9 +66,9 @@ const GALLERY_IMAGES = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#faf7f2]">
       {/* Navigation */}
-      <nav className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+      <nav className="bg-[#faf7f2]/90 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
@@ -77,11 +77,11 @@ export default function HomePage() {
               <span className="font-bold text-primary-700 text-lg sm:hidden">Holy Care</span>
             </div>
             <div className="hidden md:flex items-center gap-8">
-              <a href="#services" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Services</a>
-              <a href="#about" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">About</a>
-              <a href="#gallery" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Gallery</a>
-              <a href="#results" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Results</a>
-              <a href="#contact" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
+              <a href="#services" className="text-sm font-medium text-stone-600 hover:text-primary-600 transition-colors">Services</a>
+              <a href="#about" className="text-sm font-medium text-stone-600 hover:text-primary-600 transition-colors">About</a>
+              <a href="#gallery" className="text-sm font-medium text-stone-600 hover:text-primary-600 transition-colors">Gallery</a>
+              <a href="#results" className="text-sm font-medium text-stone-600 hover:text-primary-600 transition-colors">Results</a>
+              <a href="#contact" className="text-sm font-medium text-stone-600 hover:text-primary-600 transition-colors">Contact</a>
             </div>
             <a href="tel:+917977257779" className="bg-primary-600 text-white px-5 py-3 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors min-h-[44px] inline-flex items-center">
               Call Now
@@ -92,38 +92,38 @@ export default function HomePage() {
 
       {/* Hero Section with Clinic Photo */}
       <section className="relative overflow-hidden">
-        {/* Background: clinic exterior photo with overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-700 to-blue-900" />
+        {/* Background: warm earthy gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#5c3d2e] via-[#6d4830] to-[#8b6344]" />
         <div className="absolute inset-0">
           <Image
             src="/images/clinic-exterior-1.jpg"
             alt="Holy Care Dental Clinic"
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-15"
             priority
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/80 via-primary-800/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#3d2517]/80 via-[#5c3d2e]/60 to-transparent" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm text-white/90 px-4 py-2 rounded-full text-sm mb-6">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                 Specialist in Braces &amp; Aligners
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
                 Your Smile,<br />
-                <span className="text-blue-200">Our Passion</span>
+                <span className="text-amber-200">Our Passion</span>
               </h1>
-              <p className="mt-4 text-lg md:text-xl text-blue-100 leading-relaxed max-w-xl tamil">
+              <p className="mt-4 text-lg md:text-xl text-orange-100 leading-relaxed max-w-xl tamil">
                 உங்கள் புன்னகை, எங்கள் அர்ப்பணிப்பு
               </p>
-              <p className="mt-4 text-base md:text-lg text-blue-100/80 leading-relaxed max-w-xl">
+              <p className="mt-4 text-base md:text-lg text-orange-100/80 leading-relaxed max-w-xl">
                 Expert dental and orthodontic care with a gentle touch. From routine check-ups to advanced braces and aligners, we&apos;re here to give you a healthy, beautiful smile.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <a href="tel:+917977257779" className="bg-white text-primary-700 px-8 py-4 rounded-xl text-base font-semibold hover:bg-blue-50 transition-colors text-center shadow-lg shadow-primary-900/20">
+                <a href="tel:+917977257779" className="bg-white text-primary-700 px-8 py-4 rounded-xl text-base font-semibold hover:bg-amber-50 transition-colors text-center shadow-lg shadow-black/20">
                   Call for Appointment
                 </a>
                 <a href="#services" className="border-2 border-white/30 text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-white/10 transition-colors text-center">
@@ -158,19 +158,19 @@ export default function HomePage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
                 <div className="text-3xl font-bold text-white">MDS</div>
-                <div className="text-sm text-blue-200 mt-1">Specialist Qualified</div>
+                <div className="text-sm text-orange-200 mt-1">Specialist Qualified</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-white">10,000+</div>
-                <div className="text-sm text-blue-200 mt-1">Happy Patients</div>
+                <div className="text-sm text-orange-200 mt-1">Happy Patients</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-white">Braces</div>
-                <div className="text-sm text-blue-200 mt-1">&amp; Aligners Expert</div>
+                <div className="text-sm text-orange-200 mt-1">&amp; Aligners Expert</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-white">A-34195</div>
-                <div className="text-sm text-blue-200 mt-1">Registered Practitioner</div>
+                <div className="text-sm text-orange-200 mt-1">Registered Practitioner</div>
               </div>
             </div>
           </div>
@@ -178,13 +178,13 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 bg-gray-50">
+      <section id="services" className="py-20 bg-[#faf7f2]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-2">What We Offer</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Our Services</h2>
-            <p className="mt-2 text-gray-500 tamil">எங்கள் சேவைகள்</p>
-            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-stone-900">Our Services</h2>
+            <p className="mt-2 text-stone-500 tamil">எங்கள் சேவைகள்</p>
+            <p className="mt-4 text-stone-600 max-w-2xl mx-auto">
               Comprehensive dental care under one roof — from preventive treatments to advanced orthodontics, implants, and cosmetic dentistry.
             </p>
           </div>
@@ -193,14 +193,14 @@ export default function HomePage() {
             {SERVICES.map((service) => (
               <div
                 key={service.title}
-                className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary-200 hover:shadow-lg hover:shadow-primary-100/50 transition-all duration-300 group"
+                className="bg-white rounded-2xl p-6 border border-stone-200 hover:border-primary-300 hover:shadow-lg hover:shadow-primary-100/50 transition-all duration-300 group"
               >
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
                   {service.icon}
                 </div>
-                <h3 className="font-bold text-gray-900 text-lg">{service.title}</h3>
+                <h3 className="font-bold text-stone-900 text-lg">{service.title}</h3>
                 <p className="text-xs text-primary-500 tamil mt-0.5">{service.titleTamil}</p>
-                <p className="text-sm text-gray-500 mt-3 leading-relaxed">{service.description}</p>
+                <p className="text-sm text-stone-500 mt-3 leading-relaxed">{service.description}</p>
               </div>
             ))}
           </div>
@@ -223,28 +223,28 @@ export default function HomePage() {
                 />
               </div>
               {/* Floating badge */}
-              <div className="absolute -bottom-6 -right-4 md:right-4 bg-white rounded-2xl shadow-lg p-4 border border-gray-100">
+              <div className="absolute -bottom-6 -right-4 md:right-4 bg-white rounded-2xl shadow-lg p-4 border border-stone-200">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
                     <span className="text-2xl">🎓</span>
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900 text-sm">Dr. Pinky Vijay</p>
+                    <p className="font-bold text-stone-900 text-sm">Dr. Pinky Vijay</p>
                     <p className="text-xs text-primary-600">MDS, Orthodontics</p>
                   </div>
                 </div>
               </div>
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary-600 rounded-2xl -z-10 opacity-20" />
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary-400 rounded-2xl -z-10 opacity-20" />
             </div>
 
             {/* Content */}
             <div>
               <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-2">About the Doctor</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-2">
                 Dedicated to Your<br />Dental Health
               </h2>
-              <p className="text-gray-500 tamil mb-6">உங்கள் பல் ஆரோக்கியத்திற்கு அர்ப்பணிக்கப்பட்டது</p>
-              <div className="space-y-4 text-gray-600 leading-relaxed">
+              <p className="text-stone-500 tamil mb-6">உங்கள் பல் ஆரோக்கியத்திற்கு அர்ப்பணிக்கப்பட்டது</p>
+              <div className="space-y-4 text-stone-600 leading-relaxed">
                 <p>
                   <strong>Dr. Pinky Vijay</strong> is a highly qualified orthodontist with an <strong>MDS in Orthodontics and Dentofacial Orthopedics</strong> (BDS, (Mum), MDS (Orthodontics)). As a specialist in braces and aligners, she brings expertise, precision, and a compassionate approach to every patient.
                 </p>
@@ -253,25 +253,25 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="mt-8 grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 rounded-xl p-4">
+                <div className="bg-[#faf7f2] rounded-xl p-4">
                   <div className="text-2xl mb-1">🎓</div>
-                  <p className="font-semibold text-gray-900 text-sm">MDS Qualified</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Orthodontics specialist</p>
+                  <p className="font-semibold text-stone-900 text-sm">MDS Qualified</p>
+                  <p className="text-xs text-stone-500 mt-0.5">Orthodontics specialist</p>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-4">
+                <div className="bg-[#faf7f2] rounded-xl p-4">
                   <div className="text-2xl mb-1">😁</div>
-                  <p className="font-semibold text-gray-900 text-sm">Braces Expert</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Braces &amp; aligners specialist</p>
+                  <p className="font-semibold text-stone-900 text-sm">Braces Expert</p>
+                  <p className="text-xs text-stone-500 mt-0.5">Braces &amp; aligners specialist</p>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-4">
+                <div className="bg-[#faf7f2] rounded-xl p-4">
                   <div className="text-2xl mb-1">🏥</div>
-                  <p className="font-semibold text-gray-900 text-sm">Modern Clinic</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Advanced equipment</p>
+                  <p className="font-semibold text-stone-900 text-sm">Modern Clinic</p>
+                  <p className="text-xs text-stone-500 mt-0.5">Advanced equipment</p>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-4">
+                <div className="bg-[#faf7f2] rounded-xl p-4">
                   <div className="text-2xl mb-1">💝</div>
-                  <p className="font-semibold text-gray-900 text-sm">Community Service</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Free dental health camps</p>
+                  <p className="font-semibold text-stone-900 text-sm">Community Service</p>
+                  <p className="text-xs text-stone-500 mt-0.5">Free dental health camps</p>
                 </div>
               </div>
             </div>
@@ -280,13 +280,13 @@ export default function HomePage() {
       </section>
 
       {/* Clinic Gallery */}
-      <section id="gallery" className="py-20 bg-gray-50">
+      <section id="gallery" className="py-20 bg-[#faf7f2]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-2">Take a Look</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Our Clinic</h2>
-            <p className="mt-2 text-gray-500 tamil">எங்கள் மருத்துவமனை</p>
-            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-stone-900">Our Clinic</h2>
+            <p className="mt-2 text-stone-500 tamil">எங்கள் மருத்துவமனை</p>
+            <p className="mt-4 text-stone-600 max-w-2xl mx-auto">
               A modern, clean, and welcoming environment designed for your comfort and care.
             </p>
           </div>
@@ -333,16 +333,16 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-2">Real Results</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Smile Transformations</h2>
-            <p className="mt-2 text-gray-500 tamil">புன்னகை மாற்றங்கள்</p>
-            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-stone-900">Smile Transformations</h2>
+            <p className="mt-2 text-stone-500 tamil">புன்னகை மாற்றங்கள்</p>
+            <p className="mt-4 text-stone-600 max-w-2xl mx-auto">
               See the difference expert orthodontic treatment makes. These are real patients treated by Dr. Pinky Vijay.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Case 1 */}
-            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
+            <div className="bg-[#faf7f2] rounded-2xl overflow-hidden border border-stone-200 shadow-sm hover:shadow-lg transition-shadow">
               <div className="relative">
                 <Image
                   src="/images/before-after-1.jpg"
@@ -353,8 +353,8 @@ export default function HomePage() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="font-bold text-gray-900 text-lg">Orthodontic Braces Treatment</h3>
-                <p className="text-sm text-gray-500 mt-1">Complex tooth alignment corrected with fixed braces</p>
+                <h3 className="font-bold text-stone-900 text-lg">Orthodontic Braces Treatment</h3>
+                <p className="text-sm text-stone-500 mt-1">Complex tooth alignment corrected with fixed braces</p>
                 <div className="mt-3 flex gap-2">
                   <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-xs font-medium">Braces</span>
                   <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-xs font-medium">Alignment</span>
@@ -363,7 +363,7 @@ export default function HomePage() {
             </div>
 
             {/* Case 2 */}
-            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
+            <div className="bg-[#faf7f2] rounded-2xl overflow-hidden border border-stone-200 shadow-sm hover:shadow-lg transition-shadow">
               <div className="relative">
                 <Image
                   src="/images/before-after-2.jpg"
@@ -374,8 +374,8 @@ export default function HomePage() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="font-bold text-gray-900 text-lg">Jaw &amp; Bite Correction</h3>
-                <p className="text-sm text-gray-500 mt-1">Cephalometric X-ray showing significant jaw alignment improvement with orthodontic treatment</p>
+                <h3 className="font-bold text-stone-900 text-lg">Jaw &amp; Bite Correction</h3>
+                <p className="text-sm text-stone-500 mt-1">Cephalometric X-ray showing significant jaw alignment improvement with orthodontic treatment</p>
                 <div className="mt-3 flex gap-2">
                   <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-xs font-medium">Orthodontics</span>
                   <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-xs font-medium">Jaw Alignment</span>
@@ -387,61 +387,61 @@ export default function HomePage() {
       </section>
 
       {/* Working Hours & Contact */}
-      <section id="hours" className="py-20 bg-gray-50">
+      <section id="hours" className="py-20 bg-[#faf7f2]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-2">Visit Us</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Working Hours &amp; Location</h2>
-            <p className="mt-2 text-gray-500 tamil">வேலை நேரம் &amp; இடம்</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-stone-900">Working Hours &amp; Location</h2>
+            <p className="mt-2 text-stone-500 tamil">வேலை நேரம் &amp; இடம்</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Working Hours */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+            <div className="bg-white rounded-2xl p-8 border border-stone-200 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-2xl">🕐</div>
                 <div>
-                  <h3 className="font-bold text-gray-900 text-lg">Working Hours</h3>
-                  <p className="text-sm text-gray-500 tamil">வேலை நேரம்</p>
+                  <h3 className="font-bold text-stone-900 text-lg">Working Hours</h3>
+                  <p className="text-sm text-stone-500 tamil">வேலை நேரம்</p>
                 </div>
               </div>
               <div className="space-y-4">
                 {WORKING_HOURS.map((item) => (
-                  <div key={item.day} className="flex items-center justify-between py-3 border-b border-gray-50 last:border-0">
-                    <span className="font-medium text-gray-700">{item.day}</span>
-                    <span className="text-gray-500 text-sm text-right">{item.hours}</span>
+                  <div key={item.day} className="flex items-center justify-between py-3 border-b border-stone-100 last:border-0">
+                    <span className="font-medium text-stone-700">{item.day}</span>
+                    <span className="text-stone-500 text-sm text-right">{item.hours}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-6 bg-blue-50 rounded-xl p-4 text-sm text-primary-700">
+              <div className="mt-6 bg-amber-50 rounded-xl p-4 text-sm text-amber-800">
                 <strong>Emergency?</strong> Call us at <a href="tel:+917977257779" className="underline font-semibold">+91 79772 57779</a>. We prioritize dental emergencies.
               </div>
             </div>
 
             {/* Contact Card */}
-            <div id="contact" className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+            <div id="contact" className="bg-white rounded-2xl p-8 border border-stone-200 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-2xl">📍</div>
                 <div>
-                  <h3 className="font-bold text-gray-900 text-lg">Find Us</h3>
-                  <p className="text-sm text-gray-500 tamil">எங்களைக் கண்டறியவும்</p>
+                  <h3 className="font-bold text-stone-900 text-lg">Find Us</h3>
+                  <p className="text-sm text-stone-500 tamil">எங்களைக் கண்டறியவும்</p>
                 </div>
               </div>
 
               <div className="space-y-5">
                 <div className="flex gap-3">
-                  <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-lg flex-shrink-0">🏥</div>
+                  <div className="w-10 h-10 bg-[#faf7f2] rounded-lg flex items-center justify-center text-lg flex-shrink-0">🏥</div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm">Holy Care Dental &amp; Orthodontic Clinic</p>
-                    <p className="text-sm text-gray-500 mt-0.5">8/277, Rachel Enclave, Kavalkinaru Main Road</p>
-                    <p className="text-sm text-gray-500">Kavalkinaru - 627105</p>
+                    <p className="font-semibold text-stone-900 text-sm">Holy Care Dental &amp; Orthodontic Clinic</p>
+                    <p className="text-sm text-stone-500 mt-0.5">8/277, Rachel Enclave, Kavalkinaru Main Road</p>
+                    <p className="text-sm text-stone-500">Kavalkinaru - 627105</p>
                   </div>
                 </div>
 
                 <div className="flex gap-3">
-                  <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-lg flex-shrink-0">📞</div>
+                  <div className="w-10 h-10 bg-[#faf7f2] rounded-lg flex items-center justify-center text-lg flex-shrink-0">📞</div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm">Phone</p>
+                    <p className="font-semibold text-stone-900 text-sm">Phone</p>
                     <a href="tel:+917977257779" className="text-sm text-primary-600 font-semibold mt-0.5 block hover:text-primary-700">
                       +91 79772 57779
                     </a>
@@ -449,11 +449,11 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex gap-3">
-                  <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-lg flex-shrink-0">👩‍⚕️</div>
+                  <div className="w-10 h-10 bg-[#faf7f2] rounded-lg flex items-center justify-center text-lg flex-shrink-0">👩‍⚕️</div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm">Dr. Pinky Vijay MDS</p>
-                    <p className="text-sm text-gray-500 mt-0.5">Orthodontics &amp; Dentofacial Orthopedics</p>
-                    <p className="text-sm text-gray-500">Reg. No: A-34195</p>
+                    <p className="font-semibold text-stone-900 text-sm">Dr. Pinky Vijay MDS</p>
+                    <p className="text-sm text-stone-500 mt-0.5">Orthodontics &amp; Dentofacial Orthopedics</p>
+                    <p className="text-sm text-stone-500">Reg. No: A-34195</p>
                   </div>
                 </div>
               </div>
@@ -487,19 +487,19 @@ export default function HomePage() {
             className="object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-primary-900/85" />
-        <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+        <div className="absolute inset-0 bg-[#3d2517]/90" />
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: 'radial-gradient(circle, #f5d0b0 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }} />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white">Ready for a Healthier Smile?</h2>
-          <p className="text-blue-200 mt-2 tamil text-lg">ஆரோக்கியமான புன்னகைக்கு தயாரா?</p>
-          <p className="mt-4 text-blue-100 text-lg max-w-2xl mx-auto">
+          <p className="text-amber-200 mt-2 tamil text-lg">ஆரோக்கியமான புன்னகைக்கு தயாரா?</p>
+          <p className="mt-4 text-orange-100 text-lg max-w-2xl mx-auto">
             Schedule your visit today. Whether it&apos;s a routine check-up, braces, or a complete smile makeover, we&apos;re here to help.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:+917977257779" className="bg-white text-primary-700 px-8 py-4 rounded-xl text-base font-semibold hover:bg-blue-50 transition-colors shadow-lg inline-flex items-center justify-center gap-2">
+            <a href="tel:+917977257779" className="bg-white text-primary-700 px-8 py-4 rounded-xl text-base font-semibold hover:bg-amber-50 transition-colors shadow-lg inline-flex items-center justify-center gap-2">
               <span>📞</span> Call +91 79772 57779
             </a>
           </div>
@@ -507,7 +507,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12">
+      <footer className="bg-stone-900 text-stone-400 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
@@ -541,18 +541,18 @@ export default function HomePage() {
                 <p>8/277, Rachel Enclave</p>
                 <p>Kavalkinaru Main Road</p>
                 <p>Kavalkinaru - 627105</p>
-                <p className="mt-3 text-xs text-gray-500">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
+                <p className="mt-3 text-xs text-stone-500">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="border-t border-stone-800 mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs">
               &copy; {new Date().getFullYear()} Holy Care Dental &amp; Orthodontic Clinic. All rights reserved.
             </p>
             <Link
               href="/login"
-              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
+              className="text-xs text-stone-600 hover:text-stone-400 transition-colors"
             >
               Staff Login
             </Link>
