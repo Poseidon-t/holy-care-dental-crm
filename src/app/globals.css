@@ -12,6 +12,7 @@
 
   .tamil {
     font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: max(0.875rem, 14px);
   }
 }
 

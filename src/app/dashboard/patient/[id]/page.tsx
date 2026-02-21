@@ -121,10 +121,10 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-bold text-gray-900">{patient.name}</h1>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{patient.name}</h1>
                 <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-bold">
                   {patient.op_number_formatted}
                 </span>
@@ -134,17 +134,17 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                 Registered: {new Date(patient.created_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-shrink-0">
               <a
                 href={`/report/${patient.id}`}
                 target="_blank"
                 rel="noopener"
                 className="btn-secondary text-sm"
               >
-                View Printable Report
+                Report
               </a>
               <a href={`/dashboard/treatment/${patient.id}`} className="btn-primary text-sm">
-                Add New Treatment
+                + Treatment
               </a>
             </div>
           </div>
@@ -285,12 +285,13 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
               </div>
             ) : (
               <div className="card overflow-hidden p-0">
+                <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="bg-primary-50 border-b border-primary-100">
-                      <th className="text-left p-4 text-sm font-semibold text-primary-700">Date</th>
+                      <th className="text-left p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Date</th>
                       <th className="text-left p-4 text-sm font-semibold text-primary-700">Description</th>
-                      <th className="text-right p-4 text-sm font-semibold text-primary-700">Amount</th>
+                      <th className="text-right p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Amount</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -313,6 +314,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                     </tr>
                   </tfoot>
                 </table>
+                </div>
               </div>
             )}
           </div>

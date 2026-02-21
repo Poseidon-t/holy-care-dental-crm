@@ -230,8 +230,8 @@ export default function DashboardPage() {
 
         {/* QR Code Modal */}
         {showQrModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowQrModal(false)}>
-            <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6" onClick={e => e.stopPropagation()}>
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto" onClick={() => setShowQrModal(false)}>
+            <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 my-auto" onClick={e => e.stopPropagation()}>
               <div className="text-center">
                 <h3 className="text-lg font-bold text-gray-900 mb-1">Patient Registration QR Code</h3>
                 <p className="text-sm text-gray-500 mb-4">
@@ -258,7 +258,7 @@ export default function DashboardPage() {
                   />
                   <button
                     onClick={copyLink}
-                    className="text-xs font-medium px-3 py-1.5 rounded-md bg-primary-600 text-white hover:bg-primary-700 transition-colors whitespace-nowrap"
+                    className="text-xs font-medium px-4 py-2.5 rounded-md bg-primary-600 text-white hover:bg-primary-700 transition-colors whitespace-nowrap min-h-[44px]"
                   >
                     {linkCopied ? 'Copied!' : 'Copy'}
                   </button>

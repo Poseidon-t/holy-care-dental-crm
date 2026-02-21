@@ -2,19 +2,12 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const secret = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'holycare-dental-default-secret'
-);
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-const publicPaths = [
-  '/login',
-  '/register',
-  '/api/auth/login',
-  '/api/patients',
-  '/api/links/',
-];
-
-function isPublicPath(pathname: string): boolean {
+function isPublicPath(pathname: string, method: string): boolean {
   // Public website home page
   if (pathname === '/') return true;
 
@@ -24,8 +17,8 @@ function isPublicPath(pathname: string): boolean {
   // Registration paths (tablet and remote)
   if (pathname.startsWith('/register')) return true;
 
-  // Patient creation API (POST only - checked in the route handler)
-  if (pathname === '/api/patients') return true;
+  // Patient creation API - POST only (for registration form submissions)
+  if (pathname === '/api/patients' && method === 'POST') return true;
 
   // Link validation API
   if (pathname.startsWith('/api/links/')) return true;
@@ -37,7 +30,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow public paths
-  if (isPublicPath(pathname)) {
+  if (isPublicPath(pathname, request.method)) {
     return NextResponse.next();
   }
 

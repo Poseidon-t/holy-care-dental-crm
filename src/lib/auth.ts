@@ -2,9 +2,10 @@ import { SignJWT, jwtVerify } from 'jose';
 import { scryptSync, randomBytes, timingSafeEqual } from 'crypto';
 import { cookies } from 'next/headers';
 
-const secret = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'holycare-dental-default-secret'
-);
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 const COOKIE_NAME = 'holycare_session';
 

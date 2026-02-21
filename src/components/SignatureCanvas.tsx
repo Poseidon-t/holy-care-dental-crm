@@ -148,7 +148,7 @@ export default function SignatureCanvas({ label, tamilLabel, value, onChange, re
       <button
         type="button"
         onClick={clearSignature}
-        className="text-sm text-red-600 hover:text-red-700 font-medium px-3 py-1 rounded border border-red-200 hover:bg-red-50 transition-colors min-h-[36px]"
+        className="text-sm text-red-600 hover:text-red-700 font-medium px-3 py-2 rounded border border-red-200 hover:bg-red-50 transition-colors min-h-[44px]"
       >
         Clear Signature
       </button>

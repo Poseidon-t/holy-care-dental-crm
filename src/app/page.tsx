@@ -83,7 +83,7 @@ export default function HomePage() {
               <a href="#results" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Results</a>
               <a href="#contact" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
             </div>
-            <a href="tel:+917977257779" className="bg-primary-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors">
+            <a href="tel:+917977257779" className="bg-primary-600 text-white px-5 py-3 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors min-h-[44px] inline-flex items-center">
               Call Now
             </a>
           </div>
