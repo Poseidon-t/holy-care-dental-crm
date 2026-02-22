@@ -90,18 +90,18 @@ html {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #fff8f0;
+  background: #fafafa;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #fdba74;
+  background: #d4d4d4;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #fb923c;
+  background: #a3a3a3;
 }
