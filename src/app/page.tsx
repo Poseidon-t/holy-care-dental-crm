@@ -52,42 +52,11 @@ const MDS_SPECIALIZATIONS = [
 ];
 
 const WHY_CHOOSE_US = [
-  {
-    title: 'MDS Specialist Team',
-    description: 'Multiple MDS-qualified doctors across orthodontics, endodontics, prosthodontics, and periodontics — not general dentists.',
-    stat: '5+',
-    statLabel: 'Specializations',
-  },
-  {
-    title: 'Braces & Aligners Expert',
-    description: 'Dr. Pinky Vijay is a specialist in orthodontics and dentofacial orthopedics — braces, clear aligners, and jaw correction.',
-    stat: '#1',
-    statLabel: 'In Region',
-  },
-  {
-    title: 'Digital Equipment',
-    description: 'Digital X-rays, modern sterilization protocols, and the latest dental technology for accurate diagnosis and treatment.',
-    stat: '100%',
-    statLabel: 'Digital',
-  },
-  {
-    title: 'Trusted by Thousands',
-    description: 'Over 10,000 patients trust us with their dental care. Rated 5.0 on Google with consistently positive reviews.',
-    stat: '10K+',
-    statLabel: 'Patients',
-  },
-  {
-    title: 'Sterilized & Safe',
-    description: 'Every instrument is autoclave-sterilized. We follow strict cross-infection control — your safety comes first.',
-    stat: '100%',
-    statLabel: 'Sterilized',
-  },
-  {
-    title: 'Transparent Pricing',
-    description: 'No hidden costs, no surprise bills. Treatment plans with clear pricing discussed before any procedure begins.',
-    stat: '₹0',
-    statLabel: 'Hidden Fees',
-  },
+  'Specialized MDS Doctors',
+  'Advanced Orthodontic Care',
+  'Modern Equipment',
+  'Clean & Comfortable Clinic',
+  'Affordable & Transparent Pricing',
 ];
 
 const GOOGLE_REVIEWS = [
@@ -422,24 +391,16 @@ export default function HomePage() {
       {/* ─── Why Choose Us ─── */}
       <section className="py-14 md:py-16 bg-surface">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
+          <div className="text-center mb-8">
             <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Why Us</p>
             <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Why Choose Holy Care?</h2>
             <p className="mt-1 text-faint tamil text-sm">ஏன் ஹோலி கேர்?</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4 max-w-3xl mx-auto">
             {WHY_CHOOSE_US.map((item) => (
-              <div key={item.title} className="bg-card rounded-xl p-5 border border-line hover:border-primary-200 hover:shadow-md transition-all group">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-14 h-14 bg-primary-50 rounded-xl flex flex-col items-center justify-center group-hover:bg-primary-100 transition-colors">
-                    <span className="text-primary-700 font-bold text-base leading-none">{item.stat}</span>
-                    <span className="text-primary-600/60 text-[9px] font-medium mt-0.5">{item.statLabel}</span>
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-bold text-heading text-[15px]">{item.title}</h3>
-                    <p className="text-xs text-muted mt-1 leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
+              <div key={item} className="flex items-center gap-2.5">
+                <svg className="w-4 h-4 text-primary-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                <span className="text-sm text-heading">{item}</span>
               </div>
             ))}
           </div>
