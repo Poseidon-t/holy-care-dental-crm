@@ -3,37 +3,37 @@ import Image from 'next/image';
 
 const SPECIALTIES = [
   {
-    icon: '😁',
+    image: '/images/specialty-orthodontics.jpg',
     title: 'Orthodontics & Smile Correction',
     titleTamil: 'பல் சீரமைப்பு & புன்னகை திருத்தம்',
     items: ['Metal & Ceramic Braces', 'Clear Aligners', 'Smile Designing', 'Jaw Alignment', 'Dentofacial Orthopedics for Children'],
   },
   {
-    icon: '🦷',
+    image: '/images/specialty-rootcanal.jpg',
     title: 'Root Canal & Conservative Dentistry',
     titleTamil: 'ரூட் கனால் & பாதுகாப்பு பல் சிகிச்சை',
     items: ['Single Sitting RCT', 'Re-RCT', 'Tooth Colored Fillings', 'Cosmetic Restorations'],
   },
   {
-    icon: '🩺',
+    image: '/images/specialty-implants.jpg',
     title: 'Implants, Crowns & Dentures',
     titleTamil: 'பல் பொருத்துதல், கிரீடங்கள் & பல்பொருத்தி',
     items: ['Dental Implants', 'Zirconia & Ceramic Crowns', 'Bridges', 'Complete & Partial Dentures', 'Full Mouth Rehabilitation'],
   },
   {
-    icon: '🪥',
+    image: '/images/specialty-gum.jpg',
     title: 'Gum Treatments',
     titleTamil: 'ஈறு சிகிச்சைகள்',
     items: ['Scaling & Polishing', 'Gum Disease Treatment', 'Flap Surgery', 'Laser Gum Procedures'],
   },
   {
-    icon: '🔬',
+    image: '/images/specialty-surgery.jpg',
     title: 'Oral Surgery',
     titleTamil: 'வாய் அறுவை சிகிச்சை',
     items: ['Wisdom Tooth Removal', 'Surgical Extractions', 'Minor Oral Surgeries', 'Cyst Removal'],
   },
   {
-    icon: '👶',
+    image: '/images/specialty-pediatric.jpg',
     title: 'Pediatric Dentistry',
     titleTamil: 'குழந்தை பல் சிகிச்சை',
     items: ['Preventive Dental Care', 'Fluoride Therapy', 'Habit Breaking Appliances', 'Child-Friendly Treatments'],
@@ -318,21 +318,30 @@ export default function HomePage() {
             {SPECIALTIES.map((specialty) => (
               <div
                 key={specialty.title}
-                className="bg-white rounded-2xl p-6 border border-yellow-100 hover:border-primary-300 hover:shadow-xl hover:shadow-primary-100/30 transition-all duration-300 group"
+                className="bg-white rounded-2xl overflow-hidden border border-yellow-100 hover:border-primary-300 hover:shadow-xl hover:shadow-primary-100/30 transition-all duration-300 group"
               >
-                <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:bg-primary-100 group-hover:scale-110 transition-all duration-300">
-                  {specialty.icon}
+                <div className="relative h-44 overflow-hidden">
+                  <Image
+                    src={specialty.image}
+                    alt={specialty.title}
+                    width={400}
+                    height={176}
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  <h3 className="absolute bottom-3 left-4 right-4 font-bold text-white text-lg drop-shadow-lg">{specialty.title}</h3>
                 </div>
-                <h3 className="font-bold text-gray-900 text-lg">{specialty.title}</h3>
-                <p className="text-xs text-primary-500 tamil mt-0.5">{specialty.titleTamil}</p>
-                <ul className="mt-3 space-y-1.5">
-                  {specialty.items.map((item) => (
-                    <li key={item} className="text-sm text-gray-500 flex items-start gap-2">
-                      <span className="text-primary-400 mt-0.5 flex-shrink-0">&#10003;</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <div className="p-5">
+                  <p className="text-xs text-primary-500 tamil">{specialty.titleTamil}</p>
+                  <ul className="mt-3 space-y-1.5">
+                    {specialty.items.map((item) => (
+                      <li key={item} className="text-sm text-gray-500 flex items-start gap-2">
+                        <span className="text-primary-400 mt-0.5 flex-shrink-0">&#10003;</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>
