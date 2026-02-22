@@ -85,7 +85,16 @@ function initializeDatabase(db: Database.Database) {
       patient_id INTEGER,
       FOREIGN KEY (patient_id) REFERENCES patients(id)
     );
+
+    CREATE TABLE IF NOT EXISTS site_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL,
+      updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
   `);
+
+  // Seed default theme
+  db.prepare("INSERT OR IGNORE INTO site_settings (key, value) VALUES ('theme', 'classic')").run();
 
   // Seed admin user if none exists
   const adminCount = db.prepare('SELECT COUNT(*) as count FROM admin_users').get() as { count: number };
@@ -196,4 +205,15 @@ export function formatInvoiceNumber(num: number): string {
 
 export function formatXrayId(num: number): string {
   return `XRAY-${String(num).padStart(3, '0')}`;
+}
+
+export function getSetting(key: string): string | null {
+  const row = getDb().prepare('SELECT value FROM site_settings WHERE key = ?').get(key) as { value: string } | undefined;
+  return row?.value ?? null;
+}
+
+export function setSetting(key: string, value: string): void {
+  getDb().prepare(
+    "INSERT INTO site_settings (key, value, updated_at) VALUES (?, ?, datetime('now')) ON CONFLICT(key) DO UPDATE SET value = ?, updated_at = datetime('now')"
+  ).run(key, value, value);
 }

@@ -89,8 +89,8 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
     return (
       <div className="card text-center py-12">
         <div className="text-5xl mb-4">✅</div>
-        <h2 className="text-xl font-bold text-primary-700 mb-2">Treatment Records Saved</h2>
-        <p className="text-gray-600 mb-6">
+        <h2 className="text-xl font-bold font-heading text-primary-700 mb-2">Treatment Records Saved</h2>
+        <p className="text-body mb-6">
           Treatment records for {patientName} ({opNumber}) have been saved successfully.
         </p>
         <div className="flex gap-4 justify-center">
@@ -109,11 +109,11 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="card">
         <div className="flex items-center justify-between mb-4 pb-2 border-b">
-          <h2 className="text-lg font-bold text-primary-700">
+          <h2 className="text-lg font-bold font-heading text-primary-700">
             Treatment Record &amp; Billing
-            <span className="tamil text-sm font-normal text-gray-500 ml-2">(சிகிச்சை பதிவு &amp; பில்லிங்)</span>
+            <span className="tamil text-sm font-normal text-muted ml-2">(சிகிச்சை பதிவு &amp; பில்லிங்)</span>
           </h2>
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-body">
             <span className="font-semibold">{patientName}</span> | {opNumber}
           </div>
         </div>
@@ -125,22 +125,22 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
               <tr className="bg-primary-50">
                 <th className="text-left p-3 text-sm font-semibold text-primary-700 rounded-tl-lg">
                   Appointment Date<br />
-                  <span className="tamil text-xs font-normal text-gray-500">சந்திப்பு தேதி</span>
+                  <span className="tamil text-xs font-normal text-muted">சந்திப்பு தேதி</span>
                 </th>
                 <th className="text-left p-3 text-sm font-semibold text-primary-700">
                   Description<br />
-                  <span className="tamil text-xs font-normal text-gray-500">விவரம்</span>
+                  <span className="tamil text-xs font-normal text-muted">விவரம்</span>
                 </th>
                 <th className="text-left p-3 text-sm font-semibold text-primary-700 w-32">
                   Amount (₹)<br />
-                  <span className="tamil text-xs font-normal text-gray-500">தொகை</span>
+                  <span className="tamil text-xs font-normal text-muted">தொகை</span>
                 </th>
                 <th className="p-3 w-12 rounded-tr-lg"></th>
               </tr>
             </thead>
             <tbody>
               {entries.map((entry) => (
-                <tr key={entry.id} className="border-b border-gray-100">
+                <tr key={entry.id} className="border-b border-line">
                   <td className="p-2">
                     <input
                       type="date"
@@ -162,7 +162,7 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
                   </td>
                   <td className="p-2">
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-medium">₹</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-faint font-medium">₹</span>
                       <input
                         type="number"
                         className="input-field pl-8"
@@ -209,7 +209,7 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
         {/* Grand Total */}
         <div className="flex justify-end mt-4 pt-4 border-t-2 border-primary-200">
           <div className="text-right">
-            <span className="text-sm text-gray-500 mr-4">Grand Total:</span>
+            <span className="text-sm text-muted mr-4">Grand Total:</span>
             <span className="text-2xl font-bold text-primary-700">₹ {grandTotal.toLocaleString('en-IN')}</span>
           </div>
         </div>

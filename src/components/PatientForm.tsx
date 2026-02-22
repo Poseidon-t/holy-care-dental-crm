@@ -101,20 +101,20 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-blue-100 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 p-4">
         <div className="card text-center max-w-lg w-full py-12">
           <div className="text-6xl mb-4">✅</div>
-          <h2 className="text-2xl font-bold text-primary-700 mb-2">Thank You!</h2>
+          <h2 className="text-2xl font-bold font-heading text-primary-700 mb-2">Thank You!</h2>
           {mode === 'tablet' ? (
             <>
-              <p className="text-gray-600 text-lg">Please take a seat.</p>
-              <p className="text-gray-600 text-lg tamil">தயவுசெய்து அமரவும்.</p>
-              <p className="text-gray-400 text-sm mt-4">Form will reset in 5 seconds...</p>
+              <p className="text-body text-lg">Please take a seat.</p>
+              <p className="text-body text-lg tamil">தயவுசெய்து அமரவும்.</p>
+              <p className="text-faint text-sm mt-4">Form will reset in 5 seconds...</p>
             </>
           ) : (
             <>
-              <p className="text-gray-600 text-lg">Your information has been submitted successfully.</p>
-              <p className="text-gray-600 text-lg tamil mt-1">உங்கள் தகவல் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது.</p>
+              <p className="text-body text-lg">Your information has been submitted successfully.</p>
+              <p className="text-body text-lg tamil mt-1">உங்கள் தகவல் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது.</p>
             </>
           )}
         </div>
@@ -123,7 +123,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-blue-100 py-6 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 py-6 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="card mb-6">
           <ClinicHeader />
@@ -135,15 +135,15 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
             <div className="card">
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <span className="text-xs text-gray-500 block">O.P. No.</span>
+                  <span className="text-xs text-muted block">O.P. No.</span>
                   <span className="font-bold text-primary-700">{autoNumbers.opNumber}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block">Invoice No.</span>
+                  <span className="text-xs text-muted block">Invoice No.</span>
                   <span className="font-bold text-primary-700">{autoNumbers.invoiceNumber}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block">X-ray ID No.</span>
+                  <span className="text-xs text-muted block">X-ray ID No.</span>
                   <span className="font-bold text-primary-700">{autoNumbers.xrayId}</span>
                 </div>
               </div>
@@ -152,15 +152,15 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
           {/* Personal Information */}
           <div className="card">
-            <h2 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">
+            <h2 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">
               Personal Information
-              <span className="tamil text-sm font-normal text-gray-500 ml-2">(தனிப்பட்ட தகவல்)</span>
+              <span className="tamil text-sm font-normal text-muted ml-2">(தனிப்பட்ட தகவல்)</span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
                 <label className="label-field">
-                  Name <span className="tamil text-gray-500">(பெயர்)</span>
+                  Name <span className="tamil text-muted">(பெயர்)</span>
                   <span className="text-red-500 ml-1">*</span>
                 </label>
                 <input
@@ -175,7 +175,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div>
                 <label className="label-field">
-                  Age <span className="tamil text-gray-500">(வயது)</span>
+                  Age <span className="tamil text-muted">(வயது)</span>
                   <span className="text-red-500 ml-1">*</span>
                 </label>
                 <input
@@ -192,7 +192,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div>
                 <label className="label-field">
-                  Sex <span className="tamil text-gray-500">(பாலினம்)</span>
+                  Sex <span className="tamil text-muted">(பாலினம்)</span>
                   <span className="text-red-500 ml-1">*</span>
                 </label>
                 <select
@@ -210,7 +210,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div className="md:col-span-2">
                 <label className="label-field">
-                  Address <span className="tamil text-gray-500">(முகவரி)</span>
+                  Address <span className="tamil text-muted">(முகவரி)</span>
                 </label>
                 <textarea
                   className="input-field"
@@ -223,7 +223,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div>
                 <label className="label-field">
-                  Phone <span className="tamil text-gray-500">(தொலைபேசி)</span>
+                  Phone <span className="tamil text-muted">(தொலைபேசி)</span>
                   <span className="text-red-500 ml-1">*</span>
                 </label>
                 <input
@@ -238,7 +238,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div>
                 <label className="label-field">
-                  Occupation <span className="tamil text-gray-500">(தொழில்)</span>
+                  Occupation <span className="tamil text-muted">(தொழில்)</span>
                 </label>
                 <input
                   type="text"
@@ -251,7 +251,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div className="md:col-span-2">
                 <label className="label-field">
-                  Chief Complaint <span className="tamil text-gray-500">(முக்கிய வலுவையின் நோயாகும்)</span>
+                  Chief Complaint <span className="tamil text-muted">(முக்கிய வலுவையின் நோயாகும்)</span>
                 </label>
                 <textarea
                   className="input-field"
@@ -266,17 +266,17 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
           {/* Medical History */}
           <div className="card">
-            <h2 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">
+            <h2 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">
               Medical History
-              <span className="tamil text-sm font-normal text-gray-500 ml-2">(மருத்துவ வரலாறு)</span>
+              <span className="tamil text-sm font-normal text-muted ml-2">(மருத்துவ வரலாறு)</span>
             </h2>
 
             <div className="space-y-3">
               {MEDICAL_CONDITIONS.map((condition) => (
-                <div key={condition.key} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <label className="flex-1 text-sm font-medium text-gray-700 cursor-pointer" htmlFor={condition.key}>
+                <div key={condition.key} className="flex items-center justify-between p-3 bg-surface-alt rounded-lg">
+                  <label className="flex-1 text-sm font-medium text-body cursor-pointer" htmlFor={condition.key}>
                     {condition.english}
-                    <span className="tamil text-gray-500 ml-1 text-xs">({condition.tamil})</span>
+                    <span className="tamil text-muted ml-1 text-xs">({condition.tamil})</span>
                   </label>
                   <div className="flex items-center gap-4 ml-4">
                     <label className="flex items-center gap-1.5 cursor-pointer min-h-[44px] px-2">
@@ -297,7 +297,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
                         onChange={() => updateField(condition.key, false)}
                         className="w-5 h-5 text-primary-600"
                       />
-                      <span className="text-sm font-medium text-gray-500">No</span>
+                      <span className="text-sm font-medium text-muted">No</span>
                     </label>
                   </div>
                 </div>
@@ -307,15 +307,15 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
           {/* Additional Information */}
           <div className="card">
-            <h2 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">
+            <h2 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">
               Additional Information
-              <span className="tamil text-sm font-normal text-gray-500 ml-2">(கூடுதல் தகவல்)</span>
+              <span className="tamil text-sm font-normal text-muted ml-2">(கூடுதல் தகவல்)</span>
             </h2>
 
             <div className="space-y-4">
               <div>
                 <label className="label-field">
-                  Previous Dental History <span className="tamil text-gray-500">(முந்தைய பல் வரலாறு)</span>
+                  Previous Dental History <span className="tamil text-muted">(முந்தைய பல் வரலாறு)</span>
                 </label>
                 <textarea
                   className="input-field"
@@ -328,7 +328,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div>
                 <label className="label-field">
-                  Diagnosis <span className="tamil text-gray-500">(நோயறிதல்)</span>
+                  Diagnosis <span className="tamil text-muted">(நோயறிதல்)</span>
                 </label>
                 <textarea
                   className="input-field"
@@ -341,7 +341,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div>
                 <label className="label-field">
-                  Treatment Plan <span className="tamil text-gray-500">(சிகிச்சை திட்டம்)</span>
+                  Treatment Plan <span className="tamil text-muted">(சிகிச்சை திட்டம்)</span>
                 </label>
                 <textarea
                   className="input-field"
@@ -356,42 +356,42 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
           {/* Consent */}
           <div className="card">
-            <h2 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">
-              Consent <span className="tamil text-sm font-normal text-gray-500 ml-2">(ஒப்புதல்)</span>
+            <h2 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">
+              Consent <span className="tamil text-sm font-normal text-muted ml-2">(ஒப்புதல்)</span>
               <span className="text-red-500 ml-1">*</span>
             </h2>
 
-            <div className="bg-blue-50 p-4 rounded-lg mb-4">
-              <p className="text-sm text-gray-700 leading-relaxed">
+            <div className="bg-primary-50 p-4 rounded-lg mb-4">
+              <p className="text-sm text-body leading-relaxed">
                 I hereby give consent to the dentist and those under his professional supervision to prescribe and
                 perform whatever dental treatment, dental operation, anesthesia or other dental procedure which is
                 deemed necessary (or) appropriate and mutually agreed upon.
               </p>
-              <p className="text-sm text-gray-600 leading-relaxed mt-2 tamil">
+              <p className="text-sm text-body leading-relaxed mt-2 tamil">
                 மேற்படி மருத்துவர் அவர்களும் அவர்களுடைய பார்வையிலுள்லவர்களும் வயங்களும் என்மீது
                 செய்யப்படவேண்டிய சிகிச்சை முறைகள்,செயல் முறைகள்,மயக்கமருந்து புழங்குதல் என் மருத்தை
                 செய்யும் பயன்படுகி முந்தை பதில தகவலைகளை தெரிவர்மாறும் முழு மன ரதான எமக்குகிறேன்.
               </p>
             </div>
 
-            <label className="flex items-center gap-3 cursor-pointer p-3 bg-gray-50 rounded-lg min-h-[44px]">
+            <label className="flex items-center gap-3 cursor-pointer p-3 bg-surface-alt rounded-lg min-h-[44px]">
               <input
                 type="checkbox"
                 checked={formData.consent_agreed}
                 onChange={e => updateField('consent_agreed', e.target.checked)}
                 className="w-6 h-6 text-primary-600 rounded"
               />
-              <span className="font-medium text-gray-700">
+              <span className="font-medium text-body">
                 I agree to the above consent
-                <span className="tamil text-gray-500 ml-1 text-sm">(நான் மேற்கூறிய ஒப்புதலுக்கு இணங்குகிறேன்)</span>
+                <span className="tamil text-muted ml-1 text-sm">(நான் மேற்கூறிய ஒப்புதலுக்கு இணங்குகிறேன்)</span>
               </span>
             </label>
           </div>
 
           {/* Signatures */}
           <div className="card">
-            <h2 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">
-              Signatures <span className="tamil text-sm font-normal text-gray-500 ml-2">(கையொப்பங்கள்)</span>
+            <h2 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">
+              Signatures <span className="tamil text-sm font-normal text-muted ml-2">(கையொப்பங்கள்)</span>
             </h2>
 
             <div className={`grid grid-cols-1 ${mode === 'tablet' ? 'md:grid-cols-2' : ''} gap-6`}>
@@ -410,7 +410,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
                 />
               )}
               {mode === 'remote' && (
-                <p className="text-sm text-gray-500 italic mt-2">
+                <p className="text-sm text-muted italic mt-2">
                   Doctor&apos;s signature will be added during your clinic visit.
                   <span className="tamil block text-xs mt-1">(மருத்துவரின் கையொப்பம் கிளினிக் வருகையின் போது சேர்க்கப்படும்)</span>
                 </p>

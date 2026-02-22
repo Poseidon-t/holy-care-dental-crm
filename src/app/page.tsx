@@ -163,31 +163,31 @@ export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-surface">
       {/* ─── Navigation ─── */}
-      <nav className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+      <nav className="bg-[var(--color-nav-bg)] backdrop-blur-md sticky top-0 z-50 border-b border-line">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
               <Image src="/images/logo.jpg" alt="Holy Care Dental" width={36} height={36} className="w-9 h-9" />
-              <span className="font-bold text-gray-900 text-lg hidden sm:inline">Holy Care Dental</span>
-              <span className="font-bold text-gray-900 text-lg sm:hidden">Holy Care</span>
+              <span className="font-bold font-heading text-heading text-lg hidden sm:inline">Holy Care Dental</span>
+              <span className="font-bold font-heading text-heading text-lg sm:hidden">Holy Care</span>
             </div>
             <div className="hidden md:flex items-center gap-8">
               {NAV_LINKS.map((link) => (
-                <a key={link.href} href={link.href} className="text-[13px] font-medium text-gray-500 hover:text-primary-700 transition-colors tracking-wide uppercase">
+                <a key={link.href} href={link.href} className="text-[13px] font-medium text-muted hover:text-primary-700 transition-colors tracking-wide uppercase">
                   {link.label}
                 </a>
               ))}
             </div>
             <div className="flex items-center gap-2">
-              <a href="tel:+917977257779" className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors inline-flex items-center gap-2">
+              <a href="tel:+917977257779" className="bg-[var(--color-btn-dark)] text-ondeep px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[var(--color-btn-dark-hover)] transition-colors inline-flex items-center gap-2">
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                 <span className="hidden sm:inline">Call Now</span>
               </a>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="md:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
+                className="md:hidden p-2 text-body hover:text-heading transition-colors"
                 aria-label="Toggle menu"
               >
                 {menuOpen ? (
@@ -200,14 +200,14 @@ export default function HomePage() {
           </div>
         </div>
         {menuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
+          <div className="md:hidden border-t border-line bg-surface shadow-lg">
             <div className="px-4 py-2 space-y-0.5">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block px-3 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+                  className="block px-3 py-3 rounded-lg text-sm font-medium text-body hover:bg-primary-50 hover:text-primary-700 transition-colors"
                 >
                   {link.label}
                 </a>
@@ -217,64 +217,95 @@ export default function HomePage() {
         )}
       </nav>
 
-      {/* ─── Hero (Compact) ─── */}
-      <section className="relative overflow-hidden bg-gray-900">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/clinic-exterior-1.jpg"
-            alt="Holy Care Dental Clinic"
-            fill
-            className="object-cover opacity-30"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/60 to-gray-900/40" />
-        </div>
+      {/* ─── Hero (Split Layout) ─── */}
+      <section className="relative overflow-hidden bg-surface">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-20">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Left — Text */}
+            <div>
+              <div className="inline-flex items-center gap-2 bg-primary-50 border border-primary-100 rounded-full px-3.5 py-1.5 mb-5">
+                <span className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-pulse" />
+                <span className="text-primary-700 text-xs font-semibold uppercase tracking-wider">MDS Specialist Dental Care</span>
+              </div>
+              <h1 className="text-3xl sm:text-4xl md:text-[2.75rem] font-bold font-heading text-heading leading-[1.15]">
+                Confident Smiles<br />
+                <span className="text-primary-600">Begin Here</span>
+              </h1>
+              <p className="mt-2 text-sm text-primary-500/70 tamil">
+                நம்பிக்கையான புன்னகை இங்கே தொடங்குகிறது
+              </p>
+              <p className="mt-4 text-body text-[15px] leading-relaxed max-w-md">
+                Advanced orthodontic &amp; complete dental care by MDS specialists. Braces, aligners, implants, root canal &amp; more.
+              </p>
+              <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                <a href="tel:+917977257779" className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl text-sm font-bold transition-colors text-center inline-flex items-center justify-center gap-2 shadow-lg shadow-primary-500/20">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                  Book Appointment
+                </a>
+                <a href="#specialties" className="border-2 border-line-strong text-heading px-6 py-3 rounded-xl text-sm font-medium hover:bg-surface-alt transition-colors text-center">
+                  View Specialities
+                </a>
+              </div>
+            </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20">
-          <div className="max-w-xl">
-            <p className="text-primary-400 text-xs font-semibold uppercase tracking-widest mb-4">
-              MDS Specialist Dental Care
-            </p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-[1.1]">
-              Confident Smiles{' '}
-              <span className="text-primary-400">Begin Here</span>
-            </h1>
-            <p className="mt-2 text-sm text-primary-300/70 tamil">
-              நம்பிக்கையான புன்னகை இங்கே தொடங்குகிறது
-            </p>
-            <p className="mt-4 text-gray-400 text-[15px] leading-relaxed max-w-md">
-              Advanced orthodontic &amp; complete dental care by MDS specialists. Braces, aligners, implants, root canal &amp; more.
-            </p>
-            <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <a href="tel:+917977257779" className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-xl text-sm font-bold transition-colors text-center inline-flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                Book Appointment
-              </a>
-              <a href="#specialties" className="border border-white/20 text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-white/10 transition-colors text-center">
-                View Specialities
-              </a>
+            {/* Right — Image */}
+            <div className="relative">
+              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/10">
+                <Image
+                  src="/images/clinic-exterior-1.jpg"
+                  alt="Holy Care Dental & Orthodontic Clinic - Exterior"
+                  width={600}
+                  height={750}
+                  className="object-cover w-full h-[360px] md:h-[460px]"
+                  priority
+                />
+              </div>
+              {/* Floating rating card */}
+              <div className="absolute -bottom-4 left-4 md:-left-6 bg-card rounded-xl shadow-lg p-3 border border-line">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 bg-primary-50 rounded-full flex items-center justify-center">
+                    <span className="text-yellow-500 text-base">&#9733;</span>
+                  </div>
+                  <div>
+                    <p className="font-bold text-heading text-sm">5.0 Rating</p>
+                    <p className="text-[11px] text-muted">Google Reviews</p>
+                  </div>
+                </div>
+              </div>
+              {/* Floating patients card */}
+              <div className="absolute -top-3 right-4 md:-right-4 bg-card rounded-xl shadow-lg p-3 border border-line">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 bg-primary-50 rounded-full flex items-center justify-center text-primary-700">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                  </div>
+                  <div>
+                    <p className="font-bold text-heading text-sm">10,000+</p>
+                    <p className="text-[11px] text-muted">Happy Patients</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Compact stats strip */}
-        <div className="relative border-t border-white/10 bg-white/5 backdrop-blur-sm">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm">
-              <span><strong className="text-primary-400">MDS</strong> <span className="text-gray-400">Specialist</span></span>
-              <span className="text-gray-600 hidden sm:inline">&middot;</span>
-              <span><strong className="text-primary-400">10,000+</strong> <span className="text-gray-400">Patients</span></span>
-              <span className="text-gray-600 hidden sm:inline">&middot;</span>
-              <span><strong className="text-primary-400">Braces</strong> <span className="text-gray-400">&amp; Aligners Expert</span></span>
-              <span className="text-gray-600 hidden sm:inline">&middot;</span>
-              <span><strong className="text-primary-400">A-34195</strong> <span className="text-gray-400">Registered</span></span>
+        {/* Stats strip */}
+        <div className="border-y border-line bg-surface-alt">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 text-sm">
+              <span><strong className="text-primary-600 font-bold">MDS</strong> <span className="text-muted">Specialist</span></span>
+              <span className="text-line-strong hidden sm:inline">|</span>
+              <span><strong className="text-primary-600 font-bold">10,000+</strong> <span className="text-muted">Patients</span></span>
+              <span className="text-line-strong hidden sm:inline">|</span>
+              <span><strong className="text-primary-600 font-bold">Braces</strong> <span className="text-muted">&amp; Aligners Expert</span></span>
+              <span className="text-line-strong hidden sm:inline">|</span>
+              <span><strong className="text-primary-600 font-bold">A-34195</strong> <span className="text-muted">Registered</span></span>
             </div>
           </div>
         </div>
       </section>
 
       {/* ─── About + MDS ─── */}
-      <section id="about" className="py-14 md:py-20 bg-white">
+      <section id="about" className="py-14 md:py-20 bg-surface">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="relative">
@@ -287,13 +318,13 @@ export default function HomePage() {
                   className="object-cover w-full h-[380px]"
                 />
               </div>
-              <div className="absolute -bottom-5 right-4 bg-white rounded-xl shadow-lg p-3.5 border border-gray-100">
+              <div className="absolute -bottom-5 right-4 bg-card rounded-xl shadow-lg p-3.5 border border-line">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center text-primary-700">
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10l-10-5L2 10l10 5 10-5z" /><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5" /></svg>
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900 text-sm">Dr. Pinky Vijay</p>
+                    <p className="font-bold text-heading text-sm">Dr. Pinky Vijay</p>
                     <p className="text-xs text-primary-600 font-medium">MDS, Orthodontics</p>
                   </div>
                 </div>
@@ -302,16 +333,16 @@ export default function HomePage() {
 
             <div>
               <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-3">About Us</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug">
+              <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading leading-snug">
                 Your Dental Health,<br />Our Priority
               </h2>
-              <p className="text-gray-400 tamil text-sm mt-1 mb-5">உங்கள் பல் ஆரோக்கியம், எங்கள் முன்னுரிமை</p>
-              <div className="space-y-3 text-gray-600 text-[15px] leading-relaxed">
+              <p className="text-faint tamil text-sm mt-1 mb-5">உங்கள் பல் ஆரோக்கியம், எங்கள் முன்னுரிமை</p>
+              <div className="space-y-3 text-body text-[15px] leading-relaxed">
                 <p>
-                  <strong className="text-gray-900">Holy Care Dental and Orthodontic Clinic</strong> is a modern dental care center in Kavalkinaru &ndash; Vadakankulam offering advanced orthodontic and complete dental treatments under expert MDS specialists.
+                  <strong className="text-heading">Holy Care Dental and Orthodontic Clinic</strong> is a modern dental care center in Kavalkinaru &ndash; Vadakankulam offering advanced orthodontic and complete dental treatments under expert MDS specialists.
                 </p>
                 <p>
-                  Led by <strong className="text-gray-900">Dr. Pinky Vijay</strong> (BDS, MDS Orthodontics &amp; Dentofacial Orthopedics), our clinic combines precision treatment, a hygienic environment, personalized care, and advanced technology.
+                  Led by <strong className="text-heading">Dr. Pinky Vijay</strong> (BDS, MDS Orthodontics &amp; Dentofacial Orthopedics), our clinic combines precision treatment, a hygienic environment, personalized care, and advanced technology.
                 </p>
               </div>
 
@@ -323,13 +354,13 @@ export default function HomePage() {
                   { label: 'Personalized Care', sub: 'Individual plans', d: 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z' },
                   { label: 'Advanced Technology', sub: 'Modern equipment', d: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
                 ].map((v) => (
-                  <div key={v.label} className="flex items-start gap-2.5 p-3 rounded-xl bg-gray-50 border border-gray-100">
+                  <div key={v.label} className="flex items-start gap-2.5 p-3 rounded-xl bg-surface-alt border border-line">
                     <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-700 flex-shrink-0 mt-0.5">
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={v.d} /></svg>
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900 text-sm leading-tight">{v.label}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{v.sub}</p>
+                      <p className="font-semibold text-heading text-sm leading-tight">{v.label}</p>
+                      <p className="text-xs text-muted mt-0.5">{v.sub}</p>
                     </div>
                   </div>
                 ))}
@@ -337,7 +368,7 @@ export default function HomePage() {
 
               {/* MDS badges (merged from standalone section) */}
               <div className="mt-6">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">MDS Specializations</p>
+                <p className="text-xs font-semibold text-faint uppercase tracking-wider mb-2">MDS Specializations</p>
                 <div className="flex flex-wrap gap-2">
                   {MDS_SPECIALIZATIONS.map((spec) => (
                     <span key={spec} className="bg-primary-50 text-primary-800 px-3 py-1.5 rounded-lg text-xs font-medium border border-primary-100">
@@ -352,13 +383,13 @@ export default function HomePage() {
       </section>
 
       {/* ─── Specialities ─── */}
-      <section id="specialties" className="py-14 md:py-20 bg-gray-50">
+      <section id="specialties" className="py-14 md:py-20 bg-surface-alt">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">What We Offer</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Our Specialities</h2>
-            <p className="mt-1 text-gray-400 tamil text-sm">எங்கள் சிறப்புகள்</p>
-            <p className="mt-3 text-gray-500 text-sm max-w-xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Our Specialities</h2>
+            <p className="mt-1 text-faint tamil text-sm">எங்கள் சிறப்புகள்</p>
+            <p className="mt-3 text-muted text-sm max-w-xl mx-auto">
               Comprehensive dental care under one roof &mdash; from advanced orthodontics and implants to pediatric dentistry and oral surgery.
             </p>
           </div>
@@ -367,7 +398,7 @@ export default function HomePage() {
             {SPECIALTIES.map((specialty) => (
               <div
                 key={specialty.title}
-                className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-primary-200 hover:shadow-lg hover:shadow-primary-50 transition-all duration-300 group"
+                className="bg-card rounded-2xl overflow-hidden border border-line hover:border-primary-200 hover:shadow-lg hover:shadow-primary-50 transition-all duration-300 group"
               >
                 <div className="relative h-40 overflow-hidden">
                   <Image
@@ -384,7 +415,7 @@ export default function HomePage() {
                   <p className="text-[11px] text-primary-500 tamil">{specialty.titleTamil}</p>
                   <ul className="mt-2.5 space-y-1.5">
                     {specialty.items.map((item) => (
-                      <li key={item} className="text-[13px] text-gray-500 flex items-start gap-2">
+                      <li key={item} className="text-[13px] text-muted flex items-start gap-2">
                         <svg className="w-3.5 h-3.5 text-primary-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                         {item}
                       </li>
@@ -398,21 +429,21 @@ export default function HomePage() {
       </section>
 
       {/* ─── Why Choose Us ─── */}
-      <section className="py-14 md:py-16 bg-white">
+      <section className="py-14 md:py-16 bg-surface">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Why Us</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Why Choose Holy Care?</h2>
-            <p className="mt-1 text-gray-400 tamil text-sm">ஏன் ஹோலி கேர்?</p>
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Why Choose Holy Care?</h2>
+            <p className="mt-1 text-faint tamil text-sm">ஏன் ஹோலி கேர்?</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {WHY_CHOOSE_US.map((item) => (
-              <div key={item.title} className="text-center p-4 rounded-xl hover:bg-gray-50 transition-colors group">
+              <div key={item.title} className="text-center p-4 rounded-xl hover:bg-surface-alt transition-colors group">
                 <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center text-primary-700 mx-auto mb-3 group-hover:bg-primary-100 group-hover:scale-110 transition-all">
                   {item.icon}
                 </div>
-                <h3 className="font-semibold text-gray-900 text-sm">{item.title}</h3>
-                <p className="text-xs text-gray-500 mt-1 leading-relaxed">{item.description}</p>
+                <h3 className="font-semibold text-heading text-sm">{item.title}</h3>
+                <p className="text-xs text-muted mt-1 leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
@@ -420,34 +451,34 @@ export default function HomePage() {
       </section>
 
       {/* ─── Google Reviews ─── */}
-      <section id="reviews" className="py-14 md:py-20 bg-gray-50">
+      <section id="reviews" className="py-14 md:py-20 bg-surface-alt">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Patient Reviews</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">What Our Patients Say</h2>
-            <p className="mt-1 text-gray-400 tamil text-sm">எங்கள் நோயாளிகள் என்ன சொல்கிறார்கள்</p>
-            <div className="mt-3 inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-full border border-gray-200 text-sm">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">What Our Patients Say</h2>
+            <p className="mt-1 text-faint tamil text-sm">எங்கள் நோயாளிகள் என்ன சொல்கிறார்கள்</p>
+            <div className="mt-3 inline-flex items-center gap-2 bg-card px-3 py-1.5 rounded-full border border-line-strong text-sm">
               <span className="text-yellow-500">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-              <span className="font-semibold text-gray-700 text-xs">5.0 on Google</span>
+              <span className="font-semibold text-body text-xs">5.0 on Google</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {GOOGLE_REVIEWS.map((review) => (
-              <div key={review.name} className="bg-white rounded-xl p-5 border border-gray-100 hover:shadow-md transition-shadow">
+              <div key={review.name} className="bg-card rounded-xl p-5 border border-line hover:shadow-md transition-shadow">
                 <div className="flex items-center gap-1 mb-2.5">
                   {[...Array(review.rating)].map((_, i) => (
                     <span key={i} className="text-yellow-500 text-xs">&#9733;</span>
                   ))}
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed">&ldquo;{review.text}&rdquo;</p>
-                <div className="mt-3 pt-3 border-t border-gray-50 flex items-center gap-2.5">
+                <p className="text-sm text-body leading-relaxed">&ldquo;{review.text}&rdquo;</p>
+                <div className="mt-3 pt-3 border-t border-line-subtle flex items-center gap-2.5">
                   <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-800 font-bold text-xs">
                     {review.name.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900 text-sm truncate">{review.name}</p>
-                    <p className="text-xs text-gray-400">{review.date}</p>
+                    <p className="font-semibold text-heading text-sm truncate">{review.name}</p>
+                    <p className="text-xs text-faint">{review.date}</p>
                   </div>
                   <svg className="w-4 h-4 text-[#4285F4] flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
@@ -463,16 +494,16 @@ export default function HomePage() {
       </section>
 
       {/* ─── Before & After ─── */}
-      <section id="results" className="py-14 md:py-20 bg-white">
+      <section id="results" className="py-14 md:py-20 bg-surface">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Real Results</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Smile Transformations</h2>
-            <p className="mt-1 text-gray-400 tamil text-sm">புன்னகை மாற்றங்கள்</p>
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Smile Transformations</h2>
+            <p className="mt-1 text-faint tamil text-sm">புன்னகை மாற்றங்கள்</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all group">
+            <div className="bg-surface-alt rounded-2xl overflow-hidden border border-line hover:shadow-lg transition-all group">
               <div className="relative overflow-hidden">
                 <Image
                   src="/images/before-after-1.jpg"
@@ -483,16 +514,16 @@ export default function HomePage() {
                 />
               </div>
               <div className="p-5">
-                <h3 className="font-bold text-gray-900">Orthodontic Braces Treatment</h3>
-                <p className="text-sm text-gray-500 mt-1">Complex tooth alignment corrected with fixed braces</p>
+                <h3 className="font-bold font-heading text-heading">Orthodontic Braces Treatment</h3>
+                <p className="text-sm text-muted mt-1">Complex tooth alignment corrected with fixed braces</p>
                 <div className="mt-2.5 flex gap-2">
-                  <span className="bg-gray-900 text-white px-2.5 py-0.5 rounded-full text-xs font-medium">Braces</span>
-                  <span className="bg-gray-900 text-white px-2.5 py-0.5 rounded-full text-xs font-medium">Alignment</span>
+                  <span className="bg-surface-deep text-ondeep px-2.5 py-0.5 rounded-full text-xs font-medium">Braces</span>
+                  <span className="bg-surface-deep text-ondeep px-2.5 py-0.5 rounded-full text-xs font-medium">Alignment</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all group">
+            <div className="bg-surface-alt rounded-2xl overflow-hidden border border-line hover:shadow-lg transition-all group">
               <div className="relative overflow-hidden">
                 <Image
                   src="/images/before-after-2.jpg"
@@ -503,11 +534,11 @@ export default function HomePage() {
                 />
               </div>
               <div className="p-5">
-                <h3 className="font-bold text-gray-900">Jaw &amp; Bite Correction</h3>
-                <p className="text-sm text-gray-500 mt-1">Significant jaw alignment improvement with orthodontic treatment</p>
+                <h3 className="font-bold font-heading text-heading">Jaw &amp; Bite Correction</h3>
+                <p className="text-sm text-muted mt-1">Significant jaw alignment improvement with orthodontic treatment</p>
                 <div className="mt-2.5 flex gap-2">
-                  <span className="bg-gray-900 text-white px-2.5 py-0.5 rounded-full text-xs font-medium">Orthodontics</span>
-                  <span className="bg-gray-900 text-white px-2.5 py-0.5 rounded-full text-xs font-medium">Jaw Alignment</span>
+                  <span className="bg-surface-deep text-ondeep px-2.5 py-0.5 rounded-full text-xs font-medium">Orthodontics</span>
+                  <span className="bg-surface-deep text-ondeep px-2.5 py-0.5 rounded-full text-xs font-medium">Jaw Alignment</span>
                 </div>
               </div>
             </div>
@@ -516,12 +547,12 @@ export default function HomePage() {
       </section>
 
       {/* ─── Clinic Gallery ─── */}
-      <section id="gallery" className="py-14 md:py-20 bg-gray-50">
+      <section id="gallery" className="py-14 md:py-20 bg-surface-alt">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Take a Look</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Our Clinic</h2>
-            <p className="mt-1 text-gray-400 tamil text-sm">எங்கள் மருத்துவமனை</p>
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Our Clinic</h2>
+            <p className="mt-1 text-faint tamil text-sm">எங்கள் மருத்துவமனை</p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -552,7 +583,7 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <p className="text-white font-bold text-lg">Community Dental Health Camps</p>
-                <p className="text-gray-300 text-sm mt-1 max-w-xl">Dr. Pinky Vijay actively conducts free dental health camps, bringing quality care to the community.</p>
+                <p className="text-white/70 text-sm mt-1 max-w-xl">Dr. Pinky Vijay actively conducts free dental health camps, bringing quality care to the community.</p>
               </div>
             </div>
           </div>
@@ -560,31 +591,31 @@ export default function HomePage() {
       </section>
 
       {/* ─── Hours & Contact ─── */}
-      <section id="hours" className="py-14 md:py-20 bg-white">
+      <section id="hours" className="py-14 md:py-20 bg-surface">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Visit Us</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Clinic Timings &amp; Location</h2>
-            <p className="mt-1 text-gray-400 tamil text-sm">கிளினிக் நேரம் &amp; இடம்</p>
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Clinic Timings &amp; Location</h2>
+            <p className="mt-1 text-faint tamil text-sm">கிளினிக் நேரம் &amp; இடம்</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* Working Hours */}
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
+            <div className="bg-surface-alt rounded-xl p-6 border border-line">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center text-primary-700">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900">Clinic Timings</h3>
-                  <p className="text-xs text-gray-400 tamil">கிளினிக் நேரம்</p>
+                  <h3 className="font-bold font-heading text-heading">Clinic Timings</h3>
+                  <p className="text-xs text-faint tamil">கிளினிக் நேரம்</p>
                 </div>
               </div>
               <div className="space-y-3">
                 {WORKING_HOURS.map((item) => (
-                  <div key={item.day} className="flex items-center justify-between py-2.5 border-b border-gray-100 last:border-0">
-                    <span className="font-medium text-gray-800 text-sm">{item.day}</span>
-                    <span className={`text-sm ${item.hours === 'Closed' ? 'text-red-500 font-medium' : 'text-gray-500'}`}>{item.hours}</span>
+                  <div key={item.day} className="flex items-center justify-between py-2.5 border-b border-line last:border-0">
+                    <span className="font-medium text-heading text-sm">{item.day}</span>
+                    <span className={`text-sm ${item.hours === 'Closed' ? 'text-red-500 font-medium' : 'text-muted'}`}>{item.hours}</span>
                   </div>
                 ))}
               </div>
@@ -594,46 +625,46 @@ export default function HomePage() {
             </div>
 
             {/* Contact */}
-            <div id="contact" className="bg-gray-50 rounded-xl p-6 border border-gray-100">
+            <div id="contact" className="bg-surface-alt rounded-xl p-6 border border-line">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center text-primary-700">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900">Find Us</h3>
-                  <p className="text-xs text-gray-400 tamil">எங்களைக் கண்டறியவும்</p>
+                  <h3 className="font-bold font-heading text-heading">Find Us</h3>
+                  <p className="text-xs text-faint tamil">எங்களைக் கண்டறியவும்</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="flex gap-3">
-                  <svg className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 22V12h6v10" /></svg>
+                  <svg className="w-4 h-4 text-faint mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 22V12h6v10" /></svg>
                   <div>
-                    <p className="font-medium text-gray-900 text-sm">Holy Care Dental &amp; Orthodontic Clinic</p>
-                    <p className="text-sm text-gray-500">Kavalkinaru &ndash; Vadakankulam, Tamil Nadu</p>
+                    <p className="font-medium text-heading text-sm">Holy Care Dental &amp; Orthodontic Clinic</p>
+                    <p className="text-sm text-muted">Kavalkinaru &ndash; Vadakankulam, Tamil Nadu</p>
                   </div>
                 </div>
 
                 <div className="flex gap-3">
-                  <svg className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                  <svg className="w-4 h-4 text-faint mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                   <a href="tel:+917977257779" className="text-sm text-primary-700 font-semibold hover:text-primary-800">079772 57779</a>
                 </div>
 
                 <div className="flex gap-3">
-                  <svg className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
+                  <svg className="w-4 h-4 text-faint mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
                   <a href="mailto:holycareortho@gmail.com" className="text-sm text-primary-700 font-semibold hover:text-primary-800">holycareortho@gmail.com</a>
                 </div>
 
                 <div className="flex gap-3">
-                  <svg className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                  <svg className="w-4 h-4 text-faint mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
                   <div>
-                    <p className="font-medium text-gray-900 text-sm">Dr. Pinky Vijay MDS</p>
-                    <p className="text-xs text-gray-500">Orthodontics &amp; Dentofacial Orthopedics &middot; Reg. A-34195</p>
+                    <p className="font-medium text-heading text-sm">Dr. Pinky Vijay MDS</p>
+                    <p className="text-xs text-muted">Orthodontics &amp; Dentofacial Orthopedics &middot; Reg. A-34195</p>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-5 rounded-lg overflow-hidden h-36 border border-gray-200">
+              <div className="mt-5 rounded-lg overflow-hidden h-36 border border-line-strong">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.5!2d77.39!3d8.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOCtyNSUyNy4wJTIyTiA3NyUyMzknMjcuMCUyMkU!5e0!3m2!1sen!2sin!4v1"
                   width="100%"
@@ -652,14 +683,14 @@ export default function HomePage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="py-14 relative overflow-hidden bg-gray-900">
+      <section className="py-14 relative overflow-hidden bg-surface-deep">
         <div className="absolute inset-0 opacity-20">
-          <Image src="/images/clinic-interior-glass.jpg" alt="" fill className="object-cover" />
+          <Image src="/images/dental-chair.jpg" alt="" fill className="object-cover" />
         </div>
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white">Ready for a Healthier Smile?</h2>
+          <h2 className="text-2xl md:text-3xl font-bold font-heading text-ondeep">Ready for a Healthier Smile?</h2>
           <p className="text-primary-400 mt-1 tamil text-sm">ஆரோக்கியமான புன்னகைக்கு தயாரா?</p>
-          <p className="mt-3 text-gray-400 text-sm max-w-lg mx-auto">
+          <p className="mt-3 text-faint text-sm max-w-lg mx-auto">
             Schedule your visit today. Whether it&apos;s a routine check-up, braces, or a complete smile makeover &mdash; we&apos;re here to help.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
@@ -667,7 +698,7 @@ export default function HomePage() {
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
               Call 079772 57779
             </a>
-            <a href="mailto:holycareortho@gmail.com" className="border border-white/20 text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-white/10 transition-colors inline-flex items-center justify-center gap-2">
+            <a href="mailto:holycareortho@gmail.com" className="border border-white/20 text-ondeep px-6 py-3 rounded-xl text-sm font-medium hover:bg-white/10 transition-colors inline-flex items-center justify-center gap-2">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
               Email Us
             </a>
@@ -676,15 +707,15 @@ export default function HomePage() {
       </section>
 
       {/* ─── Footer ─── */}
-      <footer className="bg-gray-950 text-gray-400 py-10">
+      <footer className="bg-surface-deepest text-faint py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <Image src="/images/logo.jpg" alt="Holy Care Dental" width={28} height={28} className="w-7 h-7 brightness-200" />
-                <span className="font-bold text-white text-sm">Holy Care Dental</span>
+                <span className="font-bold font-heading text-ondeep text-sm">Holy Care Dental</span>
               </div>
-              <p className="text-xs leading-relaxed text-gray-500">
+              <p className="text-xs leading-relaxed text-muted">
                 Quality dental &amp; orthodontic care for the entire family. Specialist in braces and aligners. Kavalkinaru &ndash; Vadakankulam.
               </p>
               <div className="mt-3 space-y-1">
@@ -693,31 +724,31 @@ export default function HomePage() {
               </div>
             </div>
             <div>
-              <h4 className="font-semibold text-white text-sm mb-3">Quick Links</h4>
+              <h4 className="font-semibold font-heading text-ondeep text-sm mb-3">Quick Links</h4>
               <div className="space-y-1.5 text-xs">
                 {NAV_LINKS.map((link) => (
-                  <a key={link.href} href={link.href} className="block text-gray-500 hover:text-white transition-colors">{link.label}</a>
+                  <a key={link.href} href={link.href} className="block text-muted hover:text-ondeep transition-colors">{link.label}</a>
                 ))}
-                <a href="#results" className="block text-gray-500 hover:text-white transition-colors">Results</a>
-                <a href="#hours" className="block text-gray-500 hover:text-white transition-colors">Timings</a>
+                <a href="#results" className="block text-muted hover:text-ondeep transition-colors">Results</a>
+                <a href="#hours" className="block text-muted hover:text-ondeep transition-colors">Timings</a>
               </div>
             </div>
             <div>
-              <h4 className="font-semibold text-white text-sm mb-3">Clinic</h4>
-              <div className="text-xs space-y-1.5 text-gray-500">
+              <h4 className="font-semibold font-heading text-ondeep text-sm mb-3">Clinic</h4>
+              <div className="text-xs space-y-1.5 text-muted">
                 <p>Holy Care Dental &amp; Orthodontic Clinic</p>
                 <p>Kavalkinaru &ndash; Vadakankulam</p>
                 <p>Tamil Nadu</p>
-                <p className="pt-2 text-[11px] text-gray-600">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
+                <p className="pt-2 text-[11px] text-faint">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-800/50 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-[11px] text-gray-600">
+          <div className="border-t border-line mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-[11px] text-faint">
               &copy; {new Date().getFullYear()} Holy Care Dental &amp; Orthodontic Clinic. All rights reserved.
             </p>
-            <Link href="/login" className="text-[11px] text-gray-700 hover:text-gray-400 transition-colors">
+            <Link href="/login" className="text-[11px] text-muted hover:text-faint transition-colors">
               Staff Login
             </Link>
           </div>

@@ -23,6 +23,9 @@ function isPublicPath(pathname: string, method: string): boolean {
   // Link validation API
   if (pathname.startsWith('/api/links/')) return true;
 
+  // Theme API - GET only (needed for client hydration)
+  if (pathname === '/api/settings/theme' && method === 'GET') return true;
+
   return false;
 }
 

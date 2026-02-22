@@ -38,12 +38,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-blue-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 p-4">
       <div className="card max-w-md w-full">
         <ClinicHeader />
 
         <div className="mt-6 mb-2">
-          <h2 className="text-center text-lg font-semibold text-gray-700">Admin Login</h2>
+          <h2 className="text-center text-lg font-semibold font-heading text-body">Admin Login</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
@@ -98,7 +98,7 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-6 text-center">
-          <a href="/" className="text-sm text-gray-400 hover:text-primary-600 transition-colors">
+          <a href="/" className="text-sm text-faint hover:text-primary-600 transition-colors">
             &larr; Back to website
           </a>
         </div>

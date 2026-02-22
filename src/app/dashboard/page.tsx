@@ -84,18 +84,18 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-alt">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="bg-surface shadow-sm border-b border-line-strong">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-3xl">🦷</span>
             <div>
-              <h1 className="text-xl font-bold text-primary-700">Holy Care Dental CRM</h1>
-              <p className="text-xs text-gray-500">Dr. Pinky Vijay MDS</p>
+              <h1 className="text-xl font-bold font-heading text-primary-700">Holy Care Dental CRM</h1>
+              <p className="text-xs text-muted">Dr. Pinky Vijay MDS</p>
             </div>
           </div>
-          <button onClick={handleLogout} className="text-sm text-gray-600 hover:text-red-600 font-medium px-4 py-2 rounded-lg hover:bg-red-50 transition-colors min-h-[44px]">
+          <button onClick={handleLogout} className="text-sm text-body hover:text-red-600 font-medium px-4 py-2 rounded-lg hover:bg-red-50 transition-colors min-h-[44px]">
             Logout
           </button>
         </div>
@@ -166,7 +166,7 @@ export default function DashboardPage() {
               <tbody>
                 {isLoading ? (
                   <tr>
-                    <td colSpan={6} className="text-center py-12 text-gray-400">
+                    <td colSpan={6} className="text-center py-12 text-faint">
                       <svg className="animate-spin h-8 w-8 mx-auto mb-2 text-primary-400" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -176,20 +176,20 @@ export default function DashboardPage() {
                   </tr>
                 ) : patients.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center py-12 text-gray-400">
+                    <td colSpan={6} className="text-center py-12 text-faint">
                       <div className="text-4xl mb-2">📋</div>
                       No patients found
                     </td>
                   </tr>
                 ) : (
                   patients.map((patient) => (
-                    <tr key={patient.id} className="border-b border-gray-50 hover:bg-blue-50/50 transition-colors">
+                    <tr key={patient.id} className="border-b border-line-subtle hover:bg-primary-50/50 transition-colors">
                       <td className="p-4">
                         <span className="font-mono font-bold text-primary-600">{patient.op_number_formatted}</span>
                       </td>
                       <td className="p-4 font-medium">{patient.name}</td>
-                      <td className="p-4 text-gray-600 hidden sm:table-cell">{patient.phone}</td>
-                      <td className="p-4 text-gray-600 hidden md:table-cell">
+                      <td className="p-4 text-body hidden sm:table-cell">{patient.phone}</td>
+                      <td className="p-4 text-body hidden md:table-cell">
                         {new Date(patient.created_at).toLocaleDateString('en-IN', {
                           year: 'numeric', month: 'short', day: 'numeric',
                         })}
@@ -223,7 +223,7 @@ export default function DashboardPage() {
 
         {/* Stats */}
         {!isLoading && patients.length > 0 && (
-          <div className="mt-4 text-sm text-gray-500 text-center">
+          <div className="mt-4 text-sm text-muted text-center">
             Showing {patients.length} patient{patients.length !== 1 ? 's' : ''}
           </div>
         )}
@@ -231,14 +231,14 @@ export default function DashboardPage() {
         {/* QR Code Modal */}
         {showQrModal && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto" onClick={() => setShowQrModal(false)}>
-            <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 my-auto" onClick={e => e.stopPropagation()}>
+            <div className="bg-card rounded-2xl shadow-2xl max-w-sm w-full p-6 my-auto" onClick={e => e.stopPropagation()}>
               <div className="text-center">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">Patient Registration QR Code</h3>
-                <p className="text-sm text-gray-500 mb-4">
+                <h3 className="text-lg font-bold font-heading text-heading mb-1">Patient Registration QR Code</h3>
+                <p className="text-sm text-muted mb-4">
                   Print and display in your clinic. Any patient can scan to fill the registration form.
                 </p>
 
-                <div ref={qrRef} className="bg-white p-4 rounded-xl border-2 border-gray-100 inline-block mb-5">
+                <div ref={qrRef} className="bg-surface p-4 rounded-xl border-2 border-line inline-block mb-5">
                   <QRCodeSVG
                     value={registerUrl}
                     size={220}
@@ -249,12 +249,12 @@ export default function DashboardPage() {
                   />
                 </div>
 
-                <div className="flex items-center gap-2 bg-gray-50 rounded-lg p-2 mb-5">
+                <div className="flex items-center gap-2 bg-surface-alt rounded-lg p-2 mb-5">
                   <input
                     type="text"
                     readOnly
                     value={registerUrl}
-                    className="flex-1 bg-transparent text-xs text-gray-600 outline-none truncate"
+                    className="flex-1 bg-transparent text-xs text-body outline-none truncate"
                   />
                   <button
                     onClick={copyLink}

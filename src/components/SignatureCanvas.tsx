@@ -123,10 +123,10 @@ export default function SignatureCanvas({ label, tamilLabel, value, onChange, re
     <div className="space-y-2">
       <label className="label-field">
         {label}
-        {tamilLabel && <span className="tamil text-gray-500 ml-1">({tamilLabel})</span>}
+        {tamilLabel && <span className="tamil text-muted ml-1">({tamilLabel})</span>}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
-      <div className="relative border-2 border-gray-200 rounded-lg overflow-hidden bg-white">
+      <div className="relative border-2 border-line-strong rounded-lg overflow-hidden bg-card">
         <canvas
           ref={canvasRef}
           className="signature-canvas w-full"
@@ -140,7 +140,7 @@ export default function SignatureCanvas({ label, tamilLabel, value, onChange, re
           onTouchEnd={stopDrawing}
         />
         {!hasSignature && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-gray-400">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-faint">
             <span>Draw your signature here</span>
           </div>
         )}

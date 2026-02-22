@@ -256,22 +256,22 @@ export default function PrintableReportPage({ params }: { params: { id: string }
       `}</style>
 
       {/* Action Buttons */}
-      <div className="no-print bg-gray-100 py-3 px-4 flex gap-3 items-center justify-center sticky top-0 z-10 shadow-sm">
+      <div className="no-print bg-surface-alt py-3 px-4 flex gap-3 items-center justify-center sticky top-0 z-10 shadow-sm">
         <button
           onClick={() => window.print()}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          className="bg-primary-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors"
         >
           Print Report
         </button>
         <a
           href={`/dashboard/patient/${patient.id}`}
-          className="bg-white text-gray-700 px-6 py-2 rounded-lg font-medium hover:bg-gray-50 border transition-colors"
+          className="bg-card text-body px-6 py-2 rounded-lg font-medium hover:bg-surface-alt border border-line transition-colors"
         >
           Back to Patient
         </a>
         <a
           href="/dashboard"
-          className="bg-white text-gray-700 px-6 py-2 rounded-lg font-medium hover:bg-gray-50 border transition-colors"
+          className="bg-card text-body px-6 py-2 rounded-lg font-medium hover:bg-surface-alt border border-line transition-colors"
         >
           Dashboard
         </a>

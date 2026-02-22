@@ -123,7 +123,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-surface-alt">
         <svg className="animate-spin h-10 w-10 text-primary-500" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -134,7 +134,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
 
   if (error || !patient) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-surface-alt">
         <div className="card text-center py-12">
           <div className="text-4xl mb-4">❌</div>
           <p className="text-red-600 font-medium">{error || 'Patient not found'}</p>
@@ -145,19 +145,19 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-alt">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="bg-surface shadow-sm border-b border-line-strong">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 flex-wrap">
-                <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{patient.name}</h1>
+                <h1 className="text-xl sm:text-2xl font-bold font-heading text-heading">{patient.name}</h1>
                 <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-bold">
                   {patient.op_number_formatted}
                 </span>
               </div>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-muted mt-1">
                 {patient.phone} | {patient.sex}, {patient.age} years |
                 Registered: {new Date(patient.created_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
@@ -189,13 +189,13 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
         </a>
 
         {/* Tabs */}
-        <div className="flex border-b border-gray-200 mt-4 mb-6">
+        <div className="flex border-b border-line-strong mt-4 mb-6">
           <button
             onClick={() => setActiveTab('registration')}
             className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors min-h-[44px] ${
               activeTab === 'registration'
                 ? 'border-primary-600 text-primary-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-muted hover:text-body'
             }`}
           >
             Registration Form
@@ -205,7 +205,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
             className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors min-h-[44px] ${
               activeTab === 'treatments'
                 ? 'border-primary-600 text-primary-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-muted hover:text-body'
             }`}
           >
             Treatment Records ({treatments.length})
@@ -219,15 +219,15 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
             <div className="card">
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <span className="text-xs text-gray-500 block">O.P. No.</span>
+                  <span className="text-xs text-muted block">O.P. No.</span>
                   <span className="font-bold text-primary-700 text-lg">{patient.op_number_formatted}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block">Invoice No.</span>
+                  <span className="text-xs text-muted block">Invoice No.</span>
                   <span className="font-bold text-primary-700 text-lg">{patient.invoice_number_formatted}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block">X-ray ID No.</span>
+                  <span className="text-xs text-muted block">X-ray ID No.</span>
                   <span className="font-bold text-primary-700 text-lg">{patient.xray_id_formatted}</span>
                 </div>
               </div>
@@ -235,31 +235,31 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
 
             {/* Personal Info */}
             <div className="card">
-              <h3 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">Personal Information</h3>
+              <h3 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">Personal Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div><span className="text-sm text-gray-500">Name:</span><p className="font-medium">{patient.name}</p></div>
-                <div><span className="text-sm text-gray-500">Age:</span><p className="font-medium">{patient.age}</p></div>
-                <div><span className="text-sm text-gray-500">Sex:</span><p className="font-medium">{patient.sex}</p></div>
-                <div><span className="text-sm text-gray-500">Phone:</span><p className="font-medium">{patient.phone}</p></div>
-                <div><span className="text-sm text-gray-500">Occupation:</span><p className="font-medium">{patient.occupation || '-'}</p></div>
-                <div><span className="text-sm text-gray-500">Submission Method:</span><p className="font-medium capitalize">{patient.submission_method}</p></div>
-                <div className="md:col-span-2"><span className="text-sm text-gray-500">Address:</span><p className="font-medium">{patient.address || '-'}</p></div>
-                <div className="md:col-span-2"><span className="text-sm text-gray-500">Chief Complaint:</span><p className="font-medium">{patient.chief_complaint || '-'}</p></div>
+                <div><span className="text-sm text-muted">Name:</span><p className="font-medium">{patient.name}</p></div>
+                <div><span className="text-sm text-muted">Age:</span><p className="font-medium">{patient.age}</p></div>
+                <div><span className="text-sm text-muted">Sex:</span><p className="font-medium">{patient.sex}</p></div>
+                <div><span className="text-sm text-muted">Phone:</span><p className="font-medium">{patient.phone}</p></div>
+                <div><span className="text-sm text-muted">Occupation:</span><p className="font-medium">{patient.occupation || '-'}</p></div>
+                <div><span className="text-sm text-muted">Submission Method:</span><p className="font-medium capitalize">{patient.submission_method}</p></div>
+                <div className="md:col-span-2"><span className="text-sm text-muted">Address:</span><p className="font-medium">{patient.address || '-'}</p></div>
+                <div className="md:col-span-2"><span className="text-sm text-muted">Chief Complaint:</span><p className="font-medium">{patient.chief_complaint || '-'}</p></div>
               </div>
             </div>
 
             {/* Medical History */}
             <div className="card">
-              <h3 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">Medical History</h3>
+              <h3 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">Medical History</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {MEDICAL_CONDITIONS.map((condition) => {
                   const value = patient[condition.key as keyof Patient] as number;
                   return (
-                    <div key={condition.key} className={`flex items-center gap-2 p-2 rounded ${value ? 'bg-red-50' : 'bg-gray-50'}`}>
+                    <div key={condition.key} className={`flex items-center gap-2 p-2 rounded ${value ? 'bg-red-50' : 'bg-surface-alt'}`}>
                       <span className={value ? 'text-red-500' : 'text-green-500'}>{value ? '!' : '✓'}</span>
-                      <span className={`text-sm ${value ? 'text-red-700 font-medium' : 'text-gray-600'}`}>
+                      <span className={`text-sm ${value ? 'text-red-700 font-medium' : 'text-body'}`}>
                         {condition.english}
-                        <span className="tamil text-xs text-gray-400 ml-1">({condition.tamil})</span>
+                        <span className="tamil text-xs text-faint ml-1">({condition.tamil})</span>
                       </span>
                     </div>
                   );
@@ -269,33 +269,33 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
 
             {/* Additional Info */}
             <div className="card">
-              <h3 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">Additional Information</h3>
+              <h3 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">Additional Information</h3>
               <div className="space-y-4">
-                <div><span className="text-sm text-gray-500">Previous Dental History:</span><p className="font-medium mt-1">{patient.previous_dental_history || '-'}</p></div>
-                <div><span className="text-sm text-gray-500">Diagnosis:</span><p className="font-medium mt-1">{patient.diagnosis || '-'}</p></div>
-                <div><span className="text-sm text-gray-500">Treatment Plan:</span><p className="font-medium mt-1">{patient.treatment_plan || '-'}</p></div>
+                <div><span className="text-sm text-muted">Previous Dental History:</span><p className="font-medium mt-1">{patient.previous_dental_history || '-'}</p></div>
+                <div><span className="text-sm text-muted">Diagnosis:</span><p className="font-medium mt-1">{patient.diagnosis || '-'}</p></div>
+                <div><span className="text-sm text-muted">Treatment Plan:</span><p className="font-medium mt-1">{patient.treatment_plan || '-'}</p></div>
               </div>
             </div>
 
             {/* Signatures */}
             <div className="card">
-              <h3 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">Signatures</h3>
+              <h3 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">Signatures</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Patient Signature */}
                 <div>
-                  <span className="text-sm text-gray-500 block mb-2">Patient Signature:</span>
+                  <span className="text-sm text-muted block mb-2">Patient Signature:</span>
                   {patient.patient_signature ? (
                     <img src={patient.patient_signature} alt="Patient Signature" className="border rounded-lg max-h-32" />
                   ) : (
-                    <div className="border-2 border-dashed border-gray-200 rounded-lg h-32 flex items-center justify-center">
-                      <span className="text-sm text-gray-400">Not yet signed</span>
+                    <div className="border-2 border-dashed border-line-strong rounded-lg h-32 flex items-center justify-center">
+                      <span className="text-sm text-faint">Not yet signed</span>
                     </div>
                   )}
                 </div>
 
                 {/* Dentist Signature */}
                 <div>
-                  <span className="text-sm text-gray-500 block mb-2">Dentist Signature:</span>
+                  <span className="text-sm text-muted block mb-2">Dentist Signature:</span>
                   {patient.dentist_signature ? (
                     <div>
                       <img src={patient.dentist_signature} alt="Dentist Signature" className="border rounded-lg max-h-32" />
@@ -349,7 +349,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
             {treatments.length === 0 ? (
               <div className="card text-center py-12">
                 <div className="text-4xl mb-2">📋</div>
-                <p className="text-gray-500">No treatment records yet</p>
+                <p className="text-muted">No treatment records yet</p>
                 <a href={`/dashboard/treatment/${patient.id}`} className="btn-primary mt-4 inline-block">
                   Add First Treatment
                 </a>
@@ -367,7 +367,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                   </thead>
                   <tbody>
                     {treatments.map((t) => (
-                      <tr key={t.id} className="border-b border-gray-50">
+                      <tr key={t.id} className="border-b border-line-subtle">
                         <td className="p-4 text-sm">
                           {new Date(t.appointment_date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}
                         </td>

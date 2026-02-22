@@ -34,7 +34,7 @@ export default function AddTreatmentPage({ params }: { params: { patientId: stri
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-surface-alt">
         <svg className="animate-spin h-10 w-10 text-primary-500" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -45,7 +45,7 @@ export default function AddTreatmentPage({ params }: { params: { patientId: stri
 
   if (error || !patient) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-surface-alt">
         <div className="card text-center py-12">
           <div className="text-4xl mb-4">❌</div>
           <p className="text-red-600 font-medium">{error || 'Patient not found'}</p>
@@ -56,13 +56,13 @@ export default function AddTreatmentPage({ params }: { params: { patientId: stri
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm border-b border-gray-200">
+    <div className="min-h-screen bg-surface-alt">
+      <header className="bg-surface shadow-sm border-b border-line-strong">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Add Treatment Record</h1>
-              <p className="text-sm text-gray-500 mt-1">
+              <h1 className="text-xl font-bold font-heading text-heading">Add Treatment Record</h1>
+              <p className="text-sm text-muted mt-1">
                 For {patient.name} ({patient.op_number_formatted})
               </p>
             </div>

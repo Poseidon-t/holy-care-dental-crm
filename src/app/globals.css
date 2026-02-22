@@ -2,11 +2,117 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ═══════════════════════════════════════════════
+   Theme: Classic (Golden Warmth) — DEFAULT
+   ═══════════════════════════════════════════════ */
+:root,
+[data-theme="classic"] {
+  /* Primary accent (golden yellow) */
+  --color-primary-50: #fefce8;
+  --color-primary-100: #fef9c3;
+  --color-primary-200: #fef08a;
+  --color-primary-300: #fde047;
+  --color-primary-400: #facc15;
+  --color-primary-500: #eab308;
+  --color-primary-600: #ca8a04;
+  --color-primary-700: #a16207;
+  --color-primary-800: #854d0e;
+  --color-primary-900: #713f12;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-surface-alt: #f9fafb;
+  --color-surface-deep: #111827;
+  --color-surface-deepest: #030712;
+  --color-card: #ffffff;
+
+  /* Text */
+  --color-text-heading: #111827;
+  --color-text-body: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-text-faint: #9ca3af;
+  --color-text-on-deep: #ffffff;
+
+  /* Borders */
+  --color-border: #f3f4f6;
+  --color-border-subtle: #f9fafb;
+  --color-border-strong: #e5e7eb;
+
+  /* Nav */
+  --color-nav-bg: rgba(255, 255, 255, 0.95);
+
+  /* Typography */
+  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Scrollbar */
+  --color-scrollbar-track: #fafafa;
+  --color-scrollbar-thumb: #d4d4d4;
+
+  /* Button on deep */
+  --color-btn-dark: #111827;
+  --color-btn-dark-hover: #1f2937;
+}
+
+/* ═══════════════════════════════════════════════
+   Theme: Premium (Dentologie-inspired)
+   Warm beige, serif headings, muted neutral tones
+   ═══════════════════════════════════════════════ */
+[data-theme="premium"] {
+  /* Primary accent (warm muted taupe — intentionally subtle) */
+  --color-primary-50: #faf8f5;
+  --color-primary-100: #f0ebe4;
+  --color-primary-200: #e2d9cd;
+  --color-primary-300: #cfc2b0;
+  --color-primary-400: #b8a590;
+  --color-primary-500: #a08b74;
+  --color-primary-600: #8a7560;
+  --color-primary-700: #6e5d4d;
+  --color-primary-800: #564a3e;
+  --color-primary-900: #3d342c;
+
+  /* Surfaces (warm cream / beige) */
+  --color-surface: #faf7f2;
+  --color-surface-alt: #f3ede4;
+  --color-surface-deep: #2c2520;
+  --color-surface-deepest: #1a1512;
+  --color-card: #ffffff;
+
+  /* Text (warm gray) */
+  --color-text-heading: #2c2520;
+  --color-text-body: #5c524a;
+  --color-text-muted: #7a6f65;
+  --color-text-faint: #a89d93;
+  --color-text-on-deep: #faf7f2;
+
+  /* Borders (warm) */
+  --color-border: #ebe5dc;
+  --color-border-subtle: #f3ede4;
+  --color-border-strong: #d9d0c5;
+
+  /* Nav */
+  --color-nav-bg: rgba(250, 247, 242, 0.95);
+
+  /* Typography (serif headings) */
+  --font-heading: 'Playfair Display', Georgia, serif;
+
+  /* Scrollbar */
+  --color-scrollbar-track: #f3ede4;
+  --color-scrollbar-thumb: #d0c7bb;
+
+  /* Button on deep */
+  --color-btn-dark: #2c2520;
+  --color-btn-dark-hover: #3d342c;
+}
+
+/* ═══════════════════════════════════════════════
+   Base & Component Styles
+   ═══════════════════════════════════════════════ */
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply bg-surface text-heading antialiased;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
   }
 
@@ -14,6 +120,11 @@
     font-family: 'Noto Sans Tamil', sans-serif;
     font-size: max(0.875rem, 14px);
   }
+}
+
+/* Premium theme uses Inter for body text */
+[data-theme="premium"] body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 @layer components {
@@ -25,7 +136,7 @@
   }
 
   .btn-secondary {
-    @apply bg-white text-primary-600 border-2 border-primary-600 px-6 py-3 rounded-lg font-medium
+    @apply bg-card text-primary-600 border-2 border-primary-600 px-6 py-3 rounded-lg font-medium
            hover:bg-primary-50 active:bg-primary-100 transition-colors
            disabled:opacity-50 disabled:cursor-not-allowed
            min-h-[44px] inline-flex items-center justify-center;
@@ -38,17 +149,17 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-lg
+    @apply w-full px-4 py-3 border-2 border-line-strong rounded-lg
            focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none
-           transition-colors min-h-[44px] text-base;
+           transition-colors min-h-[44px] text-base bg-card text-heading;
   }
 
   .label-field {
-    @apply block text-sm font-semibold text-gray-700 mb-1;
+    @apply block text-sm font-semibold text-muted mb-1;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
+    @apply bg-card rounded-xl shadow-sm border border-line p-6;
   }
 }
 
@@ -94,14 +205,14 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #fafafa;
+  background: var(--color-scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
+  background: var(--color-scrollbar-thumb);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a3a3a3;
+  background: var(--color-text-faint);
 }
