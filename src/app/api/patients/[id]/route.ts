@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb, formatOpNumber, formatInvoiceNumber, formatXrayId } from '@/lib/db';
+import { getSession } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
@@ -33,6 +34,42 @@ export async function GET(
     });
   } catch (error) {
     console.error('Get patient error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { id } = await params;
+    const body = await request.json();
+    const { dentist_signature } = body;
+
+    if (!dentist_signature) {
+      return NextResponse.json({ error: 'Dentist signature is required' }, { status: 400 });
+    }
+
+    const db = getDb();
+
+    const patient = db.prepare('SELECT id FROM patients WHERE id = ?').get(id);
+    if (!patient) {
+      return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
+    }
+
+    db.prepare(
+      'UPDATE patients SET dentist_signature = ? WHERE id = ?'
+    ).run(dentist_signature, id);
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Update dentist signature error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

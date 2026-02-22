@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import ClinicHeader from '@/components/ClinicHeader';
+import SignatureCanvas from '@/components/SignatureCanvas';
 
 interface Patient {
   id: number;
@@ -71,6 +72,33 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
   const [activeTab, setActiveTab] = useState<'registration' | 'treatments'>('registration');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showDoctorSign, setShowDoctorSign] = useState(false);
+  const [doctorSignature, setDoctorSignature] = useState('');
+  const [isSavingSignature, setIsSavingSignature] = useState(false);
+
+  async function saveDoctorSignature() {
+    if (!doctorSignature) return;
+    setIsSavingSignature(true);
+    try {
+      const response = await fetch(`/api/patients/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dentist_signature: doctorSignature }),
+      });
+      if (response.ok) {
+        setPatient(prev => prev ? { ...prev, dentist_signature: doctorSignature } : prev);
+        setShowDoctorSign(false);
+        setDoctorSignature('');
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to save signature');
+      }
+    } catch {
+      alert('Failed to save signature');
+    } finally {
+      setIsSavingSignature(false);
+    }
+  }
 
   useEffect(() => {
     async function fetchPatient() {
@@ -250,25 +278,68 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
             </div>
 
             {/* Signatures */}
-            {(patient.patient_signature || patient.dentist_signature) && (
-              <div className="card">
-                <h3 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">Signatures</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {patient.patient_signature && (
-                    <div>
-                      <span className="text-sm text-gray-500 block mb-2">Patient Signature:</span>
-                      <img src={patient.patient_signature} alt="Patient Signature" className="border rounded-lg max-h-32" />
+            <div className="card">
+              <h3 className="text-lg font-bold text-primary-700 mb-4 pb-2 border-b">Signatures</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Patient Signature */}
+                <div>
+                  <span className="text-sm text-gray-500 block mb-2">Patient Signature:</span>
+                  {patient.patient_signature ? (
+                    <img src={patient.patient_signature} alt="Patient Signature" className="border rounded-lg max-h-32" />
+                  ) : (
+                    <div className="border-2 border-dashed border-gray-200 rounded-lg h-32 flex items-center justify-center">
+                      <span className="text-sm text-gray-400">Not yet signed</span>
                     </div>
                   )}
-                  {patient.dentist_signature && (
+                </div>
+
+                {/* Dentist Signature */}
+                <div>
+                  <span className="text-sm text-gray-500 block mb-2">Dentist Signature:</span>
+                  {patient.dentist_signature ? (
                     <div>
-                      <span className="text-sm text-gray-500 block mb-2">Dentist Signature:</span>
                       <img src={patient.dentist_signature} alt="Dentist Signature" className="border rounded-lg max-h-32" />
+                      <span className="text-xs text-green-600 mt-1 inline-block">Signed</span>
+                    </div>
+                  ) : showDoctorSign ? (
+                    <div className="space-y-3">
+                      <SignatureCanvas
+                        label=""
+                        value={doctorSignature}
+                        onChange={setDoctorSignature}
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          onClick={saveDoctorSignature}
+                          disabled={!doctorSignature || isSavingSignature}
+                          className="btn-primary text-sm disabled:opacity-50"
+                        >
+                          {isSavingSignature ? 'Saving...' : 'Confirm Signature'}
+                        </button>
+                        <button
+                          onClick={() => { setShowDoctorSign(false); setDoctorSignature(''); }}
+                          className="btn-secondary text-sm"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="border-2 border-dashed border-amber-200 bg-amber-50 rounded-lg h-32 flex flex-col items-center justify-center gap-2">
+                        <span className="text-sm text-amber-600 font-medium">Awaiting doctor signature</span>
+                        <button
+                          onClick={() => setShowDoctorSign(true)}
+                          className="btn-primary text-sm"
+                        >
+                          Sign as Doctor
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
               </div>
-            )}
+            </div>
           </div>
         )}
 

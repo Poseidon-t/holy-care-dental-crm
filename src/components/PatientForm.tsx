@@ -394,19 +394,27 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
               Signatures <span className="tamil text-sm font-normal text-gray-500 ml-2">(கையொப்பங்கள்)</span>
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className={`grid grid-cols-1 ${mode === 'tablet' ? 'md:grid-cols-2' : ''} gap-6`}>
               <SignatureCanvas
                 label="Patient Signature"
                 tamilLabel="நோயாளியின் கையொப்பம்"
                 value={formData.patient_signature}
                 onChange={val => updateField('patient_signature', val)}
               />
-              <SignatureCanvas
-                label="Signature of Dentist"
-                tamilLabel="பல் மருத்துவரின் கையொப்பம்"
-                value={formData.dentist_signature}
-                onChange={val => updateField('dentist_signature', val)}
-              />
+              {mode === 'tablet' && (
+                <SignatureCanvas
+                  label="Signature of Dentist"
+                  tamilLabel="பல் மருத்துவரின் கையொப்பம்"
+                  value={formData.dentist_signature}
+                  onChange={val => updateField('dentist_signature', val)}
+                />
+              )}
+              {mode === 'remote' && (
+                <p className="text-sm text-gray-500 italic mt-2">
+                  Doctor&apos;s signature will be added during your clinic visit.
+                  <span className="tamil block text-xs mt-1">(மருத்துவரின் கையொப்பம் கிளினிக் வருகையின் போது சேர்க்கப்படும்)</span>
+                </p>
+              )}
             </div>
           </div>
 
