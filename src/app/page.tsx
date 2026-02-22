@@ -53,49 +53,40 @@ const MDS_SPECIALIZATIONS = [
 
 const WHY_CHOOSE_US = [
   {
-    title: 'Specialized MDS Doctors',
-    description: 'Expert care from qualified MDS specialists',
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 10l-10-5L2 10l10 5 10-5z" /><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5" />
-      </svg>
-    ),
+    title: 'MDS Specialist Team',
+    description: 'Multiple MDS-qualified doctors across orthodontics, endodontics, prosthodontics, and periodontics — not general dentists.',
+    stat: '5+',
+    statLabel: 'Specializations',
   },
   {
-    title: 'Advanced Orthodontic Care',
-    description: 'Latest braces, aligners, and smile correction',
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" />
-      </svg>
-    ),
+    title: 'Braces & Aligners Expert',
+    description: 'Dr. Pinky Vijay is a specialist in orthodontics and dentofacial orthopedics — braces, clear aligners, and jaw correction.',
+    stat: '#1',
+    statLabel: 'In Region',
   },
   {
-    title: 'Modern Equipment',
-    description: 'State-of-the-art dental technology',
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-      </svg>
-    ),
+    title: 'Digital Equipment',
+    description: 'Digital X-rays, modern sterilization protocols, and the latest dental technology for accurate diagnosis and treatment.',
+    stat: '100%',
+    statLabel: 'Digital',
   },
   {
-    title: 'Clean & Comfortable',
-    description: 'Hygienic, welcoming environment',
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      </svg>
-    ),
+    title: 'Trusted by Thousands',
+    description: 'Over 10,000 patients trust us with their dental care. Rated 5.0 on Google with consistently positive reviews.',
+    stat: '10K+',
+    statLabel: 'Patients',
   },
   {
-    title: 'Affordable Pricing',
-    description: 'No hidden costs, fair for all',
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-      </svg>
-    ),
+    title: 'Sterilized & Safe',
+    description: 'Every instrument is autoclave-sterilized. We follow strict cross-infection control — your safety comes first.',
+    stat: '100%',
+    statLabel: 'Sterilized',
+  },
+  {
+    title: 'Transparent Pricing',
+    description: 'No hidden costs, no surprise bills. Treatment plans with clear pricing discussed before any procedure begins.',
+    stat: '₹0',
+    statLabel: 'Hidden Fees',
   },
 ];
 
@@ -436,14 +427,19 @@ export default function HomePage() {
             <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Why Choose Holy Care?</h2>
             <p className="mt-1 text-faint tamil text-sm">ஏன் ஹோலி கேர்?</p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {WHY_CHOOSE_US.map((item) => (
-              <div key={item.title} className="text-center p-4 rounded-xl hover:bg-surface-alt transition-colors group">
-                <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center text-primary-700 mx-auto mb-3 group-hover:bg-primary-100 group-hover:scale-110 transition-all">
-                  {item.icon}
+              <div key={item.title} className="bg-card rounded-xl p-5 border border-line hover:border-primary-200 hover:shadow-md transition-all group">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-14 h-14 bg-primary-50 rounded-xl flex flex-col items-center justify-center group-hover:bg-primary-100 transition-colors">
+                    <span className="text-primary-700 font-bold text-base leading-none">{item.stat}</span>
+                    <span className="text-primary-600/60 text-[9px] font-medium mt-0.5">{item.statLabel}</span>
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-heading text-[15px]">{item.title}</h3>
+                    <p className="text-xs text-muted mt-1 leading-relaxed">{item.description}</p>
+                  </div>
                 </div>
-                <h3 className="font-semibold text-heading text-sm">{item.title}</h3>
-                <p className="text-xs text-muted mt-1 leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
