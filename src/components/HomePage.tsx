@@ -1,32 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 /* ═══════════════════════════════════════════════
-   Shared Data Constants
+   Data Constants
    ═══════════════════════════════════════════════ */
 
-const SPECIALTIES = [
+const FEATURED_SERVICES = [
   {
     image: '/images/specialty-orthodontics.jpg',
-    title: 'Orthodontics & Smile Correction',
-    titleTamil: 'பல் சீரமைப்பு & புன்னகை திருத்தம்',
-    items: ['Metal & Ceramic Braces', 'Clear Aligners', 'Smile Designing', 'Jaw Alignment', 'Dentofacial Orthopedics for Children'],
+    title: 'Orthodontics & Braces',
+    desc: 'Metal & ceramic braces, clear aligners, smile designing, and jaw alignment for the perfect smile.',
+    bg: '#1a5c57',
+    light: false,
   },
   {
     image: '/images/specialty-rootcanal.jpg',
-    title: 'Root Canal & Conservative Dentistry',
-    titleTamil: 'ரூட் கனால் & பாதுகாப்பு பல் சிகிச்சை',
-    items: ['Single Sitting RCT', 'Re-RCT', 'Tooth Colored Fillings', 'Cosmetic Restorations'],
+    title: 'Root Canal Treatment',
+    desc: 'Painless single-sitting RCT, re-RCT, tooth-colored fillings, and cosmetic restorations.',
+    bg: '#e8a87c',
+    light: true,
   },
   {
     image: '/images/specialty-implants.jpg',
-    title: 'Implants, Crowns & Dentures',
-    titleTamil: 'பல் பொருத்துதல், கிரீடங்கள் & பல்பொருத்தி',
-    items: ['Dental Implants', 'Zirconia & Ceramic Crowns', 'Bridges', 'Complete & Partial Dentures', 'Full Mouth Rehabilitation'],
+    title: 'Dental Implants & Crowns',
+    desc: 'Dental implants, zirconia & ceramic crowns, bridges, and full mouth rehabilitation.',
+    bg: '#b8d4e3',
+    light: true,
   },
+];
+
+const OTHER_SERVICES = [
   {
     image: '/images/specialty-gum.jpg',
     title: 'Gum Treatments',
@@ -44,6 +50,18 @@ const SPECIALTIES = [
     title: 'Pediatric Dentistry',
     titleTamil: 'குழந்தை பல் சிகிச்சை',
     items: ['Preventive Dental Care', 'Fluoride Therapy', 'Habit Breaking Appliances', 'Child-Friendly Treatments'],
+  },
+  {
+    image: '/images/specialty-orthodontics.jpg',
+    title: 'Cosmetic Dentistry',
+    titleTamil: 'அழகியல் பல் சிகிச்சை',
+    items: ['Teeth Whitening', 'Veneers', 'Smile Makeover', 'Tooth Reshaping'],
+  },
+  {
+    image: '/images/specialty-implants.jpg',
+    title: 'Full Mouth Rehab',
+    titleTamil: 'முழு வாய் புனரமைப்பு',
+    items: ['Complete Dentures', 'Partial Dentures', 'Implant-Supported', 'Bite Reconstruction'],
   },
 ];
 
@@ -194,13 +212,13 @@ const NAV_LINKS = [
 ];
 
 /* ═══════════════════════════════════════════════
-   Shared Navigation Component
+   Navigation
    ═══════════════════════════════════════════════ */
 
-function Navigation({ isPremium, menuOpen, setMenuOpen }: { isPremium: boolean; menuOpen: boolean; setMenuOpen: (v: boolean) => void }) {
+function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (v: boolean) => void }) {
   return (
-    <nav className={`bg-[var(--color-nav-bg)] backdrop-blur-md sticky top-0 z-50 border-b ${isPremium ? 'border-line/50' : 'border-line'}`}>
-      <div className={`${isPremium ? 'max-w-7xl' : 'max-w-6xl'} mx-auto px-4 sm:px-6 lg:px-8`}>
+    <nav className="bg-[var(--color-nav-bg)] backdrop-blur-md sticky top-0 z-50 border-b border-line/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <Image src="/images/logo.jpg" alt="Holy Care Dental" width={36} height={36} className="w-9 h-9" />
@@ -209,15 +227,15 @@ function Navigation({ isPremium, menuOpen, setMenuOpen }: { isPremium: boolean; 
           </div>
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
-              <a key={link.href} href={link.href} className={`text-[13px] font-medium text-muted hover:text-heading transition-colors ${isPremium ? '' : 'tracking-wide uppercase'}`}>
+              <a key={link.href} href={link.href} className="text-[13px] font-medium text-muted hover:text-heading transition-colors">
                 {link.label}
               </a>
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <a href="tel:+917977257779" className={`${isPremium ? 'bg-surface-deep text-ondeep rounded-full' : 'bg-[var(--color-btn-dark)] text-ondeep rounded-lg'} px-4 py-2 text-sm font-semibold hover:opacity-90 transition-opacity inline-flex items-center gap-2`}>
+            <a href="tel:+917977257779" className="bg-surface-deep text-ondeep rounded-full px-4 py-2 text-sm font-semibold hover:opacity-90 transition-opacity inline-flex items-center gap-2">
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-              <span className="hidden sm:inline">{isPremium ? 'Book Now' : 'Call Now'}</span>
+              <span className="hidden sm:inline">Book Now</span>
             </a>
             <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2 text-body hover:text-heading transition-colors" aria-label="Toggle menu">
               {menuOpen ? (
@@ -245,30 +263,30 @@ function Navigation({ isPremium, menuOpen, setMenuOpen }: { isPremium: boolean; 
 }
 
 /* ═══════════════════════════════════════════════
-   Shared Footer Component
+   Footer
    ═══════════════════════════════════════════════ */
 
-function Footer({ isPremium }: { isPremium: boolean }) {
+function Footer() {
   return (
-    <footer className="bg-surface-deepest text-faint py-10">
-      <div className={`${isPremium ? 'max-w-7xl' : 'max-w-6xl'} mx-auto px-4 sm:px-6 lg:px-8`}>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <Image src="/images/logo.jpg" alt="Holy Care Dental" width={28} height={28} className="w-7 h-7 brightness-200" />
-              <span className="font-bold font-heading text-ondeep text-sm">Holy Care Dental</span>
+    <footer className="bg-surface-deepest text-faint py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-4 gap-8">
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2 mb-4">
+              <Image src="/images/logo.jpg" alt="Holy Care Dental" width={32} height={32} className="w-8 h-8 brightness-200" />
+              <span className="font-bold font-heading text-ondeep text-base">Holy Care Dental</span>
             </div>
-            <p className="text-xs leading-relaxed text-muted">
-              Quality dental &amp; orthodontic care for the entire family. Specialist in braces and aligners. Kavalkinaru &ndash; Vadakankulam.
+            <p className="text-sm leading-relaxed text-muted max-w-sm">
+              Quality dental &amp; orthodontic care for the entire family. Specialist in braces and aligners. Kavalkinaru &ndash; Vadakankulam, Tamil Nadu.
             </p>
-            <div className="mt-3 space-y-1">
-              <a href="tel:+917977257779" className="text-primary-400 hover:text-primary-300 font-semibold text-xs block">079772 57779</a>
-              <a href="mailto:holycareortho@gmail.com" className="text-primary-400 hover:text-primary-300 text-xs block">holycareortho@gmail.com</a>
+            <div className="mt-4 space-y-1.5">
+              <a href="tel:+917977257779" className="text-primary-400 hover:text-primary-300 font-semibold text-sm block">079772 57779</a>
+              <a href="mailto:holycareortho@gmail.com" className="text-primary-400 hover:text-primary-300 text-sm block">holycareortho@gmail.com</a>
             </div>
           </div>
           <div>
-            <h4 className="font-semibold font-heading text-ondeep text-sm mb-3">Quick Links</h4>
-            <div className="space-y-1.5 text-xs">
+            <h4 className="font-semibold font-heading text-ondeep text-sm mb-4">Company</h4>
+            <div className="space-y-2 text-sm">
               {NAV_LINKS.map((link) => (
                 <a key={link.href} href={link.href} className="block text-muted hover:text-ondeep transition-colors">{link.label}</a>
               ))}
@@ -277,18 +295,18 @@ function Footer({ isPremium }: { isPremium: boolean }) {
             </div>
           </div>
           <div>
-            <h4 className="font-semibold font-heading text-ondeep text-sm mb-3">Clinic</h4>
-            <div className="text-xs space-y-1.5 text-muted">
+            <h4 className="font-semibold font-heading text-ondeep text-sm mb-4">Clinic</h4>
+            <div className="text-sm space-y-2 text-muted">
               <p>Holy Care Dental &amp; Orthodontic Clinic</p>
               <p>Kavalkinaru &ndash; Vadakankulam</p>
-              <p>Tamil Nadu</p>
-              <p className="pt-2 text-[11px] text-faint">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
+              <p>Tamil Nadu, India</p>
+              <p className="pt-2 text-xs text-faint">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
             </div>
           </div>
         </div>
-        <div className="border-t border-line mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[11px] text-faint">&copy; {new Date().getFullYear()} Holy Care Dental &amp; Orthodontic Clinic. All rights reserved.</p>
-          <Link href="/login" className="text-[11px] text-muted hover:text-faint transition-colors">Staff Login</Link>
+        <div className="border-t border-line mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-faint">&copy; {new Date().getFullYear()} Holy Care Dental &amp; Orthodontic Clinic. All rights reserved.</p>
+          <Link href="/login" className="text-xs text-muted hover:text-faint transition-colors">Staff Login</Link>
         </div>
       </div>
     </footer>
@@ -296,13 +314,50 @@ function Footer({ isPremium }: { isPremium: boolean }) {
 }
 
 /* ═══════════════════════════════════════════════
-   PREMIUM LAYOUT — Dentologie-style
+   Main Component — Dentologie-style Layout (Default)
    ═══════════════════════════════════════════════ */
 
-function PremiumLayout() {
+export default function HomePage({ theme }: { theme: string }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [currentReview, setCurrentReview] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Auto-advance testimonials — resets timer on user interaction
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setCurrentReview((prev) => (prev + 1) % GOOGLE_REVIEWS.length);
+    }, 6000);
+  }, []);
+
+  useEffect(() => {
+    resetTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [resetTimer]);
+
+  const nextReview = useCallback(() => {
+    setCurrentReview((prev) => (prev + 1) % GOOGLE_REVIEWS.length);
+    resetTimer();
+  }, [resetTimer]);
+
+  const prevReview = useCallback(() => {
+    setCurrentReview((prev) => (prev - 1 + GOOGLE_REVIEWS.length) % GOOGLE_REVIEWS.length);
+    resetTimer();
+  }, [resetTimer]);
+
+  const goToReview = useCallback((i: number) => {
+    setCurrentReview(i);
+    resetTimer();
+  }, [resetTimer]);
+
+  // Suppress unused var warning — theme drives CSS variables via data-theme attribute
+  void theme;
+
   return (
-    <>
-      {/* ─── 1. Hero — Centered large serif heading ─── */}
+    <div className="min-h-screen bg-surface">
+      <Navigation menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+
+      {/* ─── 1. Hero — Centered serif heading ─── */}
       <section className="bg-surface">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-6 md:pt-24 md:pb-10 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-heading leading-[1.15] animate-fade-in-up">
@@ -325,7 +380,7 @@ function PremiumLayout() {
           <div className="mt-6 md:mt-8 flex items-center justify-center gap-2 animate-fade-in-up animation-delay-300">
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-yellow-500 text-lg">&#9733;</span>
+                <span key={i} className="text-amber-400 text-lg">&#9733;</span>
               ))}
             </div>
             <span className="text-muted text-sm font-medium">5.0 rating on Google Reviews</span>
@@ -338,7 +393,7 @@ function PremiumLayout() {
         </div>
       </section>
 
-      {/* ─── 2. Services — Dentologie card grid ─── */}
+      {/* ─── 2. Featured Services — Colored card grid (Dentologie-style) ─── */}
       <section id="specialties" className="py-16 md:py-24 bg-surface-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -349,24 +404,29 @@ function PremiumLayout() {
               We&apos;re your go-to for general dentistry, orthodontics, and restorative care.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SPECIALTIES.map((specialty) => (
-              <div key={specialty.title} className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all duration-300 group">
-                <div className="relative h-48 overflow-hidden">
-                  <Image src={specialty.image} alt={specialty.title} width={400} height={200} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-                  <h3 className="absolute bottom-4 left-5 right-5 font-bold text-white text-base drop-shadow-lg leading-tight font-heading">{specialty.title}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {FEATURED_SERVICES.map((service) => (
+              <div
+                key={service.title}
+                className="rounded-3xl overflow-hidden flex flex-col justify-between min-h-[420px] p-7 md:p-8 group hover:shadow-2xl transition-all duration-300"
+                style={{ backgroundColor: service.bg }}
+              >
+                <div>
+                  <h3 className={`text-xl md:text-2xl font-bold font-heading leading-tight ${service.light ? 'text-[#1a1a1a]' : 'text-white'}`}>
+                    {service.title}
+                  </h3>
+                  <p className={`mt-3 text-sm leading-relaxed ${service.light ? 'text-[#1a1a1a]/70' : 'text-white/80'}`}>
+                    {service.desc}
+                  </p>
                 </div>
-                <div className="p-5">
-                  <ul className="space-y-2">
-                    {specialty.items.map((item) => (
-                      <li key={item} className="text-sm text-muted flex items-start gap-2">
-                        <svg className="w-4 h-4 text-heading mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <a href="tel:+917977257779" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
+                <div className="mt-6">
+                  <div className="rounded-2xl overflow-hidden">
+                    <Image src={service.image} alt={service.title} width={400} height={250} className="object-cover w-full h-[200px] group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <a
+                    href="tel:+917977257779"
+                    className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold hover:opacity-70 transition-opacity ${service.light ? 'text-[#1a1a1a]' : 'text-white'}`}
+                  >
                     Book Now
                     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                   </a>
@@ -377,48 +437,82 @@ function PremiumLayout() {
         </div>
       </section>
 
-      {/* ─── 3. Patient Love — Testimonials ─── */}
+      {/* ─── 3. Patient Love — Single Testimonial Carousel ─── */}
       <section id="reviews" className="py-16 md:py-24 bg-surface">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
               Patient <em>Love</em>
             </h2>
             <div className="mt-4 inline-flex items-center gap-2">
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-500 text-lg">&#9733;</span>
+                  <span key={i} className="text-amber-400 text-lg">&#9733;</span>
                 ))}
               </div>
               <span className="text-muted text-sm">5.0 on Google</span>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {GOOGLE_REVIEWS.map((review) => (
-              <div key={review.name} className="bg-card rounded-3xl p-7 border border-line hover:shadow-lg transition-all duration-300">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-500 text-sm">&#9733;</span>
-                  ))}
+
+          {/* Carousel */}
+          <div className="relative px-8 md:px-16">
+            {/* Large quote mark */}
+            <div className="text-7xl md:text-8xl text-primary-200 leading-none font-serif select-none text-center" aria-hidden="true">
+              &ldquo;
+            </div>
+
+            {/* Review content */}
+            <div key={currentReview} className="animate-review-fade text-center mt-2">
+              <p className="text-xl md:text-2xl text-heading font-heading leading-relaxed max-w-3xl mx-auto">
+                {GOOGLE_REVIEWS[currentReview].text}
+              </p>
+              <div className="mt-8">
+                <div className="w-12 h-12 bg-surface-alt rounded-full flex items-center justify-center text-heading font-bold text-lg mx-auto mb-3">
+                  {GOOGLE_REVIEWS[currentReview].name.charAt(0)}
                 </div>
-                <p className="text-base text-body leading-relaxed">&ldquo;{review.text}&rdquo;</p>
-                <div className="mt-5 pt-4 border-t border-line flex items-center gap-3">
-                  <div className="w-10 h-10 bg-surface-alt rounded-full flex items-center justify-center text-heading font-bold text-sm">
-                    {review.name.charAt(0)}
+                <p className="font-bold text-heading text-base">{GOOGLE_REVIEWS[currentReview].name}</p>
+                <div className="flex items-center justify-center gap-2 mt-1">
+                  <div className="flex gap-0.5">
+                    {[...Array(GOOGLE_REVIEWS[currentReview].rating)].map((_, i) => (
+                      <span key={i} className="text-amber-400 text-sm">&#9733;</span>
+                    ))}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-heading text-sm truncate">{review.name}</p>
-                    <p className="text-xs text-faint">{review.date}</p>
-                  </div>
-                  <svg className="w-5 h-5 text-[#4285F4] flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-                  </svg>
+                  <span className="text-xs text-faint">{GOOGLE_REVIEWS[currentReview].date}</span>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Navigation dots */}
+            <div className="mt-10 flex justify-center gap-2">
+              {GOOGLE_REVIEWS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToReview(i)}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    i === currentReview
+                      ? 'bg-heading w-8'
+                      : 'bg-line-strong w-2.5 hover:bg-muted'
+                  }`}
+                  aria-label={`Go to review ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Prev/Next arrows */}
+            <button
+              onClick={prevReview}
+              className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-line bg-card flex items-center justify-center text-muted hover:text-heading hover:border-heading transition-all shadow-sm"
+              aria-label="Previous review"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+            </button>
+            <button
+              onClick={nextReview}
+              className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-line bg-card flex items-center justify-center text-muted hover:text-heading hover:border-heading transition-all shadow-sm"
+              aria-label="Next review"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
+            </button>
           </div>
         </div>
       </section>
@@ -449,6 +543,22 @@ function PremiumLayout() {
       <section id="about" className="py-16 md:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="relative">
+              <div className="rounded-3xl overflow-hidden shadow-2xl">
+                <Image src="/images/dr-pinky-checkup.jpg" alt="Dr. Pinky Vijay performing dental care" width={600} height={500} className="object-cover w-full h-[420px]" />
+              </div>
+              <div className="absolute -bottom-5 right-4 bg-card rounded-2xl shadow-lg p-4 border border-line">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-surface-alt rounded-full flex items-center justify-center text-heading">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10l-10-5L2 10l10 5 10-5z" /><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5" /></svg>
+                  </div>
+                  <div>
+                    <p className="font-bold text-heading text-sm">Dr. Pinky Vijay</p>
+                    <p className="text-xs text-muted font-medium">MDS, Orthodontics</p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading leading-tight">
                 A Fresh Approach to <em>Dentistry</em>
@@ -468,33 +578,60 @@ function PremiumLayout() {
                   </span>
                 ))}
               </div>
-              <a href="tel:+917977257779" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
-                Learn More
+              <a href="#specialties" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
+                Our Services
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               </a>
-            </div>
-            <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <Image src="/images/dr-pinky-checkup.jpg" alt="Dr. Pinky Vijay performing dental care" width={600} height={500} className="object-cover w-full h-[420px]" />
-              </div>
-              <div className="absolute -bottom-5 right-4 bg-card rounded-2xl shadow-lg p-4 border border-line">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-surface-alt rounded-full flex items-center justify-center text-heading">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10l-10-5L2 10l10 5 10-5z" /><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5" /></svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-heading text-sm">Dr. Pinky Vijay</p>
-                    <p className="text-xs text-muted font-medium">MDS, Orthodontics</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── 6. Before & After ─── */}
-      <section id="results" className="py-16 md:py-24 bg-surface-alt">
+      {/* ─── 6. Other Services — Horizontal scroll ─── */}
+      <section className="py-16 md:py-24 bg-surface-alt">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
+                Other <em>Services</em>
+              </h2>
+              <p className="mt-3 text-lg text-muted">More specialized care for every need.</p>
+            </div>
+            <a href="#specialties" className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
+              All Services
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+            </a>
+          </div>
+          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4">
+            {OTHER_SERVICES.map((service) => (
+              <div key={service.title} className="flex-shrink-0 w-[280px] snap-start bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all duration-300 group">
+                <div className="relative h-44 overflow-hidden">
+                  <Image src={service.image} alt={service.title} width={300} height={200} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-bold font-heading text-heading text-base">{service.title}</h3>
+                  <ul className="mt-2 space-y-1.5">
+                    {service.items.slice(0, 3).map((item) => (
+                      <li key={item} className="text-sm text-muted flex items-start gap-2">
+                        <svg className="w-3.5 h-3.5 text-heading mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <a href="tel:+917977257779" className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
+                    Book Now
+                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 7. Before & After ─── */}
+      <section id="results" className="py-16 md:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
@@ -533,8 +670,8 @@ function PremiumLayout() {
         </div>
       </section>
 
-      {/* ─── 7. Gallery — Clinic photos ─── */}
-      <section id="gallery" className="py-16 md:py-24 bg-surface">
+      {/* ─── 8. Gallery — Clinic photos ─── */}
+      <section id="gallery" className="py-16 md:py-24 bg-surface-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
@@ -566,8 +703,8 @@ function PremiumLayout() {
         </div>
       </section>
 
-      {/* ─── 8. Hours & Contact ─── */}
-      <section id="hours" className="py-16 md:py-24 bg-surface-alt">
+      {/* ─── 9. Find Us — Hours & Contact ─── */}
+      <section id="hours" className="py-16 md:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
@@ -634,7 +771,7 @@ function PremiumLayout() {
         </div>
       </section>
 
-      {/* ─── 9. CTA ─── */}
+      {/* ─── 10. CTA ─── */}
       <section className="py-16 md:py-24 bg-surface-deep relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <Image src="/images/dental-chair.jpg" alt="" fill className="object-cover" />
@@ -647,7 +784,7 @@ function PremiumLayout() {
             Schedule your visit today. Whether it&apos;s a routine check-up, braces, or a complete smile makeover.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:+917977257779" className="bg-white text-surface-deep px-8 py-3.5 rounded-full text-sm font-bold hover:opacity-90 transition-opacity inline-flex items-center justify-center gap-2 shadow-lg">
+            <a href="tel:+917977257779" className="bg-card text-heading px-8 py-3.5 rounded-full text-sm font-bold hover:opacity-90 transition-opacity inline-flex items-center justify-center gap-2 shadow-lg">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
               Call 079772 57779
             </a>
@@ -658,385 +795,8 @@ function PremiumLayout() {
           </div>
         </div>
       </section>
-    </>
-  );
-}
 
-/* ═══════════════════════════════════════════════
-   DEFAULT LAYOUT — Classic / Dark themes
-   ═══════════════════════════════════════════════ */
-
-function DefaultLayout() {
-  return (
-    <>
-      {/* ─── Hero (Split Layout) ─── */}
-      <section className="relative overflow-hidden bg-surface">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-20">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 bg-primary-50 border border-primary-100 rounded-full px-3.5 py-1.5 mb-5">
-                <span className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-pulse" />
-                <span className="text-primary-700 text-xs font-semibold uppercase tracking-wider">MDS Specialist Dental Care</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl md:text-[2.75rem] font-bold font-heading text-heading leading-[1.15]">
-                Confident Smiles<br />
-                <span className="text-primary-600">Begin Here</span>
-              </h1>
-              <p className="mt-2 text-sm text-primary-500/70 tamil">நம்பிக்கையான புன்னகை இங்கே தொடங்குகிறது</p>
-              <p className="mt-4 text-body text-[15px] leading-relaxed max-w-md">
-                Advanced orthodontic &amp; complete dental care by MDS specialists. Braces, aligners, implants, root canal &amp; more.
-              </p>
-              <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                <a href="tel:+917977257779" className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl text-sm font-bold transition-colors text-center inline-flex items-center justify-center gap-2 shadow-lg shadow-primary-500/20">
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                  Book Appointment
-                </a>
-                <a href="#specialties" className="border-2 border-line-strong text-heading px-6 py-3 rounded-xl text-sm font-medium hover:bg-surface-alt transition-colors text-center">View Specialities</a>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/10">
-                <Image src="/images/clinic-exterior-1.jpg" alt="Holy Care Dental & Orthodontic Clinic" width={600} height={750} className="object-cover w-full h-[360px] md:h-[460px]" priority />
-              </div>
-              <div className="absolute -bottom-4 left-4 md:-left-6 bg-card rounded-xl shadow-lg p-3 border border-line">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 bg-primary-50 rounded-full flex items-center justify-center"><span className="text-yellow-500 text-base">&#9733;</span></div>
-                  <div><p className="font-bold text-heading text-sm">5.0 Rating</p><p className="text-[11px] text-muted">Google Reviews</p></div>
-                </div>
-              </div>
-              <div className="absolute -top-3 right-4 md:-right-4 bg-card rounded-xl shadow-lg p-3 border border-line">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 bg-primary-50 rounded-full flex items-center justify-center text-primary-700">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
-                  </div>
-                  <div><p className="font-bold text-heading text-sm">10,000+</p><p className="text-[11px] text-muted">Happy Patients</p></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="border-y border-line bg-surface-alt">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 text-sm">
-              <span><strong className="text-primary-600 font-bold">MDS</strong> <span className="text-muted">Specialist</span></span>
-              <span className="text-line-strong hidden sm:inline">|</span>
-              <span><strong className="text-primary-600 font-bold">10,000+</strong> <span className="text-muted">Patients</span></span>
-              <span className="text-line-strong hidden sm:inline">|</span>
-              <span><strong className="text-primary-600 font-bold">Braces</strong> <span className="text-muted">&amp; Aligners Expert</span></span>
-              <span className="text-line-strong hidden sm:inline">|</span>
-              <span><strong className="text-primary-600 font-bold">A-34195</strong> <span className="text-muted">Registered</span></span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── About + MDS ─── */}
-      <section id="about" className="py-14 md:py-20 bg-surface">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden">
-                <Image src="/images/dr-pinky-checkup.jpg" alt="Dr. Pinky Vijay performing a dental check-up" width={600} height={500} className="object-cover w-full h-[380px]" />
-              </div>
-              <div className="absolute -bottom-5 right-4 bg-card rounded-xl shadow-lg p-3.5 border border-line">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center text-primary-700">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10l-10-5L2 10l10 5 10-5z" /><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5" /></svg>
-                  </div>
-                  <div><p className="font-bold text-heading text-sm">Dr. Pinky Vijay</p><p className="text-xs text-primary-600 font-medium">MDS, Orthodontics</p></div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-3">About Us</p>
-              <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading leading-snug">Your Dental Health,<br />Our Priority</h2>
-              <p className="text-faint tamil text-sm mt-1 mb-5">உங்கள் பல் ஆரோக்கியம், எங்கள் முன்னுரிமை</p>
-              <div className="space-y-3 text-body text-[15px] leading-relaxed">
-                <p><strong className="text-heading">Holy Care Dental and Orthodontic Clinic</strong> is a modern dental care center in Kavalkinaru &ndash; Vadakankulam offering advanced orthodontic and complete dental treatments under expert MDS specialists.</p>
-                <p>Led by <strong className="text-heading">Dr. Pinky Vijay</strong> (BDS, MDS Orthodontics &amp; Dentofacial Orthopedics), our clinic combines precision treatment, a hygienic environment, personalized care, and advanced technology.</p>
-              </div>
-              <div className="mt-6 grid grid-cols-2 gap-3">
-                {[
-                  { label: 'Precision Treatment', sub: 'Accurate, expert care', d: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
-                  { label: 'Hygienic Environment', sub: 'Sterilization standards', d: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
-                  { label: 'Personalized Care', sub: 'Individual plans', d: 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z' },
-                  { label: 'Advanced Technology', sub: 'Modern equipment', d: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
-                ].map((v) => (
-                  <div key={v.label} className="flex items-start gap-2.5 p-3 rounded-xl bg-surface-alt border border-line">
-                    <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-700 flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={v.d} /></svg>
-                    </div>
-                    <div><p className="font-semibold text-heading text-sm leading-tight">{v.label}</p><p className="text-xs text-muted mt-0.5">{v.sub}</p></div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6">
-                <p className="text-xs font-semibold text-faint uppercase tracking-wider mb-2">MDS Specializations</p>
-                <div className="flex flex-wrap gap-2">
-                  {MDS_SPECIALIZATIONS.map((spec) => (
-                    <span key={spec} className="bg-primary-50 text-primary-800 px-3 py-1.5 rounded-lg text-xs font-medium border border-primary-100">{spec}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Specialities ─── */}
-      <section id="specialties" className="py-14 md:py-20 bg-surface-alt">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">What We Offer</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Our Specialities</h2>
-            <p className="mt-1 text-faint tamil text-sm">எங்கள் சிறப்புகள்</p>
-            <p className="mt-3 text-muted text-sm max-w-xl mx-auto">Comprehensive dental care under one roof &mdash; from advanced orthodontics and implants to pediatric dentistry and oral surgery.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {SPECIALTIES.map((specialty) => (
-              <div key={specialty.title} className="bg-card rounded-2xl overflow-hidden border border-line hover:border-primary-200 hover:shadow-lg hover:shadow-primary-50 transition-all duration-300 group">
-                <div className="relative h-40 overflow-hidden">
-                  <Image src={specialty.image} alt={specialty.title} width={400} height={160} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-                  <h3 className="absolute bottom-3 left-4 right-4 font-bold text-white text-[15px] drop-shadow-lg leading-tight">{specialty.title}</h3>
-                </div>
-                <div className="p-4">
-                  <p className="text-[11px] text-primary-500 tamil">{specialty.titleTamil}</p>
-                  <ul className="mt-2.5 space-y-1.5">
-                    {specialty.items.map((item) => (
-                      <li key={item} className="text-[13px] text-muted flex items-start gap-2">
-                        <svg className="w-3.5 h-3.5 text-primary-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Why Choose Us ─── */}
-      <section className="py-14 md:py-20 bg-surface">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Why Us</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Why Choose Holy Care?</h2>
-            <p className="mt-1 text-faint tamil text-sm">ஏன் ஹோலி கேர்?</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {WHY_CHOOSE_US.map((item) => (
-              <div key={item.title} className="group text-center px-4 py-6 rounded-2xl bg-card border border-line hover:border-primary-200 hover:shadow-lg transition-all duration-200">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary-50 text-primary-600 mb-4 group-hover:bg-primary-100 transition-colors">{item.icon}</div>
-                <h3 className="font-semibold text-heading text-sm leading-snug mb-1.5">{item.title}</h3>
-                <p className="text-xs text-muted leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Google Reviews ─── */}
-      <section id="reviews" className="py-14 md:py-20 bg-surface-alt">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Patient Reviews</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">What Our Patients Say</h2>
-            <p className="mt-1 text-faint tamil text-sm">எங்கள் நோயாளிகள் என்ன சொல்கிறார்கள்</p>
-            <div className="mt-3 inline-flex items-center gap-2 bg-card px-3 py-1.5 rounded-full border border-line-strong text-sm">
-              <span className="text-yellow-500">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-              <span className="font-semibold text-body text-xs">5.0 on Google</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {GOOGLE_REVIEWS.map((review) => (
-              <div key={review.name} className="bg-card rounded-xl p-5 border border-line hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-1 mb-2.5">
-                  {[...Array(review.rating)].map((_, i) => (<span key={i} className="text-yellow-500 text-xs">&#9733;</span>))}
-                </div>
-                <p className="text-sm text-body leading-relaxed">&ldquo;{review.text}&rdquo;</p>
-                <div className="mt-3 pt-3 border-t border-line-subtle flex items-center gap-2.5">
-                  <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-800 font-bold text-xs">{review.name.charAt(0)}</div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-heading text-sm truncate">{review.name}</p>
-                    <p className="text-xs text-faint">{review.date}</p>
-                  </div>
-                  <svg className="w-4 h-4 text-[#4285F4] flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-                  </svg>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Before & After ─── */}
-      <section id="results" className="py-14 md:py-20 bg-surface">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Real Results</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Smile Transformations</h2>
-            <p className="mt-1 text-faint tamil text-sm">புன்னகை மாற்றங்கள்</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-surface-alt rounded-2xl overflow-hidden border border-line hover:shadow-lg transition-all group">
-              <div className="relative overflow-hidden"><Image src="/images/before-after-1.jpg" alt="Orthodontic braces treatment results" width={600} height={500} className="object-cover w-full group-hover:scale-[1.02] transition-transform duration-500" /></div>
-              <div className="p-5">
-                <h3 className="font-bold font-heading text-heading">Orthodontic Braces Treatment</h3>
-                <p className="text-sm text-muted mt-1">Complex tooth alignment corrected with fixed braces</p>
-                <div className="mt-2.5 flex gap-2">
-                  <span className="bg-surface-deep text-ondeep px-2.5 py-0.5 rounded-full text-xs font-medium">Braces</span>
-                  <span className="bg-surface-deep text-ondeep px-2.5 py-0.5 rounded-full text-xs font-medium">Alignment</span>
-                </div>
-              </div>
-            </div>
-            <div className="bg-surface-alt rounded-2xl overflow-hidden border border-line hover:shadow-lg transition-all group">
-              <div className="relative overflow-hidden"><Image src="/images/before-after-2.jpg" alt="Jaw alignment treatment results" width={600} height={500} className="object-cover w-full group-hover:scale-[1.02] transition-transform duration-500" /></div>
-              <div className="p-5">
-                <h3 className="font-bold font-heading text-heading">Jaw &amp; Bite Correction</h3>
-                <p className="text-sm text-muted mt-1">Significant jaw alignment improvement with orthodontic treatment</p>
-                <div className="mt-2.5 flex gap-2">
-                  <span className="bg-surface-deep text-ondeep px-2.5 py-0.5 rounded-full text-xs font-medium">Orthodontics</span>
-                  <span className="bg-surface-deep text-ondeep px-2.5 py-0.5 rounded-full text-xs font-medium">Jaw Alignment</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Clinic Gallery ─── */}
-      <section id="gallery" className="py-14 md:py-20 bg-surface-alt">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Take a Look</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Our Clinic</h2>
-            <p className="mt-1 text-faint tamil text-sm">எங்கள் மருத்துவமனை</p>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            {GALLERY_IMAGES.map((img) => (
-              <div key={img.src} className="group relative rounded-xl overflow-hidden aspect-[4/3]">
-                <Image src={img.src} alt={img.alt} width={400} height={300} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <p className="absolute bottom-2.5 left-3 text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">{img.caption}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-5">
-            <div className="relative rounded-xl overflow-hidden group aspect-[3/1]">
-              <Image src="/images/community-service-2.jpg" alt="Community dental health camp" width={1200} height={400} className="object-cover w-full h-full group-hover:scale-[1.02] transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-white font-bold text-lg">Community Dental Health Camps</p>
-                <p className="text-white/70 text-sm mt-1 max-w-xl">Dr. Pinky Vijay actively conducts free dental health camps, bringing quality care to the community.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Hours & Contact ─── */}
-      <section id="hours" className="py-14 md:py-20 bg-surface">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="text-primary-600 font-semibold text-xs uppercase tracking-widest mb-2">Visit Us</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading">Clinic Timings &amp; Location</h2>
-            <p className="mt-1 text-faint tamil text-sm">கிளினிக் நேரம் &amp; இடம்</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-surface-alt rounded-xl p-6 border border-line">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center text-primary-700">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-                </div>
-                <div><h3 className="font-bold font-heading text-heading">Clinic Timings</h3><p className="text-xs text-faint tamil">கிளினிக் நேரம்</p></div>
-              </div>
-              <div className="space-y-3">
-                {WORKING_HOURS.map((item) => (
-                  <div key={item.day} className="flex items-center justify-between py-2.5 border-b border-line last:border-0">
-                    <span className="font-medium text-heading text-sm">{item.day}</span>
-                    <span className={`text-sm ${item.hours === 'Closed' ? 'text-red-500 font-medium' : 'text-muted'}`}>{item.hours}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-5 bg-amber-50 rounded-lg p-3.5 text-sm text-amber-800 border border-amber-100">
-                <strong>Emergency?</strong> Call us at <a href="tel:+917977257779" className="underline font-bold">079772 57779</a>
-              </div>
-            </div>
-            <div id="contact" className="bg-surface-alt rounded-xl p-6 border border-line">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center text-primary-700">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                </div>
-                <div><h3 className="font-bold font-heading text-heading">Find Us</h3><p className="text-xs text-faint tamil">எங்களைக் கண்டறியவும்</p></div>
-              </div>
-              <div className="space-y-4">
-                <div className="flex gap-3">
-                  <svg className="w-4 h-4 text-faint mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 22V12h6v10" /></svg>
-                  <div><p className="font-medium text-heading text-sm">Holy Care Dental &amp; Orthodontic Clinic</p><p className="text-sm text-muted">Kavalkinaru &ndash; Vadakankulam, Tamil Nadu</p></div>
-                </div>
-                <div className="flex gap-3">
-                  <svg className="w-4 h-4 text-faint mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                  <a href="tel:+917977257779" className="text-sm text-primary-700 font-semibold hover:text-primary-800">079772 57779</a>
-                </div>
-                <div className="flex gap-3">
-                  <svg className="w-4 h-4 text-faint mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
-                  <a href="mailto:holycareortho@gmail.com" className="text-sm text-primary-700 font-semibold hover:text-primary-800">holycareortho@gmail.com</a>
-                </div>
-                <div className="flex gap-3">
-                  <svg className="w-4 h-4 text-faint mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-                  <div><p className="font-medium text-heading text-sm">Dr. Pinky Vijay MDS</p><p className="text-xs text-muted">Orthodontics &amp; Dentofacial Orthopedics &middot; Reg. A-34195</p></div>
-                </div>
-              </div>
-              <div className="mt-5 rounded-lg overflow-hidden h-36 border border-line-strong">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.5!2d77.39!3d8.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOCtyNSUyNy4wJTIyTiA3NyUyMzknMjcuMCUyMkU!5e0!3m2!1sen!2sin!4v1" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Holy Care Dental Clinic Location" className="w-full h-full" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── CTA ─── */}
-      <section className="py-14 relative overflow-hidden bg-surface-deep">
-        <div className="absolute inset-0 opacity-20"><Image src="/images/dental-chair.jpg" alt="" fill className="object-cover" /></div>
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold font-heading text-ondeep">Ready for a Healthier Smile?</h2>
-          <p className="text-primary-400 mt-1 tamil text-sm">ஆரோக்கியமான புன்னகைக்கு தயாரா?</p>
-          <p className="mt-3 text-faint text-sm max-w-lg mx-auto">Schedule your visit today. Whether it&apos;s a routine check-up, braces, or a complete smile makeover &mdash; we&apos;re here to help.</p>
-          <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="tel:+917977257779" className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-xl text-sm font-bold transition-colors inline-flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-              Call 079772 57779
-            </a>
-            <a href="mailto:holycareortho@gmail.com" className="border border-white/20 text-ondeep px-6 py-3 rounded-xl text-sm font-medium hover:bg-white/10 transition-colors inline-flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
-              Email Us
-            </a>
-          </div>
-        </div>
-      </section>
-    </>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   Main Component
-   ═══════════════════════════════════════════════ */
-
-export default function HomePage({ theme }: { theme: string }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const isPremium = theme === 'premium';
-
-  return (
-    <div className="min-h-screen bg-surface">
-      <Navigation isPremium={isPremium} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-      {isPremium ? <PremiumLayout /> : <DefaultLayout />}
-      <Footer isPremium={isPremium} />
+      <Footer />
     </div>
   );
 }

@@ -13,7 +13,7 @@ export function ArticleNav({ breadcrumb }: { breadcrumb?: string }) {
             </Link>
             {breadcrumb && (
               <>
-                <svg className="w-4 h-4 text-faint" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg className="w-4 h-4 text-faint" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path d="M9 18l6-6-6-6" />
                 </svg>
                 <Link href="/knowledge" className="text-sm text-muted hover:text-heading transition-colors">
@@ -21,7 +21,7 @@ export function ArticleNav({ breadcrumb }: { breadcrumb?: string }) {
                 </Link>
                 {breadcrumb !== 'Knowledge' && (
                   <>
-                    <svg className="w-4 h-4 text-faint hidden sm:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg className="w-4 h-4 text-faint hidden sm:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                       <path d="M9 18l6-6-6-6" />
                     </svg>
                     <span className="text-sm text-heading font-medium truncate max-w-[200px] hidden sm:block">{breadcrumb}</span>

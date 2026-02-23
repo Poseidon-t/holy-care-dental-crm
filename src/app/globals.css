@@ -6,6 +6,7 @@
 
 /* ═══════════════════════════════════════════════
    Theme: Classic (Golden Warmth) — DEFAULT
+   Now uses serif headings + Inter body (Dentologie-style)
    ═══════════════════════════════════════════════ */
 :root,
 [data-theme="classic"] {
@@ -43,8 +44,8 @@
   /* Nav */
   --color-nav-bg: rgba(255, 255, 255, 0.95);
 
-  /* Typography */
-  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Typography — serif headings for Dentologie-style */
+  --font-heading: 'Playfair Display', Georgia, serif;
 
   /* Scrollbar */
   --color-scrollbar-track: #fafafa;
@@ -56,54 +57,54 @@
 }
 
 /* ═══════════════════════════════════════════════
-   Theme: Premium (Dentologie-inspired)
-   Very light off-white bg, serif headings, clean neutral tones
+   Theme: Teal (Fresh & Modern)
+   Clean white bg, teal accents, serif headings
    ═══════════════════════════════════════════════ */
-[data-theme="premium"] {
-  /* Primary accent — subtle warm neutral */
-  --color-primary-50: #f8f7f5;
-  --color-primary-100: #efedea;
-  --color-primary-200: #e0ddd8;
-  --color-primary-300: #c8c3bb;
-  --color-primary-400: #aba59b;
-  --color-primary-500: #918a7f;
-  --color-primary-600: #7a7368;
-  --color-primary-700: #635c53;
-  --color-primary-800: #4d4841;
-  --color-primary-900: #3a3530;
+[data-theme="teal"] {
+  /* Primary accent — teal */
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
 
-  /* Surfaces — barely off-white, like Dentologie */
-  --color-surface: #f5f4f1;
-  --color-surface-alt: #eeedea;
-  --color-surface-deep: #1a1a1a;
-  --color-surface-deepest: #111111;
+  /* Surfaces — clean white with subtle teal tint */
+  --color-surface: #ffffff;
+  --color-surface-alt: #f0fdfa;
+  --color-surface-deep: #134e4a;
+  --color-surface-deepest: #042f2e;
   --color-card: #ffffff;
 
   /* Text — clean neutrals */
-  --color-text-heading: #1a1a1a;
-  --color-text-body: #555555;
-  --color-text-muted: #777777;
-  --color-text-faint: #999999;
-  --color-text-on-deep: #f5f4f1;
+  --color-text-heading: #0f172a;
+  --color-text-body: #475569;
+  --color-text-muted: #64748b;
+  --color-text-faint: #94a3b8;
+  --color-text-on-deep: #f0fdfa;
 
-  /* Borders — light neutral */
-  --color-border: #e5e4e1;
-  --color-border-subtle: #eeedea;
-  --color-border-strong: #d4d3d0;
+  /* Borders */
+  --color-border: #e2e8f0;
+  --color-border-subtle: #f1f5f9;
+  --color-border-strong: #cbd5e1;
 
-  /* Nav — frosted glass */
-  --color-nav-bg: rgba(245, 244, 241, 0.80);
+  /* Nav */
+  --color-nav-bg: rgba(255, 255, 255, 0.95);
 
-  /* Typography (serif headings) */
+  /* Typography — serif headings */
   --font-heading: 'Playfair Display', Georgia, serif;
 
   /* Scrollbar */
-  --color-scrollbar-track: #eeedea;
-  --color-scrollbar-thumb: #d4d3d0;
+  --color-scrollbar-track: #f0fdfa;
+  --color-scrollbar-thumb: #cbd5e1;
 
   /* Button on deep */
-  --color-btn-dark: #1a1a1a;
-  --color-btn-dark-hover: #333333;
+  --color-btn-dark: #134e4a;
+  --color-btn-dark-hover: #0f766e;
 }
 
 /* ═══════════════════════════════════════════════
@@ -146,7 +147,7 @@
   --color-nav-bg: rgba(11, 17, 32, 0.95);
 
   /* Typography */
-  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Playfair Display', Georgia, serif;
 
   /* Scrollbar */
   --color-scrollbar-track: #111827;
@@ -199,7 +200,7 @@
   --color-nav-bg: rgba(20, 18, 16, 0.95);
 
   /* Typography */
-  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Playfair Display', Georgia, serif;
 
   /* Scrollbar */
   --color-scrollbar-track: #1c1917;
@@ -219,18 +220,13 @@
 @layer base {
   body {
     @apply bg-surface text-heading antialiased;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 
   .tamil {
     font-family: 'Noto Sans Tamil', sans-serif;
     font-size: max(1rem, 16px);
   }
-}
-
-/* Premium theme uses Inter for body text */
-[data-theme="premium"] body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 @layer components {
@@ -321,6 +317,15 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-faint);
+}
+
+/* Hide scrollbar for horizontal scroll sections */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* ═══════════════════════════════════════════════
@@ -424,7 +429,7 @@ html {
 }
 
 /* ═══════════════════════════════════════════════
-   Dentologie-style fade-in animations (Premium)
+   Dentologie-style fade-in animations
    ═══════════════════════════════════════════════ */
 @keyframes fade-in-up {
   from {
@@ -452,4 +457,20 @@ html {
 
 .animation-delay-300 {
   animation-delay: 0.3s;
+}
+
+/* Testimonial carousel fade */
+@keyframes review-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-review-fade {
+  animation: review-fade-in 0.4s ease-out;
 }

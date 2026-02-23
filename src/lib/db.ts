@@ -99,7 +99,11 @@ function initializeDatabase(db: Database.Database) {
   // Seed admin user if none exists
   const adminCount = db.prepare('SELECT COUNT(*) as count FROM admin_users').get() as { count: number };
   if (adminCount.count === 0) {
-    const hash = hashPassword('holycare2026');
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+      throw new Error('ADMIN_PASSWORD environment variable is required for initial admin setup');
+    }
+    const hash = hashPassword(adminPassword);
     db.prepare('INSERT INTO admin_users (username, password_hash, full_name) VALUES (?, ?, ?)').run(
       'admin',
       hash,

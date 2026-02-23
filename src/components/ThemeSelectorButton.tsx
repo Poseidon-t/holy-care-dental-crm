@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 
 const THEMES = {
   light: [
-    { id: 'classic', name: 'Classic', description: 'Golden-yellow, clean white', color: '#eab308' },
-    { id: 'premium', name: 'Premium', description: 'Warm beige, serif headings', color: '#b8a590' },
+    { id: 'classic', name: 'Classic', description: 'Golden-yellow, serif headings', color: '#eab308' },
+    { id: 'teal', name: 'Teal', description: 'Fresh teal, clean design', color: '#14b8a6' },
   ],
   dark: [
     { id: 'midnight-blue', name: 'Midnight Blue', description: 'Deep navy, blue accents', color: '#3b82f6' },
@@ -41,8 +41,6 @@ export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) 
 
     setIsOpen(false);
   };
-
-  const allThemes = [...THEMES.light, ...THEMES.dark];
 
   return (
     <div className="fixed bottom-6 left-6 z-[9999] no-print">

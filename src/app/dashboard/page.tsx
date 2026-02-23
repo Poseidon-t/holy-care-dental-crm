@@ -52,6 +52,15 @@ export default function DashboardPage() {
     fetchPatients();
   }, [fetchPatients]);
 
+  useEffect(() => {
+    if (!showQrModal) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowQrModal(false);
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [showQrModal]);
+
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
     window.location.href = '/login';
@@ -156,7 +165,7 @@ export default function DashboardPage() {
         {/* Patient Table */}
         <div className="card overflow-hidden p-0">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full" aria-label="Patients list">
               <thead>
                 <tr className="bg-primary-50 border-b border-primary-100">
                   <th className="text-left p-4 text-sm font-semibold text-primary-700">OP No.</th>
@@ -206,12 +215,14 @@ export default function DashboardPage() {
                           <a
                             href={`/dashboard/patient/${patient.id}`}
                             className="text-sm text-primary-600 hover:text-primary-700 font-medium px-3 py-2 rounded-lg hover:bg-primary-50 transition-colors min-h-[44px] inline-flex items-center"
+                            aria-label={`View ${patient.name}`}
                           >
                             View
                           </a>
                           <a
                             href={`/dashboard/treatment/${patient.id}`}
                             className="text-sm text-green-600 hover:text-green-700 font-medium px-3 py-2 rounded-lg hover:bg-green-50 transition-colors min-h-[44px] inline-flex items-center"
+                            aria-label={`Add treatment for ${patient.name}`}
                           >
                             + Treatment
                           </a>
@@ -234,7 +245,7 @@ export default function DashboardPage() {
 
         {/* QR Code Modal */}
         {showQrModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto" onClick={() => setShowQrModal(false)}>
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto" onClick={() => setShowQrModal(false)} role="dialog" aria-modal="true" aria-label="Patient Registration QR Code">
             <div className="bg-card rounded-2xl shadow-2xl max-w-sm w-full p-6 my-auto" onClick={e => e.stopPropagation()}>
               <div className="text-center">
                 <h3 className="text-lg font-bold font-heading text-heading mb-1">Patient Registration QR Code</h3>

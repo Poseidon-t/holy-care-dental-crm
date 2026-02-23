@@ -13,6 +13,14 @@ export const metadata: Metadata = {
     description:
       'Expert dental health articles and guides. Learn about treatments, prevention, and oral care tips.',
     type: 'website',
+    images: [
+      {
+        url: '/images/clinic-exterior-1.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Holy Care Dental & Orthodontic Clinic',
+      },
+    ],
   },
 };
 

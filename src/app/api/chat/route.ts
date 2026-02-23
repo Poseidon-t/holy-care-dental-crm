@@ -1,7 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
 
+if (!process.env.GROQ_API_KEY) {
+  throw new Error('GROQ_API_KEY environment variable is required');
+}
+
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+/* ─── Simple in-memory rate limiter ─── */
+const rateLimit = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_WINDOW = 60_000; // 1 minute
+const RATE_LIMIT_MAX = 10; // max 10 requests per minute per IP
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimit.get(ip);
+
+  if (!entry || now > entry.resetAt) {
+    rateLimit.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+    return false;
+  }
+
+  entry.count++;
+  if (entry.count > RATE_LIMIT_MAX) {
+    return true;
+  }
+
+  return false;
+}
+
+// Clean up stale entries every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  rateLimit.forEach((value, key) => {
+    if (now > value.resetAt) rateLimit.delete(key);
+  });
+}, 5 * 60_000);
 
 const SYSTEM_PROMPT = `You are the friendly AI assistant for Holy Care Dental & Orthodontic Clinic. Your name is "Holy Care Assistant".
 
@@ -48,6 +82,15 @@ interface ChatMessage {
 }
 
 export async function POST(request: NextRequest) {
+  // Rate limiting
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please wait a moment before trying again.' },
+      { status: 429 }
+    );
+  }
+
   try {
     const { messages } = (await request.json()) as { messages: ChatMessage[] };
 
@@ -65,7 +108,7 @@ export async function POST(request: NextRequest) {
         m &&
         typeof m.content === 'string' &&
         m.content.trim().length > 0 &&
-        m.content.length <= 2000 &&
+        m.content.length <= 500 &&
         validRoles.includes(m.role)
     );
 
