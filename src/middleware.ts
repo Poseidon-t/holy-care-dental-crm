@@ -26,6 +26,12 @@ function isPublicPath(pathname: string, method: string): boolean {
   // Theme API - GET only (needed for client hydration)
   if (pathname === '/api/settings/theme' && method === 'GET') return true;
 
+  // Chat API - POST only (public chatbot)
+  if (pathname === '/api/chat' && method === 'POST') return true;
+
+  // Knowledge/Articles pages - public
+  if (pathname.startsWith('/knowledge')) return true;
+
   return false;
 }
 

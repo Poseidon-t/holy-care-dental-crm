@@ -190,6 +190,7 @@ const NAV_LINKS = [
   { href: '#reviews', label: 'Reviews' },
   { href: '#gallery', label: 'Gallery' },
   { href: '#contact', label: 'Contact' },
+  { href: '/knowledge', label: 'Knowledge' },
 ];
 
 /* ═══════════════════════════════════════════════

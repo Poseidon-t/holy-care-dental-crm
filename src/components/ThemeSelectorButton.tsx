@@ -45,7 +45,7 @@ export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) 
   const allThemes = [...THEMES.light, ...THEMES.dark];
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] no-print">
+    <div className="fixed bottom-6 left-6 z-[9999] no-print">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-12 h-12 rounded-full shadow-lg border-2 border-white/80 flex items-center justify-center transition-transform hover:scale-110 bg-surface-deep"
@@ -64,7 +64,7 @@ export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) 
             className="fixed inset-0 z-[-1]"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute bottom-16 right-0 bg-card border border-line rounded-2xl shadow-2xl p-5 w-72">
+          <div className="absolute bottom-16 left-0 bg-card border border-line rounded-2xl shadow-2xl p-5 w-72">
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm font-bold font-heading text-heading">Site Design</p>
               {isPending && <span className="text-xs text-muted">Saving...</span>}

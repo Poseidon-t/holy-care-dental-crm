@@ -324,6 +324,106 @@ html {
 }
 
 /* ═══════════════════════════════════════════════
+   Article Content Typography
+   ═══════════════════════════════════════════════ */
+.article-content h2 {
+  @apply text-2xl font-bold text-heading mt-8 mb-4;
+  font-family: var(--font-heading);
+}
+
+.article-content h3 {
+  @apply text-xl font-semibold text-heading mt-6 mb-3;
+  font-family: var(--font-heading);
+}
+
+.article-content p {
+  @apply text-body text-base leading-relaxed mb-4;
+}
+
+.article-content ul,
+.article-content ol {
+  @apply text-body text-base leading-relaxed mb-4 pl-6;
+}
+
+.article-content ul {
+  @apply list-disc;
+}
+
+.article-content ol {
+  @apply list-decimal;
+}
+
+.article-content li {
+  @apply mb-2;
+}
+
+.article-content strong {
+  @apply text-heading font-semibold;
+}
+
+.article-content blockquote {
+  @apply border-l-4 border-primary-400 pl-4 py-2 my-4 rounded-r-lg italic;
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+}
+
+.article-content img {
+  @apply rounded-xl my-6 w-full;
+}
+
+.article-content a {
+  @apply text-primary-600 underline hover:text-primary-700 transition-colors;
+}
+
+/* Tamil article content */
+.article-content.tamil p,
+.article-content.tamil li,
+.article-content.tamil blockquote {
+  font-family: 'Noto Sans Tamil', sans-serif;
+  font-size: max(1rem, 16px);
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════════════
+   Chat Widget Animations
+   ═══════════════════════════════════════════════ */
+@keyframes chat-bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
+}
+
+.chat-typing-dot {
+  animation: chat-bounce 1.4s ease-in-out infinite;
+}
+
+.chat-typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.chat-typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes chat-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-chat-open {
+  animation: chat-slide-up 0.25s ease-out;
+}
+
+/* ═══════════════════════════════════════════════
    Dentologie-style fade-in animations (Premium)
    ═══════════════════════════════════════════════ */
 @keyframes fade-in-up {
