@@ -3,6 +3,7 @@ import './globals.css';
 import { getSetting } from '@/lib/db';
 import { ThemeSelectorWrapper } from '@/components/ThemeSelectorWrapper';
 import { ChatWidget } from '@/components/ChatWidget';
+import { UpdateBanner } from '@/components/UpdateBanner';
 
 export const dynamic = 'force-dynamic';
 
@@ -205,6 +206,7 @@ export default async function RootLayout({
         {children}
         <ThemeSelectorWrapper currentTheme={theme} />
         <ChatWidget />
+        <UpdateBanner />
       </body>
     </html>
   );
