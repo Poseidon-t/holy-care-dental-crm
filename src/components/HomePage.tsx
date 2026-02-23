@@ -77,13 +77,12 @@ const WHY_CHOOSE_US = [
   {
     title: 'Specialized MDS Doctors',
     desc: 'Postgraduate specialists across orthodontics, endodontics, prosthodontics & more.',
+    bg: '#1a5c57',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-7 h-7">
-        <path d="M24 4l-2.5 6H14l6 4.5L17.5 21 24 17l6.5 4-2.5-6.5 6-4.5h-7.5L24 4z" fill="currentColor" opacity="0.15"/>
+      <svg viewBox="0 0 48 48" fill="none" className="w-8 h-8">
         <path d="M24 6l-1.8 4.4H17l4.3 3.2-1.8 4.7L24 15l4.5 3.3-1.8-4.7L31 10.4h-5.2L24 6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
         <rect x="12" y="22" width="24" height="18" rx="3" stroke="currentColor" strokeWidth="1.8"/>
         <path d="M12 28h24" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M20 28v12M28 28v12" stroke="currentColor" strokeWidth="1.2" opacity="0.4"/>
         <circle cx="24" cy="34" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
         <path d="M24 36.5V40" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
       </svg>
@@ -92,27 +91,25 @@ const WHY_CHOOSE_US = [
   {
     title: 'Advanced Orthodontic Care',
     desc: 'Precision braces, aligners & dentofacial orthopaedics for perfect smiles.',
+    bg: '#e8a87c',
+    light: true,
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-7 h-7">
+      <svg viewBox="0 0 48 48" fill="none" className="w-8 h-8">
         <path d="M8 24c0-8 7-16 16-16s16 8 16 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
         <rect x="14" y="20" width="6" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
         <rect x="21" y="20" width="6" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
         <rect x="28" y="20" width="6" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
         <line x1="13" y1="24" x2="35" y2="24" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <rect x="15.5" y="22.5" width="3" height="3" rx="0.75" fill="currentColor" opacity="0.2"/>
-        <rect x="22.5" y="22.5" width="3" height="3" rx="0.75" fill="currentColor" opacity="0.2"/>
-        <rect x="29.5" y="22.5" width="3" height="3" rx="0.75" fill="currentColor" opacity="0.2"/>
-        <path d="M12 32c2 4 6 8 12 8s10-4 12-8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
       </svg>
     ),
   },
   {
     title: 'Modern Equipment',
     desc: 'Digital X-rays, RVG sensors & sterilized instruments for accurate diagnosis.',
+    bg: '#4a7c9b',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-7 h-7">
+      <svg viewBox="0 0 48 48" fill="none" className="w-8 h-8">
         <rect x="10" y="8" width="28" height="22" rx="3" stroke="currentColor" strokeWidth="1.8"/>
-        <rect x="14" y="12" width="20" height="14" rx="1.5" fill="currentColor" opacity="0.1"/>
         <path d="M20 33v5M28 33v5M16 38h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
         <circle cx="24" cy="19" r="5" stroke="currentColor" strokeWidth="1.5"/>
         <path d="M22 19l1.5 1.5L27 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -120,31 +117,29 @@ const WHY_CHOOSE_US = [
     ),
   },
   {
-    title: 'Clean & Comfortable Clinic',
+    title: 'Clean & Comfortable',
     desc: 'Hospital-grade hygiene standards in a calm, welcoming environment.',
+    bg: '#5b8a6f',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-7 h-7">
-        <path d="M24 4l1.5 3.5L29 6l-1 3.8 3.8-.2-2.5 2.8 3.2 2.2-3.6 1.2 1.8 3.4-3.7-1.2L24 22l-3-3.7-3.7 1.2 1.8-3.4-3.6-1.2 3.2-2.2L16.2 9.6l3.8.2L19 6l3.5 1.5L24 4z" fill="currentColor" opacity="0.12"/>
+      <svg viewBox="0 0 48 48" fill="none" className="w-8 h-8">
         <path d="M24 8v3M30 10l-2 2M18 10l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
         <path d="M14 20h20a4 4 0 014 4v14a4 4 0 01-4 4H14a4 4 0 01-4-4V24a4 4 0 014-4z" stroke="currentColor" strokeWidth="1.8"/>
-        <path d="M10 26h28" stroke="currentColor" strokeWidth="1.2" opacity="0.3"/>
+        <path d="M10 26h28" stroke="currentColor" strokeWidth="1.2" opacity="0.4"/>
         <path d="M24 30v6M21 33h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
       </svg>
     ),
   },
   {
-    title: 'Affordable & Transparent Pricing',
+    title: 'Affordable Pricing',
     desc: 'Upfront costs, no hidden charges — quality dental care within your budget.',
+    bg: '#8b6f47',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-7 h-7">
+      <svg viewBox="0 0 48 48" fill="none" className="w-8 h-8">
         <rect x="6" y="14" width="36" height="22" rx="4" stroke="currentColor" strokeWidth="1.8"/>
-        <rect x="6" y="14" width="36" height="6" fill="currentColor" opacity="0.1"/>
-        <circle cx="24" cy="29" r="5" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M24 26v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M22 27.5h3.5a1.25 1.25 0 010 2.5H22.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-        <path d="M22 30h3.5a1.25 1.25 0 010 2.5H22" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-        <circle cx="12" cy="29" r="1.5" fill="currentColor" opacity="0.3"/>
-        <circle cx="36" cy="29" r="1.5" fill="currentColor" opacity="0.3"/>
+        <circle cx="24" cy="25" r="5" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M24 22v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M22 23.5h3.5a1.25 1.25 0 010 2.5H22.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+        <path d="M22 26h3.5a1.25 1.25 0 010 2.5H22" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
       </svg>
     ),
   },
@@ -556,7 +551,7 @@ export default function HomePage({ theme }: { theme: string }) {
         </div>
       </section>
 
-      {/* ─── 4. Why Choose Us — icon strip ─── */}
+      {/* ─── 4. Why Choose Us — Colored accent cards ─── */}
       <section className="py-16 md:py-24 bg-surface-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -564,14 +559,18 @@ export default function HomePage({ theme }: { theme: string }) {
               Why Choose <em>Holy Care?</em>
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {WHY_CHOOSE_US.map((item) => (
-              <div key={item.title} className="group text-center px-5 py-8 rounded-3xl bg-card border border-line hover:shadow-xl transition-all duration-300">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-surface-alt text-heading mb-5 group-hover:scale-110 transition-transform">
+              <div
+                key={item.title}
+                className="group rounded-3xl p-6 md:p-7 text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                style={{ backgroundColor: item.bg }}
+              >
+                <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5 ${item.light ? 'bg-black/10 text-[#1a1a1a]' : 'bg-white/15 text-white'}`}>
                   {item.icon}
                 </div>
-                <h3 className="font-semibold text-heading text-sm leading-snug mb-2">{item.title}</h3>
-                <p className="text-xs text-muted leading-relaxed">{item.desc}</p>
+                <h3 className={`font-semibold text-sm leading-snug mb-2 ${item.light ? 'text-[#1a1a1a]' : 'text-white'}`}>{item.title}</h3>
+                <p className={`text-xs leading-relaxed ${item.light ? 'text-[#1a1a1a]/70' : 'text-white/70'}`}>{item.desc}</p>
               </div>
             ))}
           </div>
