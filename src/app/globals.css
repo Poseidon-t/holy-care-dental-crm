@@ -57,54 +57,53 @@
 
 /* ═══════════════════════════════════════════════
    Theme: Premium (Dentologie-inspired)
-   Warm beige bg, serif headings, muted neutral tones
-   Matches hsl(40 20% 95%) palette
+   Very light off-white bg, serif headings, clean neutral tones
    ═══════════════════════════════════════════════ */
 [data-theme="premium"] {
-  /* Primary accent (warm muted taupe — intentionally subtle) */
-  --color-primary-50: #f9f6f1;
-  --color-primary-100: #efe9df;
-  --color-primary-200: #e0d5c6;
-  --color-primary-300: #cbbda8;
-  --color-primary-400: #b3a18a;
-  --color-primary-500: #9a856e;
-  --color-primary-600: #82705a;
-  --color-primary-700: #6a5a49;
-  --color-primary-800: #54473b;
-  --color-primary-900: #3d342c;
+  /* Primary accent — subtle warm neutral */
+  --color-primary-50: #f8f7f5;
+  --color-primary-100: #efedea;
+  --color-primary-200: #e0ddd8;
+  --color-primary-300: #c8c3bb;
+  --color-primary-400: #aba59b;
+  --color-primary-500: #918a7f;
+  --color-primary-600: #7a7368;
+  --color-primary-700: #635c53;
+  --color-primary-800: #4d4841;
+  --color-primary-900: #3a3530;
 
-  /* Surfaces — Dentologie warm cream palette */
-  --color-surface: #f2ede4;
-  --color-surface-alt: #ebe5da;
-  --color-surface-deep: #2c2520;
-  --color-surface-deepest: #1a1512;
-  --color-card: #faf7f2;
+  /* Surfaces — barely off-white, like Dentologie */
+  --color-surface: #f5f4f1;
+  --color-surface-alt: #eeedea;
+  --color-surface-deep: #1a1a1a;
+  --color-surface-deepest: #111111;
+  --color-card: #ffffff;
 
-  /* Text — warm grays */
-  --color-text-heading: #2c2520;
-  --color-text-body: #5c524a;
-  --color-text-muted: #706a61;
-  --color-text-faint: #a09688;
-  --color-text-on-deep: #f2ede4;
+  /* Text — clean neutrals */
+  --color-text-heading: #1a1a1a;
+  --color-text-body: #555555;
+  --color-text-muted: #777777;
+  --color-text-faint: #999999;
+  --color-text-on-deep: #f5f4f1;
 
-  /* Borders — warm translucent */
-  --color-border: #e0d8cc;
-  --color-border-subtle: #ebe5da;
-  --color-border-strong: #d0c6b8;
+  /* Borders — light neutral */
+  --color-border: #e5e4e1;
+  --color-border-subtle: #eeedea;
+  --color-border-strong: #d4d3d0;
 
-  /* Nav — frosted warm glass */
-  --color-nav-bg: rgba(242, 237, 228, 0.80);
+  /* Nav — frosted glass */
+  --color-nav-bg: rgba(245, 244, 241, 0.80);
 
   /* Typography (serif headings) */
   --font-heading: 'Playfair Display', Georgia, serif;
 
   /* Scrollbar */
-  --color-scrollbar-track: #ebe5da;
-  --color-scrollbar-thumb: #d0c6b8;
+  --color-scrollbar-track: #eeedea;
+  --color-scrollbar-thumb: #d4d3d0;
 
   /* Button on deep */
-  --color-btn-dark: #2c2520;
-  --color-btn-dark-hover: #3d342c;
+  --color-btn-dark: #1a1a1a;
+  --color-btn-dark-hover: #333333;
 }
 
 /* ═══════════════════════════════════════════════

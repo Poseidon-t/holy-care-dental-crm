@@ -249,38 +249,45 @@ export default function HomePage({ theme }: { theme: string }) {
 
       {/* ─── Hero ─── */}
       {isPremium ? (
-        /* ═══ PREMIUM HERO — Centered Dentologie-style ═══ */
+        /* ═══ PREMIUM HERO — Dentologie-style centered ═══ */
         <section className="bg-surface">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8 md:pt-24 md:pb-12 text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-heading text-heading leading-tight animate-fade-in-up">
-              <em>Confident</em> Smiles,{' '}
-              <span className="text-primary-600">Begin Here</span>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-6 md:pt-24 md:pb-10 text-center">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-heading leading-[1.15] animate-fade-in-up">
+              A better <strong className="font-bold">dental</strong> experience,
+              <br />
+              by <em>design.</em>
             </h1>
-            <p className="mt-6 md:mt-8 text-lg md:text-xl text-muted max-w-2xl mx-auto animate-fade-in-up animation-delay-100">
-              Advanced orthodontic &amp; complete dental care by MDS specialists in Kavalkinaru &ndash; Vadakankulam.
+            <p className="mt-6 md:mt-8 text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed animate-fade-in-up animation-delay-100">
+              Expert care from MDS specialist dentists, delivering the best patient experience in Kavalkinaru &ndash; Vadakankulam.
             </p>
-            <p className="mt-2 text-sm text-faint tamil animate-fade-in-up animation-delay-100">
-              நம்பிக்கையான புன்னகை இங்கே தொடங்குகிறது
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-200">
+            <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-200">
               <a href="tel:+917977257779" className="bg-surface-deep text-ondeep px-8 py-3.5 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity inline-flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                 Book Appointment
               </a>
-              <a href="#specialties" className="border border-line-strong text-heading px-8 py-3.5 rounded-full text-sm font-medium hover:bg-surface-alt transition-colors inline-flex items-center justify-center">
-                View Specialities
+              <a href="tel:+917977257779" className="border-2 border-heading text-heading px-8 py-3.5 rounded-full text-sm font-medium hover:bg-surface-alt transition-colors inline-flex items-center justify-center gap-2">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                Call to Book 079772 57779
               </a>
+            </div>
+            {/* Star rating */}
+            <div className="mt-6 md:mt-8 flex items-center justify-center gap-2 animate-fade-in-up animation-delay-300">
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-yellow-500 text-lg">&#9733;</span>
+                ))}
+              </div>
+              <span className="text-muted text-sm font-medium">5.0 rating on Google Reviews</span>
             </div>
           </div>
           {/* Large hero image */}
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24 animate-fade-in-up animation-delay-300">
-            <div className="rounded-3xl overflow-hidden shadow-2xl">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24">
+            <div className="rounded-3xl overflow-hidden shadow-2xl animate-fade-in-up animation-delay-300">
               <Image
-                src="/images/clinic-exterior-1.jpg"
-                alt="Holy Care Dental & Orthodontic Clinic"
-                width={1200}
+                src="/images/clinic-interior-glass.jpg"
+                alt="Holy Care Dental & Orthodontic Clinic Interior"
+                width={1400}
                 height={600}
-                className="object-cover w-full h-[280px] sm:h-[360px] md:h-[460px]"
+                className="object-cover w-full h-[280px] sm:h-[380px] md:h-[500px]"
                 priority
               />
             </div>
