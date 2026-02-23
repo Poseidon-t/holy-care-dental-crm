@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -189,6 +189,63 @@ const GOOGLE_REVIEWS = [
   },
 ];
 
+const TRUST_STATS = [
+  {
+    value: '500+',
+    label: 'Happy Patients',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    value: '5.0',
+    label: 'Google Rating',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    value: '6+',
+    label: 'Years Experience',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" strokeWidth="1.5"/>
+      </svg>
+    ),
+  },
+  {
+    value: '10,000+',
+    label: 'Procedures Done',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+];
+
+function GoogleGLogo({ className = 'w-5 h-5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24">
+      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+    </svg>
+  );
+}
+
 const WORKING_HOURS = [
   { day: 'Monday \u2013 Friday', hours: '10:30 AM \u2013 1:30 PM, 5:30 PM \u2013 8:00 PM' },
   { day: 'Saturday', hours: '10:30 AM \u2013 1:30 PM' },
@@ -319,37 +376,6 @@ function Footer() {
 
 export default function HomePage({ theme }: { theme: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [currentReview, setCurrentReview] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  // Auto-advance testimonials — resets timer on user interaction
-  const resetTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setCurrentReview((prev) => (prev + 1) % GOOGLE_REVIEWS.length);
-    }, 6000);
-  }, []);
-
-  useEffect(() => {
-    resetTimer();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [resetTimer]);
-
-  const nextReview = useCallback(() => {
-    setCurrentReview((prev) => (prev + 1) % GOOGLE_REVIEWS.length);
-    resetTimer();
-  }, [resetTimer]);
-
-  const prevReview = useCallback(() => {
-    setCurrentReview((prev) => (prev - 1 + GOOGLE_REVIEWS.length) % GOOGLE_REVIEWS.length);
-    resetTimer();
-  }, [resetTimer]);
-
-  const goToReview = useCallback((i: number) => {
-    setCurrentReview(i);
-    resetTimer();
-  }, [resetTimer]);
-
   // Suppress unused var warning — theme drives CSS variables via data-theme attribute
   void theme;
 
@@ -437,82 +463,95 @@ export default function HomePage({ theme }: { theme: string }) {
         </div>
       </section>
 
-      {/* ─── 3. Patient Love — Single Testimonial Carousel ─── */}
+      {/* ─── 3. Social Proof — Trust Stats + Google Reviews ─── */}
       <section id="reviews" className="py-16 md:py-24 bg-surface">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
-              Patient <em>Love</em>
+              Trusted by <em>Patients</em>
             </h2>
-            <div className="mt-4 inline-flex items-center gap-2">
-              <div className="flex gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-amber-400 text-lg">&#9733;</span>
-                ))}
+            <p className="mt-4 text-lg text-muted max-w-2xl mx-auto">
+              Real experiences from real patients. See why families in Kavalkinaru trust Holy Care Dental.
+            </p>
+          </div>
+
+          {/* Trust Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-14 md:mb-20">
+            {TRUST_STATS.map((stat) => (
+              <div
+                key={stat.label}
+                className="bg-card rounded-2xl border border-line p-5 md:p-6 text-center hover:shadow-lg hover:border-line-strong transition-all duration-300 group"
+              >
+                <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-primary-50 text-primary-600 mb-3 group-hover:scale-110 transition-transform">
+                  {stat.icon}
+                </div>
+                <div className="text-2xl md:text-3xl font-bold font-heading text-heading">{stat.value}</div>
+                <div className="text-sm text-muted mt-1">{stat.label}</div>
               </div>
-              <span className="text-muted text-sm">5.0 on Google</span>
+            ))}
+          </div>
+
+          {/* Google Rating Badge */}
+          <div className="flex justify-center mb-10">
+            <div className="inline-flex items-center gap-3 bg-card rounded-2xl border border-line px-6 py-4 shadow-sm">
+              <GoogleGLogo className="w-8 h-8" />
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-bold font-heading text-heading">5.0</span>
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="text-amber-400 text-base">&#9733;</span>
+                    ))}
+                  </div>
+                </div>
+                <span className="text-sm text-muted">Based on Google Reviews</span>
+              </div>
             </div>
           </div>
 
-          {/* Carousel */}
-          <div className="relative px-8 md:px-16">
-            {/* Large quote mark */}
-            <div className="text-7xl md:text-8xl text-primary-200 leading-none font-serif select-none text-center" aria-hidden="true">
-              &ldquo;
-            </div>
-
-            {/* Review content */}
-            <div key={currentReview} className="animate-review-fade text-center mt-2">
-              <p className="text-xl md:text-2xl text-heading font-heading leading-relaxed max-w-3xl mx-auto">
-                {GOOGLE_REVIEWS[currentReview].text}
-              </p>
-              <div className="mt-8">
-                <div className="w-12 h-12 bg-surface-alt rounded-full flex items-center justify-center text-heading font-bold text-lg mx-auto mb-3">
-                  {GOOGLE_REVIEWS[currentReview].name.charAt(0)}
-                </div>
-                <p className="font-bold text-heading text-base">{GOOGLE_REVIEWS[currentReview].name}</p>
-                <div className="flex items-center justify-center gap-2 mt-1">
-                  <div className="flex gap-0.5">
-                    {[...Array(GOOGLE_REVIEWS[currentReview].rating)].map((_, i) => (
-                      <span key={i} className="text-amber-400 text-sm">&#9733;</span>
-                    ))}
+          {/* Review Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            {GOOGLE_REVIEWS.map((review) => (
+              <div
+                key={review.name}
+                className="bg-card rounded-2xl border border-line p-6 hover:shadow-lg hover:border-line-strong transition-all duration-300 flex flex-col"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-primary-50 text-primary-600 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
+                      {review.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-heading text-sm">{review.name}</p>
+                      <p className="text-xs text-faint">{review.date}</p>
+                    </div>
                   </div>
-                  <span className="text-xs text-faint">{GOOGLE_REVIEWS[currentReview].date}</span>
+                  <GoogleGLogo className="w-5 h-5 flex-shrink-0" />
                 </div>
+                <div className="flex gap-0.5 mb-3">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <span key={i} className="text-amber-400 text-sm">&#9733;</span>
+                  ))}
+                </div>
+                <p className="text-body text-sm leading-relaxed">{review.text}</p>
               </div>
-            </div>
+            ))}
+          </div>
 
-            {/* Navigation dots */}
-            <div className="mt-10 flex justify-center gap-2">
-              {GOOGLE_REVIEWS.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goToReview(i)}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    i === currentReview
-                      ? 'bg-heading w-8'
-                      : 'bg-line-strong w-2.5 hover:bg-muted'
-                  }`}
-                  aria-label={`Go to review ${i + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Prev/Next arrows */}
-            <button
-              onClick={prevReview}
-              className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-line bg-card flex items-center justify-center text-muted hover:text-heading hover:border-heading transition-all shadow-sm"
-              aria-label="Previous review"
+          {/* CTA */}
+          <div className="text-center mt-10 md:mt-12">
+            <a
+              href="https://maps.app.goo.gl/HolyCareKavalkinaru"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-heading hover:opacity-70 transition-opacity"
             >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
-            </button>
-            <button
-              onClick={nextReview}
-              className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-line bg-card flex items-center justify-center text-muted hover:text-heading hover:border-heading transition-all shadow-sm"
-              aria-label="Next review"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
-            </button>
+              <GoogleGLogo className="w-4 h-4" />
+              See All Reviews on Google
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17L17 7M17 7H7M17 7v10" />
+              </svg>
+            </a>
           </div>
         </div>
       </section>
