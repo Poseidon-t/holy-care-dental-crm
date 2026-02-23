@@ -107,6 +107,112 @@
 }
 
 /* ═══════════════════════════════════════════════
+   Theme: Midnight Blue (Dark)
+   Deep navy with cool blue accents
+   ═══════════════════════════════════════════════ */
+[data-theme="midnight-blue"] {
+  /* Primary accent (blue) */
+  --color-primary-50: #1e3a5f;
+  --color-primary-100: #1e3a5f;
+  --color-primary-200: #2563eb;
+  --color-primary-300: #3b82f6;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #60a5fa;
+  --color-primary-700: #93bbfd;
+  --color-primary-800: #bfdbfe;
+  --color-primary-900: #dbeafe;
+
+  /* Surfaces (deep navy) */
+  --color-surface: #0b1120;
+  --color-surface-alt: #111827;
+  --color-surface-deep: #060a14;
+  --color-surface-deepest: #030712;
+  --color-card: #1e293b;
+
+  /* Text (light on dark) */
+  --color-text-heading: #f1f5f9;
+  --color-text-body: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-faint: #64748b;
+  --color-text-on-deep: #f8fafc;
+
+  /* Borders (subtle dark) */
+  --color-border: #1e293b;
+  --color-border-subtle: #162032;
+  --color-border-strong: #334155;
+
+  /* Nav */
+  --color-nav-bg: rgba(11, 17, 32, 0.95);
+
+  /* Typography */
+  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Scrollbar */
+  --color-scrollbar-track: #111827;
+  --color-scrollbar-thumb: #334155;
+
+  /* Button on deep */
+  --color-btn-dark: #1e293b;
+  --color-btn-dark-hover: #334155;
+
+  color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════
+   Theme: Dark Gold (Dark)
+   Dark charcoal with Holy Cross golden-yellow accents
+   ═══════════════════════════════════════════════ */
+[data-theme="dark-gold"] {
+  /* Primary accent (golden yellow — same hue as Classic) */
+  --color-primary-50: #422006;
+  --color-primary-100: #422006;
+  --color-primary-200: #a16207;
+  --color-primary-300: #ca8a04;
+  --color-primary-400: #eab308;
+  --color-primary-500: #eab308;
+  --color-primary-600: #facc15;
+  --color-primary-700: #fde047;
+  --color-primary-800: #fef08a;
+  --color-primary-900: #fef9c3;
+
+  /* Surfaces (warm dark charcoal) */
+  --color-surface: #141210;
+  --color-surface-alt: #1c1917;
+  --color-surface-deep: #0c0a09;
+  --color-surface-deepest: #050403;
+  --color-card: #292524;
+
+  /* Text (warm light on dark) */
+  --color-text-heading: #fafaf9;
+  --color-text-body: #d6d3d1;
+  --color-text-muted: #a8a29e;
+  --color-text-faint: #78716c;
+  --color-text-on-deep: #fafaf9;
+
+  /* Borders (warm dark) */
+  --color-border: #292524;
+  --color-border-subtle: #1c1917;
+  --color-border-strong: #44403c;
+
+  /* Nav */
+  --color-nav-bg: rgba(20, 18, 16, 0.95);
+
+  /* Typography */
+  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Scrollbar */
+  --color-scrollbar-track: #1c1917;
+  --color-scrollbar-thumb: #44403c;
+
+  /* Button on deep */
+  --color-btn-dark: #292524;
+  --color-btn-dark-hover: #44403c;
+
+  color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════
    Base & Component Styles
    ═══════════════════════════════════════════════ */
 

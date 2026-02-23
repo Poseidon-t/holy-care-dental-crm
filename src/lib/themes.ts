@@ -1,4 +1,4 @@
-export const THEME_IDS = ['classic', 'premium'] as const;
+export const THEME_IDS = ['classic', 'premium', 'midnight-blue', 'dark-gold'] as const;
 
 export type ThemeId = (typeof THEME_IDS)[number];
 
@@ -7,20 +7,37 @@ export interface ThemeMeta {
   name: string;
   description: string;
   previewColor: string;
+  mode: 'light' | 'dark';
 }
 
 export const THEMES: ThemeMeta[] = [
   {
     id: 'classic',
     name: 'Classic',
-    description: 'Bold golden-yellow with clean white layout',
+    description: 'Golden-yellow with clean white layout',
     previewColor: '#eab308',
+    mode: 'light',
   },
   {
     id: 'premium',
     name: 'Premium',
     description: 'Warm beige with elegant serif headings',
     previewColor: '#b8a590',
+    mode: 'light',
+  },
+  {
+    id: 'midnight-blue',
+    name: 'Midnight Blue',
+    description: 'Deep navy with cool blue accents',
+    previewColor: '#3b82f6',
+    mode: 'dark',
+  },
+  {
+    id: 'dark-gold',
+    name: 'Dark Gold',
+    description: 'Dark charcoal with golden-yellow accents',
+    previewColor: '#eab308',
+    mode: 'dark',
   },
 ];
 

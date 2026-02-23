@@ -3,10 +3,16 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 
-const THEMES = [
-  { id: 'classic', name: 'Classic', description: 'Bold golden-yellow, clean white', color: '#eab308' },
-  { id: 'premium', name: 'Premium', description: 'Warm beige, serif headings', color: '#b8a590' },
-] as const;
+const THEMES = {
+  light: [
+    { id: 'classic', name: 'Classic', description: 'Golden-yellow, clean white', color: '#eab308' },
+    { id: 'premium', name: 'Premium', description: 'Warm beige, serif headings', color: '#b8a590' },
+  ],
+  dark: [
+    { id: 'midnight-blue', name: 'Midnight Blue', description: 'Deep navy, blue accents', color: '#3b82f6' },
+    { id: 'dark-gold', name: 'Dark Gold', description: 'Dark charcoal, golden accents', color: '#eab308' },
+  ],
+};
 
 export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,11 +21,9 @@ export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) 
   const router = useRouter();
 
   const handleThemeSelect = async (themeId: string) => {
-    // Instant preview
     document.documentElement.setAttribute('data-theme', themeId);
     setActiveTheme(themeId);
 
-    // Persist to database
     try {
       await fetch('/api/settings/theme', {
         method: 'PUT',
@@ -38,9 +42,10 @@ export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) 
     setIsOpen(false);
   };
 
+  const allThemes = [...THEMES.light, ...THEMES.dark];
+
   return (
     <div className="fixed bottom-6 right-6 z-[9999] no-print">
-      {/* Floating button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-12 h-12 rounded-full shadow-lg border-2 border-white/80 flex items-center justify-center transition-transform hover:scale-110 bg-surface-deep"
@@ -53,10 +58,8 @@ export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) 
         </svg>
       </button>
 
-      {/* Theme panel */}
       {isOpen && (
         <>
-          {/* Backdrop */}
           <div
             className="fixed inset-0 z-[-1]"
             onClick={() => setIsOpen(false)}
@@ -66,24 +69,62 @@ export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) 
               <p className="text-sm font-bold font-heading text-heading">Site Design</p>
               {isPending && <span className="text-xs text-muted">Saving...</span>}
             </div>
-            <div className="space-y-2">
-              {THEMES.map((t) => (
+
+            {/* Light Themes */}
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-muted mb-2">Light</p>
+            <div className="space-y-1.5 mb-4">
+              {THEMES.light.map((t) => (
                 <button
                   key={t.id}
                   onClick={() => handleThemeSelect(t.id)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all ${
+                  className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all ${
                     activeTheme === t.id
                       ? 'ring-2 ring-primary-500 bg-primary-50'
                       : 'hover:bg-surface-alt border border-line'
                   }`}
                 >
                   <span
-                    className="w-8 h-8 rounded-full border-2 border-line-strong flex-shrink-0"
+                    className="w-7 h-7 rounded-full border-2 border-line-strong flex-shrink-0"
                     style={{ backgroundColor: t.color }}
                   />
-                  <div>
+                  <div className="min-w-0">
                     <span className="text-sm font-semibold text-heading block">{t.name}</span>
-                    <span className="text-xs text-muted">{t.description}</span>
+                    <span className="text-[11px] text-muted">{t.description}</span>
+                  </div>
+                  {activeTheme === t.id && (
+                    <svg className="w-4 h-4 text-primary-600 ml-auto flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Dark Themes */}
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-muted mb-2">Dark</p>
+            <div className="space-y-1.5">
+              {THEMES.dark.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => handleThemeSelect(t.id)}
+                  className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all ${
+                    activeTheme === t.id
+                      ? 'ring-2 ring-primary-500 bg-primary-50'
+                      : 'hover:bg-surface-alt border border-line'
+                  }`}
+                >
+                  <span
+                    className="w-7 h-7 rounded-full border-2 border-line-strong flex-shrink-0 relative"
+                    style={{ backgroundColor: t.color }}
+                  >
+                    {/* Dark indicator - half circle */}
+                    <span className="absolute inset-0 rounded-full overflow-hidden">
+                      <span className="absolute top-0 left-0 w-1/2 h-full bg-gray-900/50" />
+                    </span>
+                  </span>
+                  <div className="min-w-0">
+                    <span className="text-sm font-semibold text-heading block">{t.name}</span>
+                    <span className="text-[11px] text-muted">{t.description}</span>
                   </div>
                   {activeTheme === t.id && (
                     <svg className="w-4 h-4 text-primary-600 ml-auto flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
