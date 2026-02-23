@@ -163,8 +163,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  let theme = getSetting('theme') || 'classic';
-  if (theme === 'premium') theme = 'classic';
+  const theme = getSetting('theme') || 'classic';
 
   return (
     <html lang="en" data-theme={theme}>

@@ -25,8 +25,6 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  let theme = getSetting('theme') || 'classic';
-  // Handle legacy theme names
-  if (theme === 'premium') theme = 'classic';
+  const theme = getSetting('theme') || 'classic';
   return <HomePage theme={theme} />;
 }
