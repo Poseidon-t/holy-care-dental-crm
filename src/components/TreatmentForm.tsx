@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import SignatureCanvas from './SignatureCanvas';
 
 interface TreatmentEntry {
@@ -25,13 +25,13 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-
-  let nextId = entries.length > 0 ? Math.max(...entries.map(e => e.id)) + 1 : 1;
+  const nextIdRef = useRef(2);
 
   const addRow = () => {
+    const id = nextIdRef.current++;
     setEntries(prev => [
       ...prev,
-      { id: nextId++, appointment_date: new Date().toISOString().split('T')[0], description: '', amount: '' },
+      { id, appointment_date: new Date().toISOString().split('T')[0], description: '', amount: '' },
     ]);
   };
 

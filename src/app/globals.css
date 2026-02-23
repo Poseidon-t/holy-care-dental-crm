@@ -112,7 +112,7 @@
    ═══════════════════════════════════════════════ */
 [data-theme="midnight-blue"] {
   /* Primary accent (blue) */
-  --color-primary-50: #1e3a5f;
+  --color-primary-50: #0f1d33;
   --color-primary-100: #1e3a5f;
   --color-primary-200: #2563eb;
   --color-primary-300: #3b82f6;
@@ -165,7 +165,7 @@
    ═══════════════════════════════════════════════ */
 [data-theme="dark-gold"] {
   /* Primary accent (golden yellow — same hue as Classic) */
-  --color-primary-50: #422006;
+  --color-primary-50: #271304;
   --color-primary-100: #422006;
   --color-primary-200: #a16207;
   --color-primary-300: #ca8a04;
@@ -224,7 +224,7 @@
 
   .tamil {
     font-family: 'Noto Sans Tamil', sans-serif;
-    font-size: max(0.875rem, 14px);
+    font-size: max(1rem, 16px);
   }
 }
 

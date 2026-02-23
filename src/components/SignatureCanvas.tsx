@@ -36,7 +36,7 @@ export default function SignatureCanvas({ label, tamilLabel, value, onChange, re
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        ctx.strokeStyle = '#1e293b';
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-text-heading').trim() || '#1e293b';
       }
     };
 

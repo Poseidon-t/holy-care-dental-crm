@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/dashboard/', '/api/', '/login', '/register/', '/report/'],
+        disallow: ['/dashboard/', '/api/', '/login/', '/register/', '/report/'],
       },
     ],
     sitemap: 'https://patient-rejoicing-production-8ead.up.railway.app/sitemap.xml',

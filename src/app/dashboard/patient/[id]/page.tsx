@@ -75,10 +75,12 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
   const [showDoctorSign, setShowDoctorSign] = useState(false);
   const [doctorSignature, setDoctorSignature] = useState('');
   const [isSavingSignature, setIsSavingSignature] = useState(false);
+  const [signatureError, setSignatureError] = useState('');
 
   async function saveDoctorSignature() {
     if (!doctorSignature) return;
     setIsSavingSignature(true);
+    setSignatureError('');
     try {
       const response = await fetch(`/api/patients/${id}`, {
         method: 'PATCH',
@@ -91,10 +93,10 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
         setDoctorSignature('');
       } else {
         const data = await response.json();
-        alert(data.error || 'Failed to save signature');
+        setSignatureError(data.error || 'Failed to save signature');
       }
     } catch {
-      alert('Failed to save signature');
+      setSignatureError('Failed to save signature. Please try again.');
     } finally {
       setIsSavingSignature(false);
     }
@@ -308,16 +310,21 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                         value={doctorSignature}
                         onChange={setDoctorSignature}
                       />
+                      {signatureError && (
+                        <div className="bg-red-50 border border-red-200 text-red-700 p-2.5 rounded-lg text-sm">
+                          {signatureError}
+                        </div>
+                      )}
                       <div className="flex gap-2">
                         <button
                           onClick={saveDoctorSignature}
                           disabled={!doctorSignature || isSavingSignature}
-                          className="btn-primary text-sm disabled:opacity-50"
+                          className="btn-primary text-sm"
                         >
                           {isSavingSignature ? 'Saving...' : 'Confirm Signature'}
                         </button>
                         <button
-                          onClick={() => { setShowDoctorSign(false); setDoctorSignature(''); }}
+                          onClick={() => { setShowDoctorSign(false); setDoctorSignature(''); setSignatureError(''); }}
                           className="btn-secondary text-sm"
                         >
                           Cancel

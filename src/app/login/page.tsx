@@ -48,8 +48,9 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div>
-            <label className="label-field">Username</label>
+            <label htmlFor="username" className="label-field">Username</label>
             <input
+              id="username"
               type="text"
               className="input-field"
               value={username}
@@ -57,18 +58,21 @@ export default function LoginPage() {
               placeholder="Enter username"
               required
               autoFocus
+              autoComplete="username"
             />
           </div>
 
           <div>
-            <label className="label-field">Password</label>
+            <label htmlFor="password" className="label-field">Password</label>
             <input
+              id="password"
               type="password"
               className="input-field"
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="Enter password"
               required
+              autoComplete="current-password"
             />
           </div>
 

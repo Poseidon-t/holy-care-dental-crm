@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function ArticleNav({ breadcrumb }: { breadcrumb?: string }) {
   return (
-    <nav className="bg-[var(--color-nav-bg)] backdrop-blur-md sticky top-0 z-50 border-b border-line">
+    <nav aria-label="Breadcrumb" className="bg-[var(--color-nav-bg)] backdrop-blur-md sticky top-0 z-50 border-b border-line">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">

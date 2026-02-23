@@ -80,6 +80,9 @@ export default function DashboardPage() {
       a.href = canvas.toDataURL('image/png');
       a.click();
     };
+    img.onerror = () => {
+      console.error('Failed to generate QR image for download');
+    };
     img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
   };
 
@@ -111,6 +114,7 @@ export default function DashboardPage() {
               placeholder="Search by name, OP number, or phone..."
               value={search}
               onChange={e => setSearch(e.target.value)}
+              aria-label="Search patients"
             />
           </div>
           <div className="flex gap-2 flex-wrap">
@@ -119,14 +123,14 @@ export default function DashboardPage() {
               className="input-field w-auto"
               value={dateFrom}
               onChange={e => setDateFrom(e.target.value)}
-              title="From date"
+              aria-label="Filter from date"
             />
             <input
               type="date"
               className="input-field w-auto"
               value={dateTo}
               onChange={e => setDateTo(e.target.value)}
-              title="To date"
+              aria-label="Filter to date"
             />
           </div>
         </div>
@@ -245,7 +249,7 @@ export default function DashboardPage() {
                     level="M"
                     includeMargin={false}
                     bgColor="#FFFFFF"
-                    fgColor="#1e3a5f"
+                    fgColor="#000000"
                   />
                 </div>
 

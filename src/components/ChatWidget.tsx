@@ -116,7 +116,7 @@ export function ChatWidget() {
 
   // Expanded: chat panel
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] no-print w-[360px] sm:w-[400px] max-h-[min(600px,80vh)] bg-card rounded-2xl shadow-2xl border border-line flex flex-col overflow-hidden animate-chat-open">
+    <div className="fixed bottom-6 right-6 z-[9999] no-print w-[min(360px,calc(100vw-48px))] sm:w-[400px] max-h-[min(600px,80vh)] bg-card rounded-2xl shadow-2xl border border-line flex flex-col overflow-hidden animate-chat-open">
       {/* Header */}
       <div className="px-4 py-3 bg-[var(--color-surface-deep)] text-[var(--color-text-on-deep)] flex items-center justify-between rounded-t-2xl flex-shrink-0">
         <div className="flex items-center gap-2.5">
@@ -142,7 +142,7 @@ export function ChatWidget() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-surface-alt min-h-0" style={{ maxHeight: 'calc(min(600px, 80vh) - 130px)' }}>
+      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-surface-alt min-h-0" role="log" aria-live="polite" aria-label="Chat messages" style={{ maxHeight: 'calc(min(600px, 80vh) - 130px)', WebkitOverflowScrolling: 'touch' }}>
         {messages.map((msg, i) => (
           <div
             key={i}
@@ -183,13 +183,15 @@ export function ChatWidget() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type your question..."
+          maxLength={500}
+          aria-label="Type your question"
           className="flex-1 px-3 py-2.5 text-sm bg-surface-alt border border-line rounded-xl focus:border-primary-500 focus:ring-1 focus:ring-primary-200 focus:outline-none text-heading placeholder:text-faint"
           disabled={isLoading}
         />
         <button
           onClick={sendMessage}
           disabled={!input.trim() || isLoading}
-          className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center hover:bg-primary-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
+          className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center hover:bg-primary-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
           aria-label="Send message"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

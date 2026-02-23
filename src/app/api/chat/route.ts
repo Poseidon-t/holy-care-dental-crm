@@ -58,8 +58,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate message structure
+    const validRoles = ['user', 'assistant'];
+    const validMessages = messages.filter(
+      (m) =>
+        m &&
+        typeof m.content === 'string' &&
+        m.content.trim().length > 0 &&
+        m.content.length <= 2000 &&
+        validRoles.includes(m.role)
+    );
+
+    if (validMessages.length === 0) {
+      return NextResponse.json(
+        { error: 'No valid messages provided' },
+        { status: 400 }
+      );
+    }
+
     // Limit conversation history to last 20 messages to control token usage
-    const recentMessages = messages.slice(-20);
+    const recentMessages = validMessages.slice(-20);
 
     const completion = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
