@@ -57,49 +57,50 @@
 
 /* ═══════════════════════════════════════════════
    Theme: Premium (Dentologie-inspired)
-   Warm beige, serif headings, muted neutral tones
+   Warm beige bg, serif headings, muted neutral tones
+   Matches hsl(40 20% 95%) palette
    ═══════════════════════════════════════════════ */
 [data-theme="premium"] {
   /* Primary accent (warm muted taupe — intentionally subtle) */
-  --color-primary-50: #faf8f5;
-  --color-primary-100: #f0ebe4;
-  --color-primary-200: #e2d9cd;
-  --color-primary-300: #cfc2b0;
-  --color-primary-400: #b8a590;
-  --color-primary-500: #a08b74;
-  --color-primary-600: #8a7560;
-  --color-primary-700: #6e5d4d;
-  --color-primary-800: #564a3e;
+  --color-primary-50: #f9f6f1;
+  --color-primary-100: #efe9df;
+  --color-primary-200: #e0d5c6;
+  --color-primary-300: #cbbda8;
+  --color-primary-400: #b3a18a;
+  --color-primary-500: #9a856e;
+  --color-primary-600: #82705a;
+  --color-primary-700: #6a5a49;
+  --color-primary-800: #54473b;
   --color-primary-900: #3d342c;
 
-  /* Surfaces (warm cream / beige) */
-  --color-surface: #faf7f2;
-  --color-surface-alt: #f3ede4;
+  /* Surfaces — Dentologie warm cream palette */
+  --color-surface: #f2ede4;
+  --color-surface-alt: #ebe5da;
   --color-surface-deep: #2c2520;
   --color-surface-deepest: #1a1512;
-  --color-card: #ffffff;
+  --color-card: #faf7f2;
 
-  /* Text (warm gray) */
+  /* Text — warm grays */
   --color-text-heading: #2c2520;
   --color-text-body: #5c524a;
-  --color-text-muted: #7a6f65;
-  --color-text-faint: #a89d93;
-  --color-text-on-deep: #faf7f2;
+  --color-text-muted: #706a61;
+  --color-text-faint: #a09688;
+  --color-text-on-deep: #f2ede4;
 
-  /* Borders (warm) */
-  --color-border: #ebe5dc;
-  --color-border-subtle: #f3ede4;
-  --color-border-strong: #d9d0c5;
+  /* Borders — warm translucent */
+  --color-border: #e0d8cc;
+  --color-border-subtle: #ebe5da;
+  --color-border-strong: #d0c6b8;
 
-  /* Nav */
-  --color-nav-bg: rgba(250, 247, 242, 0.95);
+  /* Nav — frosted warm glass */
+  --color-nav-bg: rgba(242, 237, 228, 0.80);
 
   /* Typography (serif headings) */
   --font-heading: 'Playfair Display', Georgia, serif;
 
   /* Scrollbar */
-  --color-scrollbar-track: #f3ede4;
-  --color-scrollbar-thumb: #d0c7bb;
+  --color-scrollbar-track: #ebe5da;
+  --color-scrollbar-thumb: #d0c6b8;
 
   /* Button on deep */
   --color-btn-dark: #2c2520;
@@ -321,4 +322,35 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-faint);
+}
+
+/* ═══════════════════════════════════════════════
+   Dentologie-style fade-in animations (Premium)
+   ═══════════════════════════════════════════════ */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animation-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-300 {
+  animation-delay: 0.3s;
 }
