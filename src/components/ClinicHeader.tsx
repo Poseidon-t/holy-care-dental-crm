@@ -5,7 +5,7 @@ export default function ClinicHeader({ size = 'normal' }: { size?: 'normal' | 's
     <div className={`text-center ${isSmall ? 'py-3' : 'py-6'}`}>
       <div className={`${isSmall ? 'text-3xl' : 'text-5xl'} mb-2`}>🦷</div>
       <h1 className={`${isSmall ? 'text-lg' : 'text-2xl'} font-bold font-heading text-primary-700`}>
-        HOLY CARE DENTAL &amp; ORTHODONTIC CLINIC
+        HOLY CARE DENTAL &amp; ORTHODONTICS CLINIC
       </h1>
       <p className={`${isSmall ? 'text-xs' : 'text-sm'} text-body mt-1`}>
         <span className="font-semibold">Dr. Pinky Vijay MDS</span>

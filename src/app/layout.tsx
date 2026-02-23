@@ -16,8 +16,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Holy Care Dental & Orthodontic Clinic | Kavalkinaru, Tamil Nadu',
-    template: '%s | Holy Care Dental & Orthodontic Clinic',
+    default: 'Holy Care Dental & Orthodontics Clinic | Kavalkinaru, Tamil Nadu',
+    template: '%s | Holy Care Dental & Orthodontics Clinic',
   },
   description:
     'Expert dental care in Kavalkinaru, Tamil Nadu. Dr. Pinky Vijay MDS offers orthodontics, root canal, dental implants, teeth whitening, pediatric dentistry & more. Book your appointment today.',
@@ -37,14 +37,14 @@ export const metadata: Metadata = {
     'பல் சிகிச்சை',
   ],
   authors: [{ name: 'Dr. Pinky Vijay', url: SITE_URL }],
-  creator: 'Holy Care Dental & Orthodontic Clinic',
-  publisher: 'Holy Care Dental & Orthodontic Clinic',
+  creator: 'Holy Care Dental & Orthodontics Clinic',
+  publisher: 'Holy Care Dental & Orthodontics Clinic',
   openGraph: {
     type: 'website',
     locale: 'en_IN',
     url: SITE_URL,
-    siteName: 'Holy Care Dental & Orthodontic Clinic',
-    title: 'Holy Care Dental & Orthodontic Clinic | Kavalkinaru',
+    siteName: 'Holy Care Dental & Orthodontics Clinic',
+    title: 'Holy Care Dental & Orthodontics Clinic | Kavalkinaru',
     description:
       'Expert dental care by Dr. Pinky Vijay MDS. Orthodontics, implants, root canal, cosmetic dentistry & more in Kavalkinaru, Tamil Nadu.',
     images: [
@@ -52,13 +52,13 @@ export const metadata: Metadata = {
         url: '/images/clinic-exterior-1.jpg',
         width: 1200,
         height: 630,
-        alt: 'Holy Care Dental & Orthodontic Clinic - Kavalkinaru',
+        alt: 'Holy Care Dental & Orthodontics Clinic - Kavalkinaru',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Holy Care Dental & Orthodontic Clinic',
+    title: 'Holy Care Dental & Orthodontics Clinic',
     description:
       'Expert dental care by Dr. Pinky Vijay MDS in Kavalkinaru, Tamil Nadu.',
     images: ['/images/clinic-exterior-1.jpg'],
@@ -85,14 +85,14 @@ const jsonLd = {
     {
       '@type': ['Dentist', 'MedicalBusiness'],
       '@id': `${SITE_URL}/#organization`,
-      name: 'Holy Care Dental & Orthodontic Clinic',
+      name: 'Holy Care Dental & Orthodontics Clinic',
       url: SITE_URL,
       telephone: '+917977257779',
       email: 'holycareortho@gmail.com',
       image: `${SITE_URL}/images/clinic-exterior-1.jpg`,
       logo: `${SITE_URL}/images/logo.jpg`,
       description:
-        'Expert dental care in Kavalkinaru, Tamil Nadu. Offering orthodontics, root canal, dental implants, cosmetic dentistry, and pediatric dental care.',
+        'Expert dental care in Kavalkinaru, Tamil Nadu & Mumbai, Maharashtra. Offering orthodontics, root canal, dental implants, cosmetic dentistry, and pediatric dental care.',
       address: {
         '@type': 'PostalAddress',
         streetAddress: '8/277, Rachel Enclave, Kavalkinaru Main Road',
@@ -105,6 +105,30 @@ const jsonLd = {
         '@type': 'GeoCoordinates',
         latitude: 8.4395,
         longitude: 77.4025,
+      },
+      department: {
+        '@type': ['Dentist', 'MedicalBusiness'],
+        name: 'Holy Care Dental Clinic - Mumbai',
+        telephone: '+918655632732',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Shop no. 10, Nilkamal Co-op. Housing Society, 60 Feet Road, Matunga Labour Camp, Dharavi',
+          addressLocality: 'Mumbai',
+          addressRegion: 'Maharashtra',
+          postalCode: '400019',
+          addressCountry: 'IN',
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: 19.0437,
+          longitude: 72.8544,
+        },
+        openingHoursSpecification: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          opens: '00:00',
+          closes: '23:59',
+        },
       },
       openingHoursSpecification: [
         {
@@ -151,7 +175,7 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: 'Holy Care Dental & Orthodontic Clinic',
+      name: 'Holy Care Dental & Orthodontics Clinic',
       publisher: { '@id': `${SITE_URL}/#organization` },
       inLanguage: ['en', 'ta'],
     },

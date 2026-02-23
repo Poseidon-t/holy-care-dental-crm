@@ -282,7 +282,7 @@ export default function PrintableReportPage({ params }: { params: { id: string }
         <div className="report-header">
           <div style={{ fontSize: '36px', marginBottom: '8px' }}>🦷</div>
           <h1 style={{ fontSize: '20px', fontWeight: 700, color: '#1e40af', margin: '0 0 4px' }}>
-            HOLY CARE DENTAL &amp; ORTHODONTIC CLINIC
+            HOLY CARE DENTAL &amp; ORTHODONTICS CLINIC
           </h1>
           <p style={{ fontSize: '13px', color: '#374151', margin: '2px 0' }}>
             <strong>Dr. Pinky Vijay MDS</strong> | Orthodontics &amp; Dentofacial Orthopedics
@@ -443,7 +443,7 @@ export default function PrintableReportPage({ params }: { params: { id: string }
         {/* Footer */}
         <div className="report-footer">
           <p>Report generated on {new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
-          <p>Holy Care Dental &amp; Orthodontic Clinic | Kavalkinaru - 627105</p>
+          <p>Holy Care Dental &amp; Orthodontics Clinic | Kavalkinaru - 627105</p>
         </div>
       </div>
     </>

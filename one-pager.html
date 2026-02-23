@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Holy Care Dental CRM — Feature Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1a1a2e;
+      background: #fafafa;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      padding: 80px 32px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(234, 179, 8, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 30%, rgba(20, 184, 166, 0.06) 0%, transparent 50%);
+    }
+    .hero > * { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(234, 179, 8, 0.15);
+      border: 1px solid rgba(234, 179, 8, 0.3);
+      color: #eab308;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: #eab308; }
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.7);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .hero-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .hero-links .primary {
+      background: #eab308;
+      color: #1a1a2e;
+    }
+    .hero-links .primary:hover { background: #ca9a06; }
+    .hero-links .secondary {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .hero-links .secondary:hover { background: rgba(255,255,255,0.18); }
+
+    /* ─── Container ─── */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── Section ─── */
+    .section { padding: 56px 0; }
+    .section:nth-child(even) { background: #fff; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #eab308;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      font-size: 15px;
+      color: #64748b;
+      max-width: 600px;
+      margin-bottom: 32px;
+    }
+
+    /* ─── Theme Cards ─── */
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .theme-card {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 20px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-card:hover { border-color: #d1d5db; box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    .theme-swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      margin-bottom: 12px;
+      border: 2px solid rgba(0,0,0,0.08);
+    }
+    .theme-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+    }
+    .theme-card .style { font-size: 12px; color: #64748b; margin-bottom: 6px; }
+    .theme-card .best-for {
+      font-size: 11px;
+      color: #94a3b8;
+      padding-top: 8px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    /* ─── Feature Table ─── */
+    .feature-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid #e5e7eb;
+      margin-top: 20px;
+    }
+    .feature-table th {
+      background: #f8fafc;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      border-bottom: 1.5px solid #e5e7eb;
+    }
+    .feature-table td {
+      padding: 14px 16px;
+      font-size: 14px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: top;
+    }
+    .feature-table tr:last-child td { border-bottom: none; }
+    .feature-table .feat {
+      font-weight: 600;
+      color: #1a1a2e;
+      white-space: nowrap;
+    }
+    .feature-table .feat a {
+      color: #1a1a2e;
+      text-decoration: none;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+    .feature-table .feat a:hover { color: #eab308; border-color: #eab308; }
+    .feature-table .desc { color: #475569; }
+
+    /* ─── UI Components List ─── */
+    .ui-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .ui-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px solid #f1f5f9;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #334155;
+    }
+    .ui-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #fef9c3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 14px;
+    }
+
+    /* ─── Responsive Badges ─── */
+    .responsive-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .r-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 12px 16px;
+      flex: 1;
+      min-width: 140px;
+    }
+    .r-badge .icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .r-badge .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+    .r-badge .sub {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    /* ─── Tech Stack ─── */
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .tech-pill {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ─── Quick Links ─── */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: #fff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .link-card:hover {
+      border-color: #eab308;
+      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.1);
+    }
+    .link-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #fef9c3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .link-card .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+    .link-card .url {
+      font-size: 11px;
+      color: #94a3b8;
+      word-break: break-all;
+    }
+
+    /* ─── Footer ─── */
+    .footer {
+      background: #1a1a2e;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 40px 24px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .footer strong { color: rgba(255,255,255,0.8); }
+
+    /* ─── Print ─── */
+    @media print {
+      body { background: #fff; }
+      .hero { padding: 40px 24px 32px; }
+      .section { padding: 32px 0; }
+      .theme-card, .link-card, .r-badge, .ui-item { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero">
+    <div class="hero-badge">Product Overview</div>
+    <h1>Holy Care Dental <span>CRM</span></h1>
+    <p>A complete digital system for Holy Care Dental & Orthodontic Clinic &mdash; website, AI chatbot, patient management, and SEO in one tool.</p>
+    <div class="hero-links">
+      <a href="https://patient-rejoicing-production-8ead.up.railway.app" class="primary" target="_blank">&#127760; Live Site</a>
+      <a href="https://github.com/Poseidon-t/holy-care-dental-crm" class="secondary" target="_blank">&#128187; Source Code</a>
+      <a href="https://patient-rejoicing-production-8ead.up.railway.app/login" class="secondary" target="_blank">&#128274; Admin Dashboard</a>
+      <a href="https://patient-rejoicing-production-8ead.up.railway.app/knowledge" class="secondary" target="_blank">&#128218; Knowledge Articles</a>
+    </div>
+  </div>
+
+  <!-- ═══ DESIGN & CUSTOMIZATION ═══ -->
+  <div class="section">
+    <div class="container">
+      <div class="section-label">Design &amp; Customization</div>
+      <div class="section-title">Premium Dental Clinic UI</div>
+      <div class="section-desc">
+        The entire website follows a premium dental clinic aesthetic &mdash; elegant serif headings (Playfair Display), clean Inter body font, generous whitespace, and a professional split-hero layout. This isn't a template &mdash; it's a custom-built design that feels like a high-end clinic website while being fully functional as a CRM.
+      </div>
+
+      <div class="section-title" style="font-size: 20px; margin-bottom: 4px;">4 Switchable Themes</div>
+      <div class="section-desc">The clinic owner can change the entire site's look from the admin panel &mdash; no developer needed. Every element adapts through 14+ CSS custom properties per theme.</div>
+
+      <div class="themes-grid">
+        <div class="theme-card">
+          <div class="theme-swatch" style="background: linear-gradient(135deg, #eab308, #ca8a04);"></div>
+          <h4>Classic</h4>
+          <div class="style">Golden-yellow accents, warm serif headings, clean white</div>
+          <div class="best-for">Best for: Traditional, trusted clinic feel</div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-swatch" style="background: linear-gradient(135deg, #14b8a6, #0d9488);"></div>
+          <h4>Teal</h4>
+          <div class="style">Fresh teal/green accents, modern and calming</div>
+          <div class="best-for">Best for: Contemporary, wellness-focused branding</div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-swatch" style="background: linear-gradient(135deg, #3b82f6, #1e3a5f);"></div>
+          <h4>Midnight Blue</h4>
+          <div class="style">Deep navy background, blue accents, light text</div>
+          <div class="best-for">Best for: Premium dark look</div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-swatch" style="background: linear-gradient(135deg, #eab308, #292524);"></div>
+          <h4>Dark Gold</h4>
+          <div class="style">Charcoal background, golden accents, elegant contrast</div>
+          <div class="best-for">Best for: Luxury, high-end positioning</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ RESPONSIVE + UI ═══ -->
+  <div class="section">
+    <div class="container">
+      <div class="section-label">Responsive &amp; Interactive</div>
+      <div class="section-title">Custom UI Components</div>
+      <div class="section-desc">Every screen is built for mobile, tablet (clinic kiosk), and desktop. Print views are separately optimized for A4.</div>
+
+      <div class="responsive-row">
+        <div class="r-badge">
+          <div class="icon">&#128241;</div>
+          <div><div class="label">Mobile</div><div class="sub">Full responsive layout</div></div>
+        </div>
+        <div class="r-badge">
+          <div class="icon">&#128187;</div>
+          <div><div class="label">Tablet / Kiosk</div><div class="sub">Registration + dashboard</div></div>
+        </div>
+        <div class="r-badge">
+          <div class="icon">&#128421;</div>
+          <div><div class="label">Desktop</div><div class="sub">Full CRM experience</div></div>
+        </div>
+        <div class="r-badge">
+          <div class="icon">&#128424;</div>
+          <div><div class="label">Print / A4</div><div class="sub">Patient reports</div></div>
+        </div>
+      </div>
+
+      <div class="ui-grid">
+        <div class="ui-item"><div class="ui-icon">&#10024;</div><div>Animated hero with staggered fade-in effects</div></div>
+        <div class="ui-item"><div class="ui-icon">&#127912;</div><div>Featured service cards with colored backgrounds &amp; hover zoom</div></div>
+        <div class="ui-item"><div class="ui-icon">&#8594;</div><div>Horizontal-scroll services carousel with snap scrolling</div></div>
+        <div class="ui-item"><div class="ui-icon">&#11088;</div><div>Auto-advancing testimonial carousel with dot navigation</div></div>
+        <div class="ui-item"><div class="ui-icon">&#128205;</div><div>Google Maps embed in the contact section</div></div>
+        <div class="ui-item"><div class="ui-icon">&#128248;</div><div>Before &amp; after treatment gallery with tag badges</div></div>
+        <div class="ui-item"><div class="ui-icon">&#9999;</div><div>Digital signature canvas for patient &amp; doctor consent</div></div>
+        <div class="ui-item"><div class="ui-icon">&#127760;</div><div>Social sharing cards &mdash; WhatsApp/Facebook preview with clinic image</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FOR PATIENTS ═══ -->
+  <div class="section">
+    <div class="container">
+      <div class="section-label">Patient-Facing</div>
+      <div class="section-title">For Patients</div>
+      <table class="feature-table">
+        <thead><tr><th>Feature</th><th>What It Solves</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="feat"><a href="https://patient-rejoicing-production-8ead.up.railway.app" target="_blank">Modern Website</a></td>
+            <td class="desc">Professional first impression &mdash; hero, services, reviews carousel, gallery, hours, Google Maps.</td>
+          </tr>
+          <tr>
+            <td class="feat">AI Chatbot</td>
+            <td class="desc">Instant answers 24/7 in English + Tamil. No staff needed online. Powered by Groq LLM (Llama 3.3 70B).</td>
+          </tr>
+          <tr>
+            <td class="feat">QR Code Registration</td>
+            <td class="desc">Scan in clinic, fill form on phone. No paper, no data entry errors. Saves 5&ndash;10 min per patient.</td>
+          </tr>
+          <tr>
+            <td class="feat"><a href="https://patient-rejoicing-production-8ead.up.railway.app/knowledge" target="_blank">Knowledge Articles</a></td>
+            <td class="desc">6 expert articles (4 English, 2 Tamil). Drives Google traffic and educates patients before visits.</td>
+          </tr>
+          <tr>
+            <td class="feat">Bilingual UI</td>
+            <td class="desc">Every label, checkbox, and consent form in English + Tamil.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ FOR CLINIC ═══ -->
+  <div class="section">
+    <div class="container">
+      <div class="section-label">Clinic Management</div>
+      <div class="section-title">For the Clinic</div>
+      <table class="feature-table">
+        <thead><tr><th>Feature</th><th>What It Solves</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="feat"><a href="https://patient-rejoicing-production-8ead.up.railway.app/login" target="_blank">Patient Dashboard</a></td>
+            <td class="desc">Search any patient by name, OP number, or phone in 2 seconds. Date range filters.</td>
+          </tr>
+          <tr>
+            <td class="feat">Digital Medical History</td>
+            <td class="desc">13 conditions tracked with color-coded flags. Doctor sees critical info at a glance.</td>
+          </tr>
+          <tr>
+            <td class="feat">Treatment Records + Billing</td>
+            <td class="desc">Every visit logged with date, description, amount. Running total per patient.</td>
+          </tr>
+          <tr>
+            <td class="feat">Digital Signatures</td>
+            <td class="desc">Patient consent + doctor signatures captured on screen. Legally valid, never lost.</td>
+          </tr>
+          <tr>
+            <td class="feat">Printable Reports</td>
+            <td class="desc">One-click A4 report &mdash; full patient history, treatments, billing, signatures.</td>
+          </tr>
+          <tr>
+            <td class="feat">Registration QR Code</td>
+            <td class="desc">Generate and print a QR poster for the waiting area. Patients self-register.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ BUSINESS GROWTH ═══ -->
+  <div class="section">
+    <div class="container">
+      <div class="section-label">Marketing &amp; SEO</div>
+      <div class="section-title">For Business Growth</div>
+      <table class="feature-table">
+        <thead><tr><th>Feature</th><th>What It Solves</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="feat">Google SEO</td>
+            <td class="desc">JSON-LD schemas (Dentist, MedicalBusiness, Article) power Google rich results.</td>
+          </tr>
+          <tr>
+            <td class="feat"><a href="https://patient-rejoicing-production-8ead.up.railway.app/sitemap.xml" target="_blank">Sitemap + Robots.txt</a></td>
+            <td class="desc">Google indexes the right pages and discovers new articles fast.</td>
+          </tr>
+          <tr>
+            <td class="feat">Social Sharing Cards</td>
+            <td class="desc">WhatsApp/Facebook shares show a professional preview with clinic image &mdash; not a blank link.</td>
+          </tr>
+          <tr>
+            <td class="feat">Theme Customization</td>
+            <td class="desc">Change the entire brand look from the admin panel. No code changes needed.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ SECURITY ═══ -->
+  <div class="section">
+    <div class="container">
+      <div class="section-label">Security</div>
+      <div class="section-title">Built Secure by Default</div>
+      <table class="feature-table">
+        <thead><tr><th>Feature</th><th>What It Solves</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="feat">JWT Auth + scrypt Passwords</td>
+            <td class="desc">Patient data behind login. Passwords cryptographically hashed with random salts.</td>
+          </tr>
+          <tr>
+            <td class="feat">Middleware Route Protection</td>
+            <td class="desc">Every dashboard/API request verified server-side. No data leaks without valid session.</td>
+          </tr>
+          <tr>
+            <td class="feat">Chat Rate Limiting</td>
+            <td class="desc">10 messages/min per IP. Prevents spam and protects AI API quota.</td>
+          </tr>
+          <tr>
+            <td class="feat">Env-based Secrets</td>
+            <td class="desc">API keys and passwords stored as environment variables &mdash; never in source code.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ TECH STACK ═══ -->
+  <div class="hero" style="padding: 48px 32px;">
+    <div class="section-label" style="color: #eab308;">Tech Stack</div>
+    <div class="tech-row">
+      <span class="tech-pill">Next.js 14</span>
+      <span class="tech-pill">TypeScript</span>
+      <span class="tech-pill">Tailwind CSS</span>
+      <span class="tech-pill">SQLite</span>
+      <span class="tech-pill">Groq AI (Llama 3.3 70B)</span>
+      <span class="tech-pill">Railway</span>
+    </div>
+  </div>
+
+  <!-- ═══ QUICK LINKS ═══ -->
+  <div class="section">
+    <div class="container">
+      <div class="section-label">Quick Links</div>
+      <div class="section-title">Try It Out</div>
+      <div class="links-grid">
+        <a href="https://patient-rejoicing-production-8ead.up.railway.app" class="link-card" target="_blank">
+          <div class="link-icon">&#127760;</div>
+          <div><div class="label">Website</div><div class="url">patient-rejoicing-production-8ead.up.railway.app</div></div>
+        </a>
+        <a href="https://patient-rejoicing-production-8ead.up.railway.app/knowledge" class="link-card" target="_blank">
+          <div class="link-icon">&#128218;</div>
+          <div><div class="label">Knowledge Hub</div><div class="url">.../knowledge</div></div>
+        </a>
+        <a href="https://patient-rejoicing-production-8ead.up.railway.app/login" class="link-card" target="_blank">
+          <div class="link-icon">&#128274;</div>
+          <div><div class="label">Admin Login</div><div class="url">.../login</div></div>
+        </a>
+        <a href="https://patient-rejoicing-production-8ead.up.railway.app/register" class="link-card" target="_blank">
+          <div class="link-icon">&#128203;</div>
+          <div><div class="label">Patient Registration</div><div class="url">.../register</div></div>
+        </a>
+        <a href="https://github.com/Poseidon-t/holy-care-dental-crm" class="link-card" target="_blank">
+          <div class="link-icon">&#128187;</div>
+          <div><div class="label">GitHub Repo</div><div class="url">github.com/Poseidon-t/holy-care-dental-crm</div></div>
+        </a>
+        <a href="https://search.google.com/test/rich-results?url=https://patient-rejoicing-production-8ead.up.railway.app" class="link-card" target="_blank">
+          <div class="link-icon">&#9989;</div>
+          <div><div class="label">SEO Validation</div><div class="url">Google Rich Results Test</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="footer">
+    <strong>Built for Dr. Pinky Vijay MDS</strong><br>
+    Holy Care Dental &amp; Orthodontic Clinic, Kavalkinaru, Tamil Nadu<br><br>
+    <em>Replaces paper forms, manual registers, and missed inquiries with one browser-based tool.</em>
+  </div>
+
+</body>
+</html>

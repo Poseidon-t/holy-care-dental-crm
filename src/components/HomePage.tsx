@@ -329,7 +329,7 @@ function Footer() {
               <span className="font-bold font-heading text-ondeep text-base">Holy Care Dental</span>
             </div>
             <p className="text-sm leading-relaxed text-muted max-w-sm">
-              Quality dental &amp; orthodontic care for the entire family. Specialist in braces and aligners. Kavalkinaru &ndash; Vadakankulam, Tamil Nadu.
+              Quality dental &amp; orthodontic care for the entire family. Specialist in braces and aligners. Clinics in Kavalkinaru &amp; Mumbai.
             </p>
             <div className="mt-4 space-y-1.5">
               <a href="tel:+917977257779" className="text-primary-400 hover:text-primary-300 font-semibold text-sm block">079772 57779</a>
@@ -347,17 +347,24 @@ function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="font-semibold font-heading text-ondeep text-sm mb-4">Clinic</h4>
-            <div className="text-sm space-y-2 text-muted">
-              <p>Holy Care Dental &amp; Orthodontic Clinic</p>
-              <p>Kavalkinaru &ndash; Vadakankulam</p>
-              <p>Tamil Nadu, India</p>
-              <p className="pt-2 text-xs text-faint">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
+            <h4 className="font-semibold font-heading text-ondeep text-sm mb-4">Locations</h4>
+            <div className="text-sm space-y-3 text-muted">
+              <div>
+                <p className="text-ondeep font-medium">Kavalkinaru (HQ)</p>
+                <p>Tamil Nadu, India</p>
+                <p>079772 57779</p>
+              </div>
+              <div>
+                <p className="text-ondeep font-medium">Mumbai</p>
+                <p>Dharavi, Maharashtra</p>
+                <p>086556 32732</p>
+              </div>
+              <p className="pt-1 text-xs text-faint">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
             </div>
           </div>
         </div>
         <div className="border-t border-line mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-faint">&copy; {new Date().getFullYear()} Holy Care Dental &amp; Orthodontic Clinic. All rights reserved.</p>
+          <p className="text-xs text-faint">&copy; {new Date().getFullYear()} Holy Care Dental &amp; Orthodontics Clinic. All rights reserved.</p>
           <Link href="/login" className="text-xs text-muted hover:text-faint transition-colors">Staff Login</Link>
         </div>
       </div>
@@ -409,7 +416,7 @@ export default function HomePage({ theme }: { theme: string }) {
         </div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24">
           <div className="rounded-3xl overflow-hidden shadow-2xl animate-fade-in-up animation-delay-300">
-            <Image src="/images/clinic-interior-glass.jpg" alt="Holy Care Dental & Orthodontic Clinic Interior" width={1400} height={600} className="object-cover w-full h-[280px] sm:h-[380px] md:h-[500px]" priority />
+            <Image src="/images/clinic-interior-glass.jpg" alt="Holy Care Dental & Orthodontics Clinic Interior" width={1400} height={600} className="object-cover w-full h-[280px] sm:h-[380px] md:h-[500px]" priority />
           </div>
         </div>
       </section>
@@ -749,34 +756,24 @@ export default function HomePage({ theme }: { theme: string }) {
               Find <em>Us</em>
             </h2>
             <p className="mt-4 text-lg text-muted max-w-xl mx-auto">
-              Visit our clinic in Kavalkinaru &ndash; Vadakankulam, Tamil Nadu.
+              Two locations serving you &mdash; Kavalkinaru, Tamil Nadu &amp; Mumbai, Maharashtra.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
+            {/* Kavalkinaru Branch */}
             <div className="bg-card rounded-3xl p-7 border border-line">
-              <h3 className="font-bold font-heading text-heading text-lg mb-6">Clinic Timings</h3>
+              <div className="flex items-center gap-2 mb-6">
+                <span className="bg-primary-50 text-primary-600 text-xs font-bold px-2.5 py-1 rounded-full">HQ</span>
+                <h3 className="font-bold font-heading text-heading text-lg">Kavalkinaru</h3>
+              </div>
               <div className="space-y-4">
-                {WORKING_HOURS.map((item) => (
-                  <div key={item.day} className="flex items-center justify-between py-3 border-b border-line last:border-0">
-                    <span className="font-medium text-heading text-sm">{item.day}</span>
-                    <span className={`text-sm ${item.hours === 'Closed' ? 'text-red-500 font-medium' : 'text-muted'}`}>{item.hours}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 bg-surface-alt rounded-2xl p-4 text-sm text-heading border border-line">
-                <strong>Emergency?</strong> Call us at <a href="tel:+917977257779" className="underline font-bold">079772 57779</a>
-              </div>
-            </div>
-            <div id="contact" className="bg-card rounded-3xl p-7 border border-line">
-              <h3 className="font-bold font-heading text-heading text-lg mb-6">Contact</h3>
-              <div className="space-y-5">
                 <div className="flex gap-3">
                   <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                   </div>
                   <div>
-                    <p className="font-medium text-heading text-sm">Holy Care Dental &amp; Orthodontic Clinic</p>
-                    <p className="text-sm text-muted">Kavalkinaru &ndash; Vadakankulam, Tamil Nadu</p>
+                    <p className="font-medium text-heading text-sm">Kavalkinaru &ndash; Vadakankulam</p>
+                    <p className="text-xs text-muted">Tamil Nadu, India</p>
                   </div>
                 </div>
                 <div className="flex gap-3">
@@ -793,6 +790,15 @@ export default function HomePage({ theme }: { theme: string }) {
                 </div>
                 <div className="flex gap-3">
                   <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                  </div>
+                  <div className="text-sm">
+                    <p className="text-heading font-medium">Mon&ndash;Fri: 10:30 AM &ndash; 1:30 PM, 5:30 &ndash; 8 PM</p>
+                    <p className="text-muted">Sat: 10:30 AM &ndash; 1:30 PM &middot; Sun: Closed</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
                   </div>
                   <div>
@@ -801,8 +807,48 @@ export default function HomePage({ theme }: { theme: string }) {
                   </div>
                 </div>
               </div>
-              <div className="mt-6 rounded-2xl overflow-hidden h-40 border border-line">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.5!2d77.39!3d8.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOCtyNSUyNy4wJTIyTiA3NyUyMzknMjcuMCUyMkU!5e0!3m2!1sen!2sin!4v1" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Holy Care Dental Clinic Location" className="w-full h-full" />
+              <div className="mt-6 rounded-2xl overflow-hidden h-36 border border-line">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.5!2d77.39!3d8.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOCtyNSUyNy4wJTIyTiA3NyUyMzknMjcuMCUyMkU!5e0!3m2!1sen!2sin!4v1" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Holy Care Dental - Kavalkinaru" className="w-full h-full" />
+              </div>
+            </div>
+
+            {/* Mumbai Branch */}
+            <div id="contact" className="bg-card rounded-3xl p-7 border border-line">
+              <div className="flex items-center gap-2 mb-6">
+                <span className="bg-surface-alt text-heading text-xs font-bold px-2.5 py-1 rounded-full border border-line">Branch</span>
+                <h3 className="font-bold font-heading text-heading text-lg">Mumbai</h3>
+              </div>
+              <div className="space-y-4">
+                <div className="flex gap-3">
+                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                  </div>
+                  <div>
+                    <p className="font-medium text-heading text-sm">Shop 10, Nilkamal Co-op. Housing Society</p>
+                    <p className="text-xs text-muted">60 Feet Road, Matunga Labour Camp, Dharavi, Mumbai 400019</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                  </div>
+                  <a href="tel:+918655632732" className="text-sm text-heading font-semibold hover:opacity-70 self-center">086556 32732</a>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                  </div>
+                  <p className="text-sm text-heading font-medium self-center">Open 24 Hours</p>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                  </div>
+                  <p className="text-sm text-muted self-center">5.0 &middot; 66 Google Reviews</p>
+                </div>
+              </div>
+              <div className="mt-6 rounded-2xl overflow-hidden h-36 border border-line">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.5!2d72.8544!3d19.0437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDAyJzM3LjMiTiA3MsKwNTEnMTUuOCJF!5e0!3m2!1sen!2sin!4v1" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Holy Care Dental - Mumbai" className="w-full h-full" />
               </div>
             </div>
           </div>

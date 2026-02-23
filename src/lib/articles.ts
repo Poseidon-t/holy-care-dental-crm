@@ -83,7 +83,7 @@ export const articles: Article[] = [
 <blockquote>At Holy Care Dental Clinic, we believe in preserving your natural teeth whenever possible. Our conservative approach focuses on saving teeth through expert root canal treatment.</blockquote>
 
 <h2>Book Your Consultation</h2>
-<p>If you are experiencing tooth pain or suspect you may need a root canal, do not wait. Early treatment prevents complications and saves your tooth. Contact Holy Care Dental & Orthodontic Clinic at <strong>079772 57779</strong> to schedule your appointment with Dr. Pinky Vijay.</p>
+<p>If you are experiencing tooth pain or suspect you may need a root canal, do not wait. Early treatment prevents complications and saves your tooth. Contact Holy Care Dental & Orthodontics Clinic at <strong>079772 57779</strong> to schedule your appointment with Dr. Pinky Vijay.</p>
 `,
   },
 
@@ -168,7 +168,7 @@ export const articles: Article[] = [
 <blockquote>Dental implants are an investment in your quality of life. At Holy Care Dental Clinic, we use premium implant systems and meticulous surgical techniques to ensure lasting results.</blockquote>
 
 <h2>Get Started Today</h2>
-<p>If you are missing one or more teeth and want to explore dental implants, schedule a consultation at Holy Care Dental & Orthodontic Clinic. Dr. Pinky Vijay will assess your needs and create a personalised treatment plan. Call us at <strong>079772 57779</strong>.</p>
+<p>If you are missing one or more teeth and want to explore dental implants, schedule a consultation at Holy Care Dental & Orthodontics Clinic. Dr. Pinky Vijay will assess your needs and create a personalised treatment plan. Call us at <strong>079772 57779</strong>.</p>
 `,
   },
 
@@ -243,7 +243,7 @@ export const articles: Article[] = [
 <blockquote>சொத்தையை தடுப்பது சிகிச்சையளிப்பதை விட எளிது மற்றும் மலிவானது. உங்கள் பற்களை பாதுகாக்க இன்றே நடவடிக்கை எடுங்கள்!</blockquote>
 
 <h2>அப்பாய்ண்ட்மெண்ட் பெறுங்கள்</h2>
-<p>பல் சொத்தை பற்றிய கவலைகள் இருந்தால், Holy Care Dental & Orthodontic Clinic-ல் Dr. Pinky Vijay அவர்களை சந்தியுங்கள். எங்களை <strong>079772 57779</strong> என்ற எண்ணில் தொடர்பு கொள்ளுங்கள்.</p>
+<p>பல் சொத்தை பற்றிய கவலைகள் இருந்தால், Holy Care Dental & Orthodontics Clinic-ல் Dr. Pinky Vijay அவர்களை சந்தியுங்கள். எங்களை <strong>079772 57779</strong> என்ற எண்ணில் தொடர்பு கொள்ளுங்கள்.</p>
 `,
   },
 
@@ -317,7 +317,7 @@ export const articles: Article[] = [
 <blockquote>At Holy Care Dental Clinic, we take a conservative approach — we only recommend extraction when it is clearly beneficial to the patient's long-term oral health.</blockquote>
 
 <h2>Book a Consultation</h2>
-<p>If your wisdom teeth are causing discomfort or you want a professional assessment, visit Holy Care Dental & Orthodontic Clinic. Call <strong>079772 57779</strong> to schedule an appointment with Dr. Pinky Vijay.</p>
+<p>If your wisdom teeth are causing discomfort or you want a professional assessment, visit Holy Care Dental & Orthodontics Clinic. Call <strong>079772 57779</strong> to schedule an appointment with Dr. Pinky Vijay.</p>
 `,
   },
 
@@ -403,7 +403,7 @@ export const articles: Article[] = [
 <blockquote>குழந்தைகளுக்கு பல் பராமரிப்பை வேடிக்கையாக மாற்றுங்கள்! வண்ணமயமான பிரஷ்கள், பாடல்கள் மற்றும் பரிசுகள் மூலம் அவர்களை ஊக்குவியுங்கள்.</blockquote>
 
 <h2>எங்களை அணுகுங்கள்</h2>
-<p>உங்கள் குழந்தையின் பல் ஆரோக்கியத்தை பாதுகாக்க, Holy Care Dental & Orthodontic Clinic-ல் Dr. Pinky Vijay அவர்களை சந்தியுங்கள். குழந்தைகளுக்கான சிறப்பு பல் பராமரிப்பு சிகிச்சைகள் வழங்கப்படுகின்றன. <strong>079772 57779</strong> என்ற எண்ணில் அழைக்கவும்.</p>
+<p>உங்கள் குழந்தையின் பல் ஆரோக்கியத்தை பாதுகாக்க, Holy Care Dental & Orthodontics Clinic-ல் Dr. Pinky Vijay அவர்களை சந்தியுங்கள். குழந்தைகளுக்கான சிறப்பு பல் பராமரிப்பு சிகிச்சைகள் வழங்கப்படுகின்றன. <strong>079772 57779</strong> என்ற எண்ணில் அழைக்கவும்.</p>
 `,
   },
 
@@ -513,7 +513,7 @@ export const articles: Article[] = [
 <blockquote>A whiter smile boosts confidence and makes a great first impression. At Holy Care Dental Clinic, we offer safe, effective professional whitening treatments tailored to your needs.</blockquote>
 
 <h2>Ready for a Brighter Smile?</h2>
-<p>Schedule a whitening consultation at Holy Care Dental & Orthodontic Clinic. Dr. Pinky Vijay will assess your teeth, discuss your goals, and recommend the best whitening approach for you. Call us at <strong>079772 57779</strong>.</p>
+<p>Schedule a whitening consultation at Holy Care Dental & Orthodontics Clinic. Dr. Pinky Vijay will assess your teeth, discuss your goals, and recommend the best whitening approach for you. Call us at <strong>079772 57779</strong>.</p>
 `,
   },
 ];

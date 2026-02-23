@@ -18,7 +18,7 @@ export const metadata: Metadata = {
         url: '/images/clinic-exterior-1.jpg',
         width: 1200,
         height: 630,
-        alt: 'Holy Care Dental & Orthodontic Clinic',
+        alt: 'Holy Care Dental & Orthodontics Clinic',
       },
     ],
   },
@@ -172,7 +172,7 @@ export default function KnowledgePage() {
       <footer className="bg-[var(--color-surface-deep)] text-[var(--color-text-on-deep)] py-8">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <p className="text-sm opacity-70">
-            &copy; {new Date().getFullYear()} Holy Care Dental & Orthodontic Clinic. All rights reserved.
+            &copy; {new Date().getFullYear()} Holy Care Dental & Orthodontics Clinic. All rights reserved.
           </p>
         </div>
       </footer>
