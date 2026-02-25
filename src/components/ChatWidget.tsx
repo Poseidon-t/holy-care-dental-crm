@@ -12,6 +12,7 @@ const GREETING =
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: GREETING },
   ]);
@@ -20,12 +21,21 @@ export function ChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Auto-show prompt bubble after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isOpen) setShowPrompt(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
 
   useEffect(() => {
     if (isOpen) {
+      setShowPrompt(false);
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [isOpen]);
@@ -99,27 +109,45 @@ export function ChatWidget() {
     }
   };
 
-  // Collapsed: chat bubble
+  // Collapsed: chat bubble + prompt
   if (!isOpen) {
     return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-[9999] no-print w-14 h-14 rounded-full bg-primary-500 text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center"
-        aria-label="Open chat assistant"
-        title="Chat with us"
-      >
-        <svg
-          className="w-6 h-6"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+      <div className="fixed bottom-6 right-6 z-[9999] no-print flex items-end gap-3">
+        {showPrompt && (
+          <div
+            className="bg-card border border-line rounded-2xl shadow-xl px-4 py-3 max-w-[220px] animate-fade-in-up cursor-pointer relative"
+            onClick={() => setIsOpen(true)}
+          >
+            <button
+              onClick={(e) => { e.stopPropagation(); setShowPrompt(false); }}
+              className="absolute -top-2 -right-2 w-5 h-5 bg-card border border-line rounded-full flex items-center justify-center text-muted hover:text-heading transition-colors shadow-sm"
+              aria-label="Dismiss"
+            >
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6L6 18M6 6l12 12" /></svg>
+            </button>
+            <p className="text-sm font-semibold text-heading leading-snug">Need to book an appointment?</p>
+            <p className="text-xs text-muted mt-1">Chat with us — we&apos;ll help you!</p>
+          </div>
+        )}
+        <button
+          onClick={() => setIsOpen(true)}
+          className="w-14 h-14 rounded-full bg-primary-500 text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center flex-shrink-0"
+          aria-label="Open chat assistant"
+          title="Chat with us"
         >
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-      </button>
+          <svg
+            className="w-6 h-6"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+        </button>
+      </div>
     );
   }
 

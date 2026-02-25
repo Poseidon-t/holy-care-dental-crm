@@ -85,7 +85,7 @@ export default function ArticlePage({
           name: 'Holy Care Dental & Orthodontics Clinic',
           logo: {
             '@type': 'ImageObject',
-            url: `${SITE_URL}/images/logo.jpg`,
+            url: `${SITE_URL}/images/logo.png`,
           },
         },
         mainEntityOfPage: {

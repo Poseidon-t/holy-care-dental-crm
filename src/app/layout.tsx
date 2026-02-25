@@ -91,7 +91,7 @@ const jsonLd = {
       telephone: '+917977257779',
       email: 'holycareortho@gmail.com',
       image: `${SITE_URL}/images/clinic-exterior-1.jpg`,
-      logo: `${SITE_URL}/images/logo.jpg`,
+      logo: `${SITE_URL}/images/logo.png`,
       description:
         'Expert dental care in Kavalkinaru, Tamil Nadu & Mumbai, Maharashtra. Offering orthodontics, root canal, dental implants, cosmetic dentistry, and pediatric dental care.',
       address: {
@@ -193,10 +193,10 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme={theme}>
       <head>
-        <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦷</text></svg>"
-        />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
