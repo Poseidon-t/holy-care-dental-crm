@@ -387,8 +387,11 @@ export default function HomePage({ theme }: { theme: string }) {
             <br />
             by <em>design.</em>
           </h1>
-          <p className="mt-6 md:mt-8 text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed animate-fade-in-up animation-delay-100">
-            Expert care from MDS specialist dentists, delivering the best patient experience in Kavalkinaru &ndash; Vadakankulam.
+          <p className="mt-4 text-sm text-muted font-medium tracking-wide animate-fade-in-up animation-delay-50">
+            Kavalkinaru, Tamil Nadu &middot; Mumbai, Maharashtra
+          </p>
+          <p className="mt-4 md:mt-6 text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed animate-fade-in-up animation-delay-100">
+            Expert care from MDS specialist dentists, delivering the best patient experience across two locations.
           </p>
           <div className="mt-8 md:mt-10 flex justify-center animate-fade-in-up animation-delay-200">
             <a href="tel:+917977257779" className="bg-surface-deep text-ondeep px-8 py-3.5 rounded-full text-sm font-semibold hover:opacity-90 inline-flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
