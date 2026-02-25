@@ -10,7 +10,7 @@ import Image from 'next/image';
 
 const FEATURED_SERVICES = [
   {
-    image: '/images/specialty-orthodontics.jpg',
+    image: '/images/specialty-braces.jpg',
     title: 'Orthodontics & Braces',
     desc: 'Metal & ceramic braces, clear aligners, smile designing, and jaw alignment for the perfect smile.',
     bg: '#1a5c57',
@@ -645,10 +645,6 @@ export default function HomePage({ theme }: { theme: string }) {
               </h2>
               <p className="mt-3 text-lg text-muted">More specialized care for every need.</p>
             </div>
-            <a href="tel:+917977257779" className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
-              Book a Consultation
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-            </a>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {OTHER_SERVICES.map((service) => (
