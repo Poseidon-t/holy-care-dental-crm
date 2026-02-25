@@ -282,10 +282,6 @@ function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen:
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <a href="tel:+917977257779" className="bg-surface-deep text-ondeep rounded-full px-4 py-2 text-sm font-semibold hover:opacity-90 transition-opacity inline-flex items-center gap-2">
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-              <span className="hidden sm:inline">Book Now</span>
-            </a>
             <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2 text-body hover:text-heading transition-colors" aria-label="Toggle menu">
               {menuOpen ? (
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
@@ -420,15 +416,13 @@ export default function HomePage({ theme }: { theme: string }) {
             <br />
             by <em>design.</em>
           </h1>
+          <div className="mt-4 flex justify-center gap-6 text-base text-muted animate-fade-in-up animation-delay-100">
+            <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary-500 flex-shrink-0" />Kavalkinaru, Tamil Nadu</div>
+            <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary-500 flex-shrink-0" />Mumbai, Maharashtra</div>
+          </div>
           <p className="mt-4 md:mt-6 text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed animate-fade-in-up animation-delay-100">
             Expert care from MDS specialist dentists, delivering the best patient experience across two locations.
           </p>
-          <div className="mt-8 md:mt-10 flex justify-center animate-fade-in-up animation-delay-200">
-            <a href="tel:+917977257779" className="bg-surface-deep text-ondeep px-8 py-3.5 rounded-full text-sm font-semibold hover:opacity-90 inline-flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-              Call to Book &mdash; 079772 57779
-            </a>
-          </div>
           <div className="mt-6 md:mt-8 flex items-center justify-center gap-2 animate-fade-in-up animation-delay-300">
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
@@ -475,13 +469,6 @@ export default function HomePage({ theme }: { theme: string }) {
                   <div className="rounded-2xl overflow-hidden">
                     <Image src={service.image} alt={service.title} width={400} height={250} className="object-cover w-full h-[200px] group-hover:scale-105 transition-transform duration-500" />
                   </div>
-                  <a
-                    href="#hours"
-                    className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold hover:opacity-70 transition-opacity ${service.light ? 'text-[#1a1a1a]' : 'text-white'}`}
-                  >
-                    Book Now
-                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                  </a>
                 </div>
               </div>
             ))}
@@ -693,10 +680,6 @@ export default function HomePage({ theme }: { theme: string }) {
                       </li>
                     ))}
                   </ul>
-                  <a href="#hours" className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
-                    Book Now
-                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                  </a>
                 </div>
               </div>
             ))}
@@ -860,10 +843,6 @@ export default function HomePage({ theme }: { theme: string }) {
                 </div>
               </div>
               <div className="px-7 pb-7 flex gap-3">
-                <a href="tel:+917977257779" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-surface-deep text-ondeep text-sm font-semibold hover:opacity-90 transition-opacity">
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                  Call Now
-                </a>
                 <a href="https://maps.google.com/maps?q=Holy+care+dental+and+orthodontic+Clinic+Kavalkinaru+Tamil+Nadu" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border border-line bg-surface-alt text-heading text-sm font-semibold hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                   Directions
@@ -925,10 +904,6 @@ export default function HomePage({ theme }: { theme: string }) {
                 </div>
               </div>
               <div className="px-7 pb-7 flex gap-3">
-                <a href="tel:+918655632732" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-surface-deep text-ondeep text-sm font-semibold hover:opacity-90 transition-opacity">
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                  Call Now
-                </a>
                 <a href="https://maps.google.com/maps?q=Holy+care+dental+clinic+Dharavi+Mumbai+400019" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border border-line bg-surface-alt text-heading text-sm font-semibold hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                   Directions
