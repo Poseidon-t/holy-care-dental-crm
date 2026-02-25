@@ -13,6 +13,7 @@ function isPublicPath(pathname: string, method: string): boolean {
 
   // Exact matches
   if (pathname === '/login' || pathname === '/api/auth/login') return true;
+  if (pathname === '/reset-password' || pathname === '/api/auth/reset-password') return true;
 
   // Registration paths (tablet and remote)
   if (pathname.startsWith('/register')) return true;

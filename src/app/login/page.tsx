@@ -101,9 +101,12 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 flex items-center justify-between">
           <a href="/" className="text-sm text-faint hover:text-primary-600 transition-colors">
             &larr; Back to website
+          </a>
+          <a href="/reset-password" className="text-sm text-faint hover:text-primary-600 transition-colors">
+            Forgot Password?
           </a>
         </div>
       </div>
