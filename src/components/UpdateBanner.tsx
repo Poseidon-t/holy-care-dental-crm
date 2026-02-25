@@ -35,7 +35,7 @@ export function UpdateBanner() {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-20 right-6 z-[9998] animate-fade-in-up">
+    <div className="fixed bottom-6 left-6 z-[9998] animate-fade-in-up">
       <div className="bg-card border border-line rounded-2xl shadow-2xl px-5 py-4 flex items-center gap-4 max-w-sm">
         <div className="flex-1">
           <p className="text-sm font-semibold text-heading">New version available</p>
