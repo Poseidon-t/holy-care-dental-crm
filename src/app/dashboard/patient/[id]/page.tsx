@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import ClinicHeader from '@/components/ClinicHeader';
-import SignatureCanvas from '@/components/SignatureCanvas';
 
 interface Patient {
   id: number;
@@ -72,33 +71,29 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
   const [activeTab, setActiveTab] = useState<'registration' | 'treatments'>('registration');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [showDoctorSign, setShowDoctorSign] = useState(false);
-  const [doctorSignature, setDoctorSignature] = useState('');
-  const [isSavingSignature, setIsSavingSignature] = useState(false);
-  const [signatureError, setSignatureError] = useState('');
+  const [isApproving, setIsApproving] = useState(false);
+  const [approveError, setApproveError] = useState('');
 
-  async function saveDoctorSignature() {
-    if (!doctorSignature) return;
-    setIsSavingSignature(true);
-    setSignatureError('');
+  async function approveWithSignature() {
+    setIsApproving(true);
+    setApproveError('');
     try {
+      const signatureValue = '/images/dr-pinky-signature.jpg';
       const response = await fetch(`/api/patients/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dentist_signature: doctorSignature }),
+        body: JSON.stringify({ dentist_signature: signatureValue }),
       });
       if (response.ok) {
-        setPatient(prev => prev ? { ...prev, dentist_signature: doctorSignature } : prev);
-        setShowDoctorSign(false);
-        setDoctorSignature('');
+        setPatient(prev => prev ? { ...prev, dentist_signature: signatureValue } : prev);
       } else {
         const data = await response.json();
-        setSignatureError(data.error || 'Failed to save signature');
+        setApproveError(data.error || 'Failed to approve');
       }
     } catch {
-      setSignatureError('Failed to save signature. Please try again.');
+      setApproveError('Failed to approve. Please try again.');
     } finally {
-      setIsSavingSignature(false);
+      setIsApproving(false);
     }
   }
 
@@ -300,48 +295,34 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                   <span className="text-sm text-muted block mb-2">Dentist Signature:</span>
                   {patient.dentist_signature ? (
                     <div>
-                      <img src={patient.dentist_signature} alt="Dentist Signature" className="border rounded-lg max-h-32" />
-                      <span className="text-xs text-green-600 mt-1 inline-block">Signed</span>
-                    </div>
-                  ) : showDoctorSign ? (
-                    <div className="space-y-3">
-                      <SignatureCanvas
-                        label=""
-                        value={doctorSignature}
-                        onChange={setDoctorSignature}
-                      />
-                      {signatureError && (
-                        <div className="bg-red-50 border border-red-200 text-red-700 p-2.5 rounded-lg text-sm">
-                          {signatureError}
-                        </div>
-                      )}
-                      <div className="flex gap-2">
-                        <button
-                          onClick={saveDoctorSignature}
-                          disabled={!doctorSignature || isSavingSignature}
-                          className="btn-primary text-sm"
-                        >
-                          {isSavingSignature ? 'Saving...' : 'Confirm Signature'}
-                        </button>
-                        <button
-                          onClick={() => { setShowDoctorSign(false); setDoctorSignature(''); setSignatureError(''); }}
-                          className="btn-secondary text-sm"
-                        >
-                          Cancel
-                        </button>
-                      </div>
+                      <img src={patient.dentist_signature} alt="Dr. Pinky Vijay Signature" className="border rounded-lg max-h-32 bg-white" />
+                      <span className="text-xs text-green-600 mt-1 inline-flex items-center gap-1">
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                        Approved by Dr. Pinky Vijay
+                      </span>
                     </div>
                   ) : (
                     <div>
                       <div className="border-2 border-dashed border-amber-200 bg-amber-50 rounded-lg h-32 flex flex-col items-center justify-center gap-2">
-                        <span className="text-sm text-amber-600 font-medium">Awaiting doctor signature</span>
+                        <span className="text-sm text-amber-600 font-medium">Awaiting doctor approval</span>
                         <button
-                          onClick={() => setShowDoctorSign(true)}
-                          className="btn-primary text-sm"
+                          onClick={approveWithSignature}
+                          disabled={isApproving}
+                          className="btn-primary text-sm inline-flex items-center gap-2"
                         >
-                          Sign as Doctor
+                          {isApproving ? 'Approving...' : (
+                            <>
+                              <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                              Approve &amp; Sign
+                            </>
+                          )}
                         </button>
                       </div>
+                      {approveError && (
+                        <div className="bg-red-50 border border-red-200 text-red-700 p-2.5 rounded-lg text-sm mt-2">
+                          {approveError}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

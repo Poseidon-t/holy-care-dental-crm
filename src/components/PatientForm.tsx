@@ -251,7 +251,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div className="md:col-span-2">
                 <label className="label-field">
-                  Chief Complaint <span className="tamil text-muted">(முக்கிய வலுவையின் நோயாகும்)</span>
+                  Chief Complaint <span className="tamil text-muted">(முக்கிய புகார்)</span>
                 </label>
                 <textarea
                   className="input-field"
@@ -328,7 +328,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
 
               <div>
                 <label className="label-field">
-                  Diagnosis <span className="tamil text-muted">(நோயறிதல்)</span>
+                  Diagnosis <span className="tamil text-muted">(நோய் கண்டறிதல்)</span>
                 </label>
                 <textarea
                   className="input-field"
@@ -368,9 +368,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
                 deemed necessary (or) appropriate and mutually agreed upon.
               </p>
               <p className="text-sm text-body leading-relaxed mt-2 tamil">
-                மேற்படி மருத்துவர் அவர்களும் அவர்களுடைய பார்வையிலுள்லவர்களும் வயங்களும் என்மீது
-                செய்யப்படவேண்டிய சிகிச்சை முறைகள்,செயல் முறைகள்,மயக்கமருந்து புழங்குதல் என் மருத்தை
-                செய்யும் பயன்படுகி முந்தை பதில தகவலைகளை தெரிவர்மாறும் முழு மன ரதான எமக்குகிறேன்.
+                பல் மருத்துவருக்கும் அவரது தொழில்முறை மேற்பார்வையின் கீழ் உள்ளவர்களுக்கும் அவசியமான (அல்லது) பொருத்தமானதாகவும் பரஸ்பரம் ஒப்புக்கொள்ளப்பட்டதாகவும் கருதப்படும் எந்தவொரு பல் சிகிச்சை, பல் அறுவை சிகிச்சை, மயக்க மருந்து அல்லது பிற பல் நடைமுறைகளையும் பரிந்துரைத்துச் செய்வதற்கு இதன்மூலம் நான் ஒப்புதல் அளிக்கிறேன்.
               </p>
             </div>
 
@@ -383,7 +381,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
               />
               <span className="font-medium text-body">
                 I agree to the above consent
-                <span className="tamil text-muted ml-1 text-sm">(நான் மேற்கூறிய ஒப்புதலுக்கு இணங்குகிறேன்)</span>
+                <span className="tamil text-muted ml-1 text-sm">(மேலே உள்ள ஒப்புதலை நான் ஒப்புக்கொள்கிறேன்)</span>
               </span>
             </label>
           </div>
@@ -394,27 +392,17 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
               Signatures <span className="tamil text-sm font-normal text-muted ml-2">(கையொப்பங்கள்)</span>
             </h2>
 
-            <div className={`grid grid-cols-1 ${mode === 'tablet' ? 'md:grid-cols-2' : ''} gap-6`}>
+            <div className="space-y-4">
               <SignatureCanvas
                 label="Patient Signature"
                 tamilLabel="நோயாளியின் கையொப்பம்"
                 value={formData.patient_signature}
                 onChange={val => updateField('patient_signature', val)}
               />
-              {mode === 'tablet' && (
-                <SignatureCanvas
-                  label="Signature of Dentist"
-                  tamilLabel="பல் மருத்துவரின் கையொப்பம்"
-                  value={formData.dentist_signature}
-                  onChange={val => updateField('dentist_signature', val)}
-                />
-              )}
-              {mode === 'remote' && (
-                <p className="text-sm text-muted italic mt-2">
-                  Doctor&apos;s signature will be added during your clinic visit.
-                  <span className="tamil block text-xs mt-1">(மருத்துவரின் கையொப்பம் கிளினிக் வருகையின் போது சேர்க்கப்படும்)</span>
-                </p>
-              )}
+              <p className="text-sm text-muted italic">
+                Doctor&apos;s signature will be added upon review.
+                <span className="tamil block text-xs mt-1">(மருத்துவரின் கையொப்பம் மதிப்பாய்வின் போது சேர்க்கப்படும்)</span>
+              </p>
             </div>
           </div>
 
@@ -441,7 +429,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
                   Submitting...
                 </span>
               ) : (
-                <>Submit Registration <span className="tamil ml-1">(பதிவு செய்)</span></>
+                <>Submit Registration <span className="tamil ml-1">(பதிவை சமர்ப்பிக்கவும்)</span></>
               )}
             </button>
           </div>
