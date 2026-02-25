@@ -835,17 +835,11 @@ export default function HomePage({ theme }: { theme: string }) {
                   </div>
                   <a href="tel:+917977257779" className="text-sm text-heading font-semibold hover:opacity-70 self-center">079772 57779</a>
                 </div>
-                <div className="flex gap-3.5">
-                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
-                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
-                  </div>
-                  <a href="mailto:holycareortho@gmail.com" className="text-sm text-heading font-semibold hover:opacity-70 self-center">holycareortho@gmail.com</a>
-                </div>
               </div>
               <div className="px-7 pb-7 flex gap-3">
-                <a href="https://maps.google.com/maps?q=Holy+care+dental+and+orthodontic+Clinic+Kavalkinaru+Tamil+Nadu" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border border-line bg-surface-alt text-heading text-sm font-semibold hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all">
+                <a href="https://maps.google.com/maps?q=Holy+care+dental+and+orthodontic+Clinic+Kavalkinaru+Tamil+Nadu" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary-50 border border-primary-100 text-primary-700 text-sm font-semibold hover:bg-primary-100 hover:border-primary-200 transition-all">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                  Directions
+                  Location
                 </a>
               </div>
             </div>
@@ -904,9 +898,9 @@ export default function HomePage({ theme }: { theme: string }) {
                 </div>
               </div>
               <div className="px-7 pb-7 flex gap-3">
-                <a href="https://maps.google.com/maps?q=Holy+care+dental+clinic+Dharavi+Mumbai+400019" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border border-line bg-surface-alt text-heading text-sm font-semibold hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all">
+                <a href="https://maps.google.com/maps?q=Holy+care+dental+clinic+Dharavi+Mumbai+400019" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary-50 border border-primary-100 text-primary-700 text-sm font-semibold hover:bg-primary-100 hover:border-primary-200 transition-all">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                  Directions
+                  Location
                 </a>
               </div>
             </div>
