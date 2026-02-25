@@ -764,9 +764,10 @@ export default function HomePage({ theme }: { theme: string }) {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
               Find <em>Us</em>
             </h2>
-            <p className="mt-4 text-lg text-muted max-w-xl mx-auto">
-              Two locations serving you &mdash; Kavalkinaru, Tamil Nadu &amp; Mumbai, Maharashtra.
-            </p>
+            <div className="mt-4 flex flex-col items-center gap-1 text-lg text-muted">
+              <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-heading flex-shrink-0" />Kavalkinaru, Tamil Nadu</div>
+              <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-heading flex-shrink-0" />Mumbai, Maharashtra</div>
+            </div>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {/* Kavalkinaru Branch */}
