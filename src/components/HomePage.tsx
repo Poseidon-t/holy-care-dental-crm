@@ -713,6 +713,32 @@ export default function HomePage({ theme }: { theme: string }) {
                 </div>
               </div>
             </div>
+            <div className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all group">
+              <div className="relative overflow-hidden">
+                <Image src="/images/before-after-3.jpg" alt="Teeth alignment before and after treatment" width={600} height={500} className="object-cover w-full group-hover:scale-[1.02] transition-transform duration-500" />
+              </div>
+              <div className="p-6">
+                <h3 className="font-bold font-heading text-heading text-lg">Teeth Alignment Correction</h3>
+                <p className="text-sm text-muted mt-1.5">Crowded teeth transformed into a well-aligned smile</p>
+                <div className="mt-3 flex gap-2">
+                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Alignment</span>
+                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Crowding</span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all group">
+              <div className="relative overflow-hidden">
+                <Image src="/images/before-after-4.jpg" alt="Upper and lower arch alignment results" width={600} height={500} className="object-cover w-full group-hover:scale-[1.02] transition-transform duration-500" />
+              </div>
+              <div className="p-6">
+                <h3 className="font-bold font-heading text-heading text-lg">Full Arch Alignment</h3>
+                <p className="text-sm text-muted mt-1.5">Upper and lower arch alignment for a complete smile makeover</p>
+                <div className="mt-3 flex gap-2">
+                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Arch Alignment</span>
+                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Full Mouth</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
