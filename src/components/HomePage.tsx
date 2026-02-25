@@ -464,7 +464,7 @@ export default function HomePage({ theme }: { theme: string }) {
               Trusted by <em>Patients</em>
             </h2>
             <p className="mt-4 text-lg text-muted max-w-2xl mx-auto">
-              Real experiences from real patients. See why families in Kavalkinaru trust Holy Care Dental.
+              Real experiences from real patients. See why families trust Holy Care Dental.
             </p>
           </div>
 
