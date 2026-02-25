@@ -1,11 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import ClinicHeader from '@/components/ClinicHeader';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -101,12 +99,9 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 flex items-center justify-between">
+        <div className="mt-6 text-center">
           <a href="/" className="text-sm text-faint hover:text-primary-600 transition-colors">
             &larr; Back to website
-          </a>
-          <a href="/reset-password" className="text-sm text-faint hover:text-primary-600 transition-colors">
-            Forgot Password?
           </a>
         </div>
       </div>

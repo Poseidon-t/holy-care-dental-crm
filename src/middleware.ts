@@ -13,7 +13,6 @@ function isPublicPath(pathname: string, method: string): boolean {
 
   // Exact matches
   if (pathname === '/login' || pathname === '/api/auth/login') return true;
-  if (pathname === '/reset-password' || pathname === '/api/auth/reset-password') return true;
 
   // Registration paths (tablet and remote)
   if (pathname.startsWith('/register')) return true;
@@ -60,11 +59,9 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get('holycare_session')?.value;
 
   if (!token) {
-    // Redirect to login for page requests
     if (!pathname.startsWith('/api/')) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
-    // Return 401 for API requests
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -72,7 +69,6 @@ export async function middleware(request: NextRequest) {
     await jwtVerify(token, secret);
     return NextResponse.next();
   } catch {
-    // Invalid token - redirect to login
     if (!pathname.startsWith('/api/')) {
       const response = NextResponse.redirect(new URL('/login', request.url));
       response.cookies.delete('holycare_session');
