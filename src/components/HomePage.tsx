@@ -616,10 +616,10 @@ export default function HomePage({ theme }: { theme: string }) {
                   Holy Care Dental is redefining what it means to go to the dentist. Whether you need a cleaning, braces, or a crown, our MDS specialist team delivers high-quality care in a warm, welcoming environment.
                 </p>
                 <p>
-                  Led by <strong className="text-heading">Dr. Pinky Vijay</strong> (BDS, MDS &mdash; Orthodontics &amp; Dentofacial Orthopedics), our clinic combines precision treatment with personalized care and advanced technology. A former Assistant Professor actively involved in academic excellence and clinical training, she also serves as a Consultant Orthodontist in reputed clinics across Nagarcoil and Valliyur, bringing her expertise to a wider community.
+                  Led by <strong className="text-heading">Dr. Pinky Vijay</strong> (BDS, MDS &mdash; Orthodontics &amp; Dentofacial Orthopedics), our clinic combines precision treatment with personalized care and advanced technology.
                 </p>
                 <p>
-                  Our Mumbai branch is led by <strong className="text-heading">Dr. Ruby</strong>, delivering the same standard of compassionate, expert dental care to the Dharavi community.
+                  Our Mumbai branch is led by <strong className="text-heading">Dr. Ruby</strong>, a former Assistant Professor actively involved in academic excellence and clinical training. In addition to leading the clinic, she serves as a Consultant Orthodontist in various reputed clinics across Nagarcoil and Valliyur, bringing her expertise to a wider community.
                 </p>
               </div>
               <div className="mt-8 flex flex-wrap gap-2">
