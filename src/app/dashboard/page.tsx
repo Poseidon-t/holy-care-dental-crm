@@ -102,7 +102,7 @@ export default function DashboardPage() {
       <header className="bg-surface shadow-sm border-b border-line-strong">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">🦷</span>
+            <img src="/images/logo.png" alt="Holy Care" className="w-9 h-9" />
             <div>
               <h1 className="text-xl font-bold font-heading text-primary-700">Holy Care Dental CRM</h1>
               <p className="text-xs text-muted">Dr. Pinky Vijay MDS</p>

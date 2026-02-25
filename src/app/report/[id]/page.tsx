@@ -381,7 +381,7 @@ export default function PrintableReportPage({ params }: { params: { id: string }
             )}
             {patient.dentist_signature && (
               <div className="signature-block">
-                <img src={patient.dentist_signature} alt="Dentist Signature" />
+                <img src={patient.dentist_signature.replace('.jpg', '.png')} alt="Dentist Signature" style={{ maxHeight: '60px', objectFit: 'contain' }} />
                 <p>Dentist Signature</p>
               </div>
             )}

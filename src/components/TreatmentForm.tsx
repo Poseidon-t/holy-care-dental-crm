@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import SignatureCanvas from './SignatureCanvas';
 
 interface TreatmentEntry {
   id: number;
@@ -21,7 +20,7 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
   const [entries, setEntries] = useState<TreatmentEntry[]>([
     { id: 1, appointment_date: new Date().toISOString().split('T')[0], description: '', amount: '' },
   ]);
-  const [signature, setSignature] = useState('');
+  const signature = '/images/dr-pinky-signature.png';
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -215,14 +214,21 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
         </div>
       </div>
 
-      {/* Signature */}
+      {/* Doctor Signature — Auto-filled */}
       <div className="card">
-        <SignatureCanvas
-          label="Signature"
-          tamilLabel="கையொப்பம்"
-          value={signature}
-          onChange={setSignature}
-        />
+        <h3 className="text-sm font-semibold text-heading mb-3">
+          Doctor Signature <span className="tamil text-xs font-normal text-muted ml-1">(மருத்துவர் கையொப்பம்)</span>
+        </h3>
+        <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl">
+          <img src="/images/dr-pinky-signature.png" alt="Dr. Pinky Vijay Signature" className="h-12 object-contain" />
+          <div>
+            <p className="text-sm font-medium text-green-700 flex items-center gap-1">
+              <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+              Dr. Pinky Vijay MDS
+            </p>
+            <p className="text-xs text-green-600 mt-0.5">Signature will be auto-applied on save</p>
+          </div>
+        </div>
       </div>
 
       {/* Error */}
