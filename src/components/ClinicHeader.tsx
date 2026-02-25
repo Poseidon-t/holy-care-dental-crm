@@ -1,9 +1,11 @@
+import Image from 'next/image';
+
 export default function ClinicHeader({ size = 'normal' }: { size?: 'normal' | 'small' }) {
   const isSmall = size === 'small';
 
   return (
     <div className={`text-center ${isSmall ? 'py-3' : 'py-6'}`}>
-      <div className={`${isSmall ? 'text-3xl' : 'text-5xl'} mb-2`}>🦷</div>
+      <Image src="/images/logo.png" alt="Holy Care Dental" width={isSmall ? 40 : 56} height={isSmall ? 40 : 56} className={`mx-auto mb-2 ${isSmall ? 'w-10 h-10' : 'w-14 h-14'}`} />
       <h1 className={`${isSmall ? 'text-lg' : 'text-2xl'} font-bold font-heading text-primary-700`}>
         HOLY CARE DENTAL &amp; ORTHODONTICS CLINIC
       </h1>
