@@ -590,7 +590,16 @@ export default function HomePage({ theme }: { theme: string }) {
                   </div>
                   <div>
                     <p className="font-bold text-heading text-sm">Dr. Pinky Vijay</p>
-                    <p className="text-xs text-muted font-medium">MDS, Orthodontics</p>
+                    <p className="text-xs text-muted font-medium">MDS, Orthodontics &middot; Kavalkinaru</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 mt-3 pt-3 border-t border-line">
+                  <div className="w-10 h-10 bg-surface-alt rounded-full flex items-center justify-center text-heading">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10l-10-5L2 10l10 5 10-5z" /><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5" /></svg>
+                  </div>
+                  <div>
+                    <p className="font-bold text-heading text-sm">Dr. Ruby</p>
+                    <p className="text-xs text-muted font-medium">Dentist &middot; Mumbai</p>
                   </div>
                 </div>
               </div>
@@ -605,6 +614,9 @@ export default function HomePage({ theme }: { theme: string }) {
                 </p>
                 <p>
                   Led by <strong className="text-heading">Dr. Pinky Vijay</strong> (BDS, MDS &mdash; Orthodontics &amp; Dentofacial Orthopedics), our clinic combines precision treatment with personalized care and advanced technology. A former Assistant Professor actively involved in academic excellence and clinical training, she also serves as a Consultant Orthodontist in reputed clinics across Nagarcoil and Valliyur, bringing her expertise to a wider community.
+                </p>
+                <p>
+                  Our Mumbai branch is led by <strong className="text-heading">Dr. Ruby</strong>, delivering the same standard of compassionate, expert dental care to the Dharavi community.
                 </p>
               </div>
               <div className="mt-8 flex flex-wrap gap-2">
