@@ -651,14 +651,14 @@ export default function HomePage({ theme }: { theme: string }) {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {OTHER_SERVICES.map((service) => (
-              <div key={service.title} className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all duration-300 group">
-                <div className="relative h-44 overflow-hidden">
+              <div key={service.title} className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all duration-300 group flex flex-col">
+                <div className="relative h-44 overflow-hidden flex-shrink-0">
                   <Image src={service.image} alt={service.title} width={300} height={200} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 </div>
-                <div className="p-5">
+                <div className="p-5 flex flex-col flex-1">
                   <h3 className="font-bold font-heading text-heading text-base">{service.title}</h3>
-                  <ul className="mt-2 space-y-1.5">
+                  <ul className="mt-2 space-y-1.5 flex-1">
                     {service.items.slice(0, 3).map((item) => (
                       <li key={item} className="text-sm text-muted flex items-start gap-2">
                         <svg className="w-3.5 h-3.5 text-heading mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
