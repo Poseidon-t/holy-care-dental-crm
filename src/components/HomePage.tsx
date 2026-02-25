@@ -271,7 +271,7 @@ function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen:
             <div>
               <span className="font-bold font-heading text-heading text-lg hidden sm:inline leading-tight block">Holy Care Dental & Orthodontics</span>
               <span className="font-bold font-heading text-heading text-lg sm:hidden leading-tight block">Holy Care</span>
-              <span className="text-[10px] text-muted font-medium tracking-wide hidden sm:block">Kavalkinaru, Tamil Nadu &middot; Mumbai, Maharashtra</span>
+              <span className="text-xs text-body font-semibold tracking-wide hidden sm:block mt-0.5">Kavalkinaru, Tamil Nadu &middot; Mumbai, Maharashtra</span>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-8">
