@@ -268,8 +268,11 @@ function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen:
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <Image src="/images/logo.png" alt="Holy Care Dental & Orthodontics Clinic" width={36} height={36} className="w-9 h-9" />
-            <span className="font-bold font-heading text-heading text-lg hidden sm:inline">Holy Care Dental & Orthodontics</span>
-            <span className="font-bold font-heading text-heading text-lg sm:hidden">Holy Care</span>
+            <div>
+              <span className="font-bold font-heading text-heading text-lg hidden sm:inline leading-tight block">Holy Care Dental & Orthodontics</span>
+              <span className="font-bold font-heading text-heading text-lg sm:hidden leading-tight block">Holy Care</span>
+              <span className="text-[10px] text-muted font-medium tracking-wide hidden sm:block">Kavalkinaru, Tamil Nadu &middot; Mumbai, Maharashtra</span>
+            </div>
           </div>
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
@@ -387,9 +390,6 @@ export default function HomePage({ theme }: { theme: string }) {
             <br />
             by <em>design.</em>
           </h1>
-          <p className="mt-4 text-sm text-muted font-medium tracking-wide animate-fade-in-up animation-delay-50">
-            Kavalkinaru, Tamil Nadu &middot; Mumbai, Maharashtra
-          </p>
           <p className="mt-4 md:mt-6 text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed animate-fade-in-up animation-delay-100">
             Expert care from MDS specialist dentists, delivering the best patient experience across two locations.
           </p>
