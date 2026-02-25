@@ -764,122 +764,146 @@ export default function HomePage({ theme }: { theme: string }) {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
               Find <em>Us</em>
             </h2>
-            <div className="mt-4 flex flex-col items-center gap-1 text-lg text-muted">
-              <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-heading flex-shrink-0" />Kavalkinaru, Tamil Nadu</div>
-              <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-heading flex-shrink-0" />Mumbai, Maharashtra</div>
+            <div className="mt-4 flex justify-center gap-6 text-base text-muted">
+              <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary-500 flex-shrink-0" />Kavalkinaru, Tamil Nadu</div>
+              <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary-500 flex-shrink-0" />Mumbai, Maharashtra</div>
             </div>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             {/* Kavalkinaru Branch */}
-            <div className="bg-card rounded-3xl p-7 border border-line">
-              <div className="flex items-center gap-2 mb-6">
-                <span className="bg-primary-50 text-primary-600 text-xs font-bold px-2.5 py-1 rounded-full">HQ</span>
-                <h3 className="font-bold font-heading text-heading text-lg">Kavalkinaru</h3>
+            <div className="bg-card rounded-3xl overflow-hidden border border-line shadow-sm hover:shadow-lg transition-shadow">
+              <div className="bg-surface-deep px-7 py-5 flex items-center justify-between">
+                <div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="bg-white/20 text-ondeep text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">HQ</span>
+                    <h3 className="font-bold font-heading text-ondeep text-xl">Kavalkinaru</h3>
+                  </div>
+                  <p className="text-ondeep/70 text-xs mt-1">Tamil Nadu 627105</p>
+                </div>
+                <div className="text-right">
+                  <div className="flex items-center gap-1 text-ondeep">
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                    <span className="text-sm font-bold">5.0</span>
+                  </div>
+                  <p className="text-ondeep/60 text-[10px] mt-0.5">56 Reviews</p>
+                </div>
               </div>
-              <div className="space-y-4">
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+              <div className="p-7 space-y-5">
+                <div className="flex gap-3.5">
+                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
+                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-heading text-sm">Dr. Pinky Vijay MDS</p>
+                    <p className="text-xs text-muted mt-0.5">Orthodontics &amp; Dentofacial Orthopedics &middot; Reg. A-34195</p>
+                  </div>
+                </div>
+                <div className="flex gap-3.5">
+                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
+                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                   </div>
                   <div>
                     <p className="font-medium text-heading text-sm">Kavalkinaru Rd, Kavalkinaru</p>
-                    <p className="text-xs text-muted">Tamil Nadu 627105, India</p>
+                    <p className="text-xs text-muted mt-0.5">Tamil Nadu 627105, India</p>
                   </div>
                 </div>
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                  </div>
-                  <a href="tel:+917977257779" className="text-sm text-heading font-semibold hover:opacity-70 self-center">079772 57779</a>
-                </div>
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
-                  </div>
-                  <a href="mailto:holycareortho@gmail.com" className="text-sm text-heading font-semibold hover:opacity-70 self-center">holycareortho@gmail.com</a>
-                </div>
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                <div className="flex gap-3.5">
+                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
+                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                   </div>
                   <div className="text-sm">
                     <p className="text-heading font-medium">Mon&ndash;Fri: 10:30 AM &ndash; 1:30 PM, 5:30 &ndash; 8 PM</p>
-                    <p className="text-muted">Sat: 10:30 AM &ndash; 1:30 PM &middot; Sun: Closed</p>
+                    <p className="text-muted mt-0.5">Sat: 10:30 AM &ndash; 1:30 PM &middot; Sun: Closed</p>
                   </div>
                 </div>
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                <div className="flex gap-3.5">
+                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
+                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                   </div>
-                  <div>
-                    <p className="font-medium text-heading text-sm">Dr. Pinky Vijay MDS</p>
-                    <p className="text-xs text-muted">Orthodontics &amp; Dentofacial Orthopedics &middot; Reg. A-34195</p>
-                  </div>
+                  <a href="tel:+917977257779" className="text-sm text-heading font-semibold hover:opacity-70 self-center">079772 57779</a>
                 </div>
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                <div className="flex gap-3.5">
+                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
+                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
                   </div>
-                  <p className="text-sm text-muted self-center">5.0 &middot; 56 Google Reviews</p>
+                  <a href="mailto:holycareortho@gmail.com" className="text-sm text-heading font-semibold hover:opacity-70 self-center">holycareortho@gmail.com</a>
                 </div>
               </div>
-              <a href="https://maps.google.com/maps?q=Holy+care+dental+and+orthodontic+Clinic+Kavalkinaru+Tamil+Nadu" target="_blank" rel="noopener noreferrer" className="mt-6 flex items-center justify-center gap-2 w-full py-3 rounded-2xl border border-line bg-surface-alt text-heading text-sm font-semibold hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                Open in Google Maps
-              </a>
+              <div className="px-7 pb-7 flex gap-3">
+                <a href="tel:+917977257779" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-surface-deep text-ondeep text-sm font-semibold hover:opacity-90 transition-opacity">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                  Call Now
+                </a>
+                <a href="https://maps.google.com/maps?q=Holy+care+dental+and+orthodontic+Clinic+Kavalkinaru+Tamil+Nadu" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border border-line bg-surface-alt text-heading text-sm font-semibold hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                  Directions
+                </a>
+              </div>
             </div>
 
             {/* Mumbai Branch */}
-            <div className="bg-card rounded-3xl p-7 border border-line">
-              <div className="flex items-center gap-2 mb-6">
-                <span className="bg-surface-alt text-heading text-xs font-bold px-2.5 py-1 rounded-full border border-line">Branch</span>
-                <h3 className="font-bold font-heading text-heading text-lg">Mumbai</h3>
+            <div className="bg-card rounded-3xl overflow-hidden border border-line shadow-sm hover:shadow-lg transition-shadow">
+              <div className="bg-surface-deep px-7 py-5 flex items-center justify-between">
+                <div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="bg-white/20 text-ondeep text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Branch</span>
+                    <h3 className="font-bold font-heading text-ondeep text-xl">Mumbai</h3>
+                  </div>
+                  <p className="text-ondeep/70 text-xs mt-1">Maharashtra 400019</p>
+                </div>
+                <div className="text-right">
+                  <div className="flex items-center gap-1 text-ondeep">
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                    <span className="text-sm font-bold">5.0</span>
+                  </div>
+                  <p className="text-ondeep/60 text-[10px] mt-0.5">66 Reviews</p>
+                </div>
               </div>
-              <div className="space-y-4">
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+              <div className="p-7 space-y-5">
+                <div className="flex gap-3.5">
+                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
+                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-heading text-sm">Dr. Ruby</p>
+                    <p className="text-xs text-muted mt-0.5">Dentist</p>
+                  </div>
+                </div>
+                <div className="flex gap-3.5">
+                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
+                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                   </div>
                   <div>
                     <p className="font-medium text-heading text-sm">Shop 10, Nilkamal Co-op. Housing Society</p>
-                    <p className="text-xs text-muted">60 Feet Road, Matunga Labour Camp, Dharavi, Mumbai 400019</p>
+                    <p className="text-xs text-muted mt-0.5">60 Feet Road, Matunga Labour Camp, Dharavi, Mumbai 400019</p>
                   </div>
                 </div>
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                  </div>
-                  <a href="tel:+918655632732" className="text-sm text-heading font-semibold hover:opacity-70 self-center">086556 32732</a>
-                </div>
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                <div className="flex gap-3.5">
+                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
+                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                   </div>
                   <div className="text-sm">
                     <p className="text-heading font-medium">Mon&ndash;Sat: 9 AM &ndash; 9 PM</p>
-                    <p className="text-muted">Sun: Closed</p>
+                    <p className="text-muted mt-0.5">Sun: Closed</p>
                   </div>
                 </div>
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                <div className="flex gap-3.5">
+                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-600 flex-shrink-0">
+                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                   </div>
-                  <div>
-                    <p className="font-medium text-heading text-sm">Dr. Ruby</p>
-                    <p className="text-xs text-muted">Dentist</p>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 bg-surface-alt rounded-full flex items-center justify-center text-heading flex-shrink-0">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  </div>
-                  <p className="text-sm text-muted self-center">5.0 &middot; 66 Google Reviews</p>
+                  <a href="tel:+918655632732" className="text-sm text-heading font-semibold hover:opacity-70 self-center">086556 32732</a>
                 </div>
               </div>
-              <a href="https://maps.google.com/maps?q=Holy+care+dental+clinic+Dharavi+Mumbai+400019" target="_blank" rel="noopener noreferrer" className="mt-6 flex items-center justify-center gap-2 w-full py-3 rounded-2xl border border-line bg-surface-alt text-heading text-sm font-semibold hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                Open in Google Maps
-              </a>
+              <div className="px-7 pb-7 flex gap-3">
+                <a href="tel:+918655632732" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-surface-deep text-ondeep text-sm font-semibold hover:opacity-90 transition-opacity">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                  Call Now
+                </a>
+                <a href="https://maps.google.com/maps?q=Holy+care+dental+clinic+Dharavi+Mumbai+400019" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border border-line bg-surface-alt text-heading text-sm font-semibold hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-all">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                  Directions
+                </a>
+              </div>
             </div>
           </div>
         </div>
