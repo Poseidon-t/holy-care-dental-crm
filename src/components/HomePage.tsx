@@ -186,7 +186,7 @@ const GOOGLE_REVIEWS = [
 
 const TRUST_STATS = [
   {
-    value: '500+',
+    value: '5,000+',
     label: 'Happy Patients',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
@@ -207,7 +207,7 @@ const TRUST_STATS = [
     ),
   },
   {
-    value: '6+',
+    value: '8+',
     label: 'Years Experience',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
@@ -219,7 +219,7 @@ const TRUST_STATS = [
     ),
   },
   {
-    value: '10,000+',
+    value: '7,000+',
     label: 'Procedures Done',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
