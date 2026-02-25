@@ -645,14 +645,14 @@ export default function HomePage({ theme }: { theme: string }) {
               </h2>
               <p className="mt-3 text-lg text-muted">More specialized care for every need.</p>
             </div>
-            <a href="#specialties" className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
-              All Services
+            <a href="tel:+917977257779" className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
+              Book a Consultation
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </a>
           </div>
-          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {OTHER_SERVICES.map((service) => (
-              <div key={service.title} className="flex-shrink-0 w-[280px] snap-start bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all duration-300 group">
+              <div key={service.title} className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all duration-300 group">
                 <div className="relative h-44 overflow-hidden">
                   <Image src={service.image} alt={service.title} width={300} height={200} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
