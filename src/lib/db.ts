@@ -111,6 +111,14 @@ function initializeDatabase(db: Database.Database) {
     );
   }
 
+  // Emergency password reset: set RESET_PASSWORD env var on Railway, redeploy, then remove it
+  const resetPassword = process.env.RESET_PASSWORD;
+  if (resetPassword) {
+    const hash = hashPassword(resetPassword);
+    db.prepare('UPDATE admin_users SET password_hash = ? WHERE username = ?').run(hash, 'admin');
+    console.log('[Holy Care] Admin password has been reset via RESET_PASSWORD env var. Remove the env var now.');
+  }
+
   // Seed sample patients if none exist
   const patientCount = db.prepare('SELECT COUNT(*) as count FROM patients').get() as { count: number };
   if (patientCount.count === 0) {
