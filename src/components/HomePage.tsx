@@ -443,7 +443,7 @@ export default function HomePage({ theme }: { theme: string }) {
                     <Image src={service.image} alt={service.title} width={400} height={250} className="object-cover w-full h-[200px] group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <a
-                    href="tel:+917977257779"
+                    href="#hours"
                     className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold hover:opacity-70 transition-opacity ${service.light ? 'text-[#1a1a1a]' : 'text-white'}`}
                   >
                     Book Now
@@ -663,7 +663,7 @@ export default function HomePage({ theme }: { theme: string }) {
                       </li>
                     ))}
                   </ul>
-                  <a href="tel:+917977257779" className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
+                  <a href="#hours" className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-heading hover:opacity-70 transition-opacity">
                     Book Now
                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                   </a>
