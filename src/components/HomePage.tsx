@@ -686,57 +686,41 @@ export default function HomePage({ theme }: { theme: string }) {
             </h2>
             <p className="mt-4 text-lg text-muted max-w-xl mx-auto">Real results from our orthodontic and restorative treatments.</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all group">
-              <div className="relative overflow-hidden">
-                <Image src="/images/before-after-1.jpg" alt="Orthodontic braces treatment results" width={600} height={500} className="object-cover w-full group-hover:scale-[1.02] transition-transform duration-500" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-card rounded-2xl overflow-hidden border border-line hover:shadow-xl transition-all group">
+              <div className="relative overflow-hidden h-48 sm:h-56">
+                <Image src="/images/before-after-1.jpg" alt="Orthodontic braces treatment results" fill className="object-cover group-hover:scale-[1.02] transition-transform duration-500" />
               </div>
-              <div className="p-6">
-                <h3 className="font-bold font-heading text-heading text-lg">Orthodontic Braces Treatment</h3>
-                <p className="text-sm text-muted mt-1.5">Complex tooth alignment corrected with fixed braces</p>
-                <div className="mt-3 flex gap-2">
-                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Braces</span>
-                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Alignment</span>
-                </div>
+              <div className="p-3">
+                <h3 className="font-bold font-heading text-heading text-sm">Braces Treatment</h3>
+                <p className="text-xs text-muted mt-0.5">Alignment corrected with fixed braces</p>
               </div>
             </div>
-            <div className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all group">
-              <div className="relative overflow-hidden">
-                <Image src="/images/before-after-2.jpg" alt="Jaw alignment treatment results" width={600} height={500} className="object-cover w-full group-hover:scale-[1.02] transition-transform duration-500" />
+            <div className="bg-card rounded-2xl overflow-hidden border border-line hover:shadow-xl transition-all group">
+              <div className="relative overflow-hidden h-48 sm:h-56">
+                <Image src="/images/before-after-2.jpg" alt="Jaw alignment treatment results" fill className="object-cover group-hover:scale-[1.02] transition-transform duration-500" />
               </div>
-              <div className="p-6">
-                <h3 className="font-bold font-heading text-heading text-lg">Jaw &amp; Bite Correction</h3>
-                <p className="text-sm text-muted mt-1.5">Significant jaw alignment improvement with orthodontic treatment</p>
-                <div className="mt-3 flex gap-2">
-                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Orthodontics</span>
-                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Jaw Alignment</span>
-                </div>
+              <div className="p-3">
+                <h3 className="font-bold font-heading text-heading text-sm">Jaw &amp; Bite Correction</h3>
+                <p className="text-xs text-muted mt-0.5">Jaw alignment with orthodontic treatment</p>
               </div>
             </div>
-            <div className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all group">
-              <div className="relative overflow-hidden">
-                <Image src="/images/before-after-3.jpg" alt="Teeth alignment before and after treatment" width={600} height={500} className="object-cover w-full group-hover:scale-[1.02] transition-transform duration-500" />
+            <div className="bg-card rounded-2xl overflow-hidden border border-line hover:shadow-xl transition-all group">
+              <div className="relative overflow-hidden h-48 sm:h-56">
+                <Image src="/images/before-after-3.jpg" alt="Teeth alignment before and after treatment" fill className="object-cover group-hover:scale-[1.02] transition-transform duration-500" />
               </div>
-              <div className="p-6">
-                <h3 className="font-bold font-heading text-heading text-lg">Teeth Alignment Correction</h3>
-                <p className="text-sm text-muted mt-1.5">Crowded teeth transformed into a well-aligned smile</p>
-                <div className="mt-3 flex gap-2">
-                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Alignment</span>
-                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Crowding</span>
-                </div>
+              <div className="p-3">
+                <h3 className="font-bold font-heading text-heading text-sm">Teeth Alignment</h3>
+                <p className="text-xs text-muted mt-0.5">Crowded teeth transformed into aligned smile</p>
               </div>
             </div>
-            <div className="bg-card rounded-3xl overflow-hidden border border-line hover:shadow-xl transition-all group">
-              <div className="relative overflow-hidden">
-                <Image src="/images/before-after-4.jpg" alt="Upper and lower arch alignment results" width={600} height={500} className="object-cover w-full group-hover:scale-[1.02] transition-transform duration-500" />
+            <div className="bg-card rounded-2xl overflow-hidden border border-line hover:shadow-xl transition-all group">
+              <div className="relative overflow-hidden h-48 sm:h-56">
+                <Image src="/images/before-after-4.jpg" alt="Upper and lower arch alignment results" fill className="object-cover group-hover:scale-[1.02] transition-transform duration-500" />
               </div>
-              <div className="p-6">
-                <h3 className="font-bold font-heading text-heading text-lg">Full Arch Alignment</h3>
-                <p className="text-sm text-muted mt-1.5">Upper and lower arch alignment for a complete smile makeover</p>
-                <div className="mt-3 flex gap-2">
-                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Arch Alignment</span>
-                  <span className="bg-surface-deep text-ondeep px-3 py-1 rounded-full text-xs font-medium">Full Mouth</span>
-                </div>
+              <div className="p-3">
+                <h3 className="font-bold font-heading text-heading text-sm">Full Arch Alignment</h3>
+                <p className="text-xs text-muted mt-0.5">Upper and lower arch complete makeover</p>
               </div>
             </div>
           </div>
