@@ -280,7 +280,7 @@ export default function PrintableReportPage({ params }: { params: { id: string }
       <div className="report-container" style={{ padding: '32px' }}>
         {/* Clinic Header */}
         <div className="report-header">
-          <div style={{ fontSize: '36px', marginBottom: '8px' }}>🦷</div>
+          <img src="/images/logo.png" alt="Holy Care Dental" style={{ width: '48px', height: '48px', marginBottom: '8px', display: 'inline-block' }} />
           <h1 style={{ fontSize: '20px', fontWeight: 700, color: '#1e40af', margin: '0 0 4px' }}>
             HOLY CARE DENTAL &amp; ORTHODONTICS CLINIC
           </h1>
