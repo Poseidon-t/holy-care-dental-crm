@@ -316,51 +316,81 @@ function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen:
    ═══════════════════════════════════════════════ */
 
 function Footer() {
+  const footerLinks = [
+    { href: '#about', label: 'About' },
+    { href: '#specialties', label: 'Specialities' },
+    { href: '#reviews', label: 'Reviews' },
+    { href: '#results', label: 'Results' },
+    { href: '#gallery', label: 'Gallery' },
+    { href: '#hours', label: 'Contact' },
+    { href: '#hours', label: 'Timings' },
+    { href: '/knowledge', label: 'Knowledge' },
+  ];
+
   return (
-    <footer className="bg-surface-deepest text-faint py-12">
+    <footer className="bg-surface-deepest text-faint pt-14 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8">
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <Image src="/images/logo.png" alt="Holy Care Dental & Orthodontics Clinic" width={32} height={32} className="w-8 h-8 brightness-200" />
-              <span className="font-bold font-heading text-ondeep text-base">Holy Care Dental & Orthodontics</span>
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-6">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-4">
+            <div className="flex items-center gap-2.5 mb-4">
+              <Image src="/images/logo.png" alt="Holy Care Dental & Orthodontics Clinic" width={36} height={36} className="w-9 h-9 brightness-200" />
+              <div>
+                <span className="font-bold font-heading text-ondeep text-base block leading-tight">Holy Care Dental</span>
+                <span className="text-xs text-muted">& Orthodontics Clinic</span>
+              </div>
             </div>
-            <p className="text-sm leading-relaxed text-muted max-w-sm">
-              Quality dental &amp; orthodontic care for the entire family. Specialist in braces and aligners. Clinics in Kavalkinaru &amp; Mumbai.
+            <p className="text-sm leading-relaxed text-muted max-w-xs">
+              Quality dental &amp; orthodontic care for the entire family. Specialist in braces and aligners.
             </p>
-            <div className="mt-4 space-y-1.5">
-              <a href="tel:+917977257779" className="text-primary-400 hover:text-primary-300 font-semibold text-sm block">079772 57779</a>
-              <a href="mailto:holycareortho@gmail.com" className="text-primary-400 hover:text-primary-300 text-sm block">holycareortho@gmail.com</a>
+            <div className="mt-5 flex items-center gap-4">
+              <a href="tel:+917977257779" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-muted hover:text-ondeep hover:bg-white/20 transition-all">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+              </a>
+              <a href="mailto:holycareortho@gmail.com" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-muted hover:text-ondeep hover:bg-white/20 transition-all">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
+              </a>
             </div>
           </div>
-          <div>
-            <h4 className="font-semibold font-heading text-ondeep text-sm mb-4">Company</h4>
-            <div className="space-y-2 text-sm">
-              {NAV_LINKS.map((link) => (
-                <a key={link.href} href={link.href} className="block text-muted hover:text-ondeep transition-colors">{link.label}</a>
+
+          {/* Quick Links — two columns */}
+          <div className="col-span-1 md:col-span-2">
+            <h4 className="font-semibold font-heading text-ondeep text-sm mb-4">Quick Links</h4>
+            <div className="space-y-2.5 text-sm">
+              {footerLinks.slice(0, 4).map((link) => (
+                <a key={link.label} href={link.href} className="block text-muted hover:text-ondeep transition-colors">{link.label}</a>
               ))}
-              <a href="#results" className="block text-muted hover:text-ondeep transition-colors">Results</a>
-              <a href="#hours" className="block text-muted hover:text-ondeep transition-colors">Timings</a>
             </div>
           </div>
-          <div>
-            <h4 className="font-semibold font-heading text-ondeep text-sm mb-4">Locations</h4>
-            <div className="text-sm space-y-3 text-muted">
-              <div>
-                <p className="text-ondeep font-medium">Kavalkinaru (HQ)</p>
-                <p>Tamil Nadu, India</p>
-                <p>079772 57779</p>
-              </div>
-              <div>
-                <p className="text-ondeep font-medium">Mumbai</p>
-                <p>Dharavi, Maharashtra</p>
-                <p>086556 32732</p>
-              </div>
-              <p className="pt-1 text-xs text-faint">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
+          <div className="col-span-1 md:col-span-2">
+            <h4 className="font-semibold font-heading text-ondeep text-sm mb-4 md:invisible">More</h4>
+            <div className="space-y-2.5 text-sm">
+              {footerLinks.slice(4).map((link) => (
+                <a key={link.label} href={link.href} className="block text-muted hover:text-ondeep transition-colors">{link.label}</a>
+              ))}
             </div>
+          </div>
+
+          {/* Locations */}
+          <div className="col-span-2 md:col-span-4">
+            <h4 className="font-semibold font-heading text-ondeep text-sm mb-4">Our Locations</h4>
+            <div className="grid grid-cols-2 gap-4 text-sm text-muted">
+              <div className="bg-white/5 rounded-xl p-3.5">
+                <p className="text-ondeep font-semibold text-xs uppercase tracking-wider mb-1.5">Kavalkinaru (HQ)</p>
+                <p className="text-xs leading-relaxed">Tamil Nadu 627105</p>
+                <a href="tel:+917977257779" className="text-primary-400 hover:text-primary-300 text-xs font-medium mt-1.5 block">079772 57779</a>
+              </div>
+              <div className="bg-white/5 rounded-xl p-3.5">
+                <p className="text-ondeep font-semibold text-xs uppercase tracking-wider mb-1.5">Mumbai</p>
+                <p className="text-xs leading-relaxed">Dharavi, Maharashtra 400019</p>
+                <a href="tel:+918655632732" className="text-primary-400 hover:text-primary-300 text-xs font-medium mt-1.5 block">086556 32732</a>
+              </div>
+            </div>
+            <p className="mt-3 text-xs text-faint">Dr. Pinky Vijay MDS | Reg. No: A-34195</p>
           </div>
         </div>
-        <div className="border-t border-line mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+
+        <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-faint">&copy; {new Date().getFullYear()} Holy Care Dental &amp; Orthodontics Clinic. All rights reserved.</p>
           <Link href="/login" className="text-xs text-muted hover:text-faint transition-colors">Staff Login</Link>
         </div>
