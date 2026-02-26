@@ -1,18 +1,26 @@
 import type { Metadata } from 'next';
-import SaasLandingPage from '@/components/SaasLandingPage';
+import HomePage from '@/components/HomePage';
 
 export const metadata: Metadata = {
-  title: 'ClinicFlow | Patient Management for Modern Clinics',
+  title: 'Holy Care Dental & Orthodontics Clinic | Kavalkinaru, Tamil Nadu',
   description:
-    'Simple, powerful patient management system for clinics and solo doctors across India. Register patients, manage treatments, generate reports. Start free today.',
+    'Expert dental care by Dr. Pinky Vijay MDS in Kavalkinaru, Tamil Nadu. Offering orthodontics, root canal treatment, dental implants, teeth whitening, gum treatment, pediatric dentistry & more. Book your appointment today.',
   openGraph: {
-    title: 'ClinicFlow | Patient Management for Modern Clinics',
+    title: 'Holy Care Dental & Orthodontics Clinic | Kavalkinaru',
     description:
-      'Simple, powerful patient management for clinics and solo doctors. Start free today.',
+      'Expert dental care by Dr. Pinky Vijay MDS. Orthodontics, implants, root canal, cosmetic dentistry & more.',
     type: 'website',
+    images: [
+      {
+        url: '/images/clinic-exterior-1.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Holy Care Dental & Orthodontics Clinic',
+      },
+    ],
   },
 };
 
 export default function Page() {
-  return <SaasLandingPage />;
+  return <HomePage theme="classic" />;
 }
