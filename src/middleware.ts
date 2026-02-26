@@ -31,6 +31,7 @@ function isPublicPath(pathname: string, method: string): boolean {
   // Version check API - public (for update banner)
   if (pathname === '/api/version') return true;
 
+
   // Knowledge/Articles pages - public
   if (pathname.startsWith('/knowledge')) return true;
 
