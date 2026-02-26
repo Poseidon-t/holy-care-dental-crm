@@ -23,13 +23,19 @@ export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) 
   const handleThemeSelect = async (themeId: string) => {
     document.documentElement.setAttribute('data-theme', themeId);
     setActiveTheme(themeId);
+    setIsOpen(false);
 
     try {
-      await fetch('/api/settings/theme', {
+      const res = await fetch('/api/settings/theme', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ theme: themeId }),
       });
+
+      if (!res.ok) {
+        throw new Error(`Save failed: ${res.status}`);
+      }
+
       startTransition(() => {
         router.refresh();
       });
@@ -38,8 +44,6 @@ export function ThemeSelectorButton({ currentTheme }: { currentTheme: string }) 
       document.documentElement.setAttribute('data-theme', currentTheme);
       setActiveTheme(currentTheme);
     }
-
-    setIsOpen(false);
   };
 
   return (
