@@ -270,7 +270,7 @@ function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen:
             <Image src="/images/logo.png" alt="Holy Care Dental & Orthodontics Clinic" width={36} height={36} className="w-9 h-9" />
             <div>
               <span className="font-bold font-heading text-heading text-lg hidden sm:inline leading-tight block">Holy Care Dental & Orthodontics</span>
-              <span className="font-bold font-heading text-heading text-lg sm:hidden leading-tight block">Holy Care</span>
+              <span className="font-bold font-heading text-heading text-lg sm:hidden leading-tight block">Holy Care Dental & Orthodontics</span>
               <span className="text-xs text-body font-semibold tracking-wide hidden sm:block mt-0.5">Kavalkinaru, Tamil Nadu &middot; Mumbai, Maharashtra</span>
             </div>
           </div>
