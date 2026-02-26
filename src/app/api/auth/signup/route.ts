@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
         needsSetup: true,
       });
 
-      response.cookies.set('clinicflow_session', token, {
+      response.cookies.set('holycare_session', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',

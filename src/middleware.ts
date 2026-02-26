@@ -63,7 +63,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Check authentication
-  const token = request.cookies.get('clinicflow_session')?.value;
+  const token = request.cookies.get('holycare_session')?.value;
 
   if (!token) {
     if (!pathname.startsWith('/api/')) {
@@ -83,7 +83,7 @@ export async function middleware(request: NextRequest) {
   } catch {
     if (!pathname.startsWith('/api/')) {
       const response = NextResponse.redirect(new URL('/login', request.url));
-      response.cookies.delete('clinicflow_session');
+      response.cookies.delete('holycare_session');
       return response;
     }
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

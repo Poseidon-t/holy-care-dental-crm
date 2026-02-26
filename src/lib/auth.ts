@@ -7,7 +7,7 @@ if (!process.env.JWT_SECRET) {
 }
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-const COOKIE_NAME = 'clinicflow_session';
+const COOKIE_NAME = 'holycare_session';
 
 export interface SessionPayload {
   userId: string;
