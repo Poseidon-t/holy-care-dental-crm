@@ -4,20 +4,22 @@ import { verifyPassword, createToken, COOKIE_NAME } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const body = await request.json();
+    const login = body.username || body.email;
+    const password = body.password;
 
-    if (!email || !password) {
+    if (!login || !password) {
       return NextResponse.json(
-        { error: 'Email and password are required' },
+        { error: 'Username and password are required' },
         { status: 400 }
       );
     }
 
-    const user = await getUserByEmail(email);
+    const user = await getUserByEmail(login);
 
     if (!user || !verifyPassword(password, user.password_hash)) {
       return NextResponse.json(
-        { error: 'Invalid email or password' },
+        { error: 'Invalid username or password' },
         { status: 401 }
       );
     }

@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import ClinicHeader from '@/components/ClinicHeader';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +18,7 @@ export default function LoginPage() {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
@@ -37,28 +38,32 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 p-4">
       <div className="card max-w-md w-full">
-        <div className="text-center py-6">
-          <h1 className="text-2xl font-bold font-heading text-primary-700">Holy Care Dental</h1>
-          <p className="text-sm text-muted mt-1">Admin Portal</p>
-        </div>
+        <ClinicHeader clinic={{
+          name: 'Holy Care Dental & Orthodontics Clinic',
+          doctor_name: 'Dr. Pinky Vijay MDS',
+          specialization: 'Orthodontics & Dentofacial Orthopedics',
+          registration_number: 'A-34195',
+          phone: '+91 79772 57779',
+          address: '8/277, Rachel Enclave, Kavalkinaru Main Road, Kavalkinaru - 627105',
+        }} />
 
-        <div className="mt-2 mb-2">
-          <h2 className="text-center text-lg font-semibold font-heading text-body">Sign In</h2>
+        <div className="mt-6 mb-2">
+          <h2 className="text-center text-lg font-semibold font-heading text-body">Admin Login</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div>
-            <label htmlFor="email" className="label-field">Email</label>
+            <label htmlFor="username" className="label-field">Username</label>
             <input
-              id="email"
-              type="email"
+              id="username"
+              type="text"
               className="input-field"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              placeholder="Enter username"
               required
               autoFocus
-              autoComplete="email"
+              autoComplete="username"
             />
           </div>
 
@@ -93,21 +98,18 @@ export default function LoginPage() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                Signing in...
+                Logging in...
               </span>
             ) : (
-              'Sign In'
+              'Login'
             )}
           </button>
         </form>
 
-        <div className="mt-6 text-center border-t border-line pt-4">
-          <p className="text-sm text-muted">
-            Don&apos;t have an account?{' '}
-            <a href="/signup" className="text-primary-600 font-medium hover:text-primary-700">
-              Sign up free
-            </a>
-          </p>
+        <div className="mt-6 text-center">
+          <a href="/" className="text-sm text-faint hover:text-primary-600 transition-colors">
+            &larr; Back to website
+          </a>
         </div>
       </div>
     </div>
