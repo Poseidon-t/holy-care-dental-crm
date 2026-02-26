@@ -36,6 +36,9 @@ function isPublicPath(pathname: string, method: string): boolean {
   // Knowledge/Articles pages - public
   if (pathname.startsWith('/knowledge')) return true;
 
+  // Pricing page - public
+  if (pathname === '/pricing') return true;
+
   return false;
 }
 

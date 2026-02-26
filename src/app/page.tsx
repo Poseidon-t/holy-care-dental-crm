@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
-import HomePage from '@/components/HomePage';
-
-export const dynamic = 'force-dynamic';
+import SaasLandingPage from '@/components/SaasLandingPage';
 
 export const metadata: Metadata = {
   title: 'ClinicFlow | Patient Management for Modern Clinics',
@@ -15,6 +13,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
-  return <HomePage theme="classic" />;
+export default function Page() {
+  return <SaasLandingPage />;
 }
