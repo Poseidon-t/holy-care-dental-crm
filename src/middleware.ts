@@ -13,8 +13,7 @@ function isPublicPath(pathname: string, method: string): boolean {
 
   // Auth pages
   if (pathname === '/login' || pathname === '/api/auth/login') return true;
-  if (pathname === '/signup' || pathname === '/api/auth/signup') return true;
-
+  if (pathname === '/api/auth/setup' && method === 'POST') return true;
   // Registration paths (tablet and remote)
   if (pathname.startsWith('/register')) return true;
 
@@ -30,17 +29,11 @@ function isPublicPath(pathname: string, method: string): boolean {
   // Chat API - POST only (public chatbot)
   if (pathname === '/api/chat' && method === 'POST') return true;
 
-  // Payment webhook - POST only (Razorpay server-to-server)
-  if (pathname === '/api/payments/webhook' && method === 'POST') return true;
-
   // Version check API - public (for update banner)
   if (pathname === '/api/version') return true;
 
   // Knowledge/Articles pages - public
   if (pathname.startsWith('/knowledge')) return true;
-
-  // Pricing page - public
-  if (pathname === '/pricing') return true;
 
   return false;
 }
