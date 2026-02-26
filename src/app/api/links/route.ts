@@ -10,12 +10,11 @@ export async function POST() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { clinicId } = session;
     const token = randomBytes(24).toString('hex');
 
     await execute(
-      'INSERT INTO registration_links (clinic_id, token) VALUES ($1, $2)',
-      [clinicId, token]
+      'INSERT INTO registration_links (token) VALUES (?)',
+      [token]
     );
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';

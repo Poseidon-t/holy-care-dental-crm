@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { clinicId } = session;
     const url = new URL(request.url);
 
     const search = url.searchParams.get('search') || '';
@@ -21,28 +20,25 @@ export async function GET(request: NextRequest) {
         COALESCE(SUM(t.amount), 0) as total_billing
       FROM patients p
       LEFT JOIN treatments t ON t.patient_id = p.id
-      WHERE p.clinic_id = $1
+      WHERE 1=1
     `;
 
-    const params: unknown[] = [clinicId];
-    let paramIndex = 2;
+    const params: unknown[] = [];
 
     if (search) {
-      sql += ` AND (p.name ILIKE $${paramIndex} OR p.phone LIKE $${paramIndex} OR CAST(p.op_number AS TEXT) LIKE $${paramIndex})`;
-      params.push(`%${search}%`);
-      paramIndex++;
+      sql += ` AND (p.name LIKE ? OR p.phone LIKE ? OR CAST(p.op_number AS TEXT) LIKE ?)`;
+      const searchPattern = `%${search}%`;
+      params.push(searchPattern, searchPattern, searchPattern);
     }
 
     if (dateFrom) {
-      sql += ` AND DATE(p.created_at) >= $${paramIndex}`;
+      sql += ` AND DATE(p.created_at) >= ?`;
       params.push(dateFrom);
-      paramIndex++;
     }
 
     if (dateTo) {
-      sql += ` AND DATE(p.created_at) <= $${paramIndex}`;
+      sql += ` AND DATE(p.created_at) <= ?`;
       params.push(dateTo);
-      paramIndex++;
     }
 
     sql += ' GROUP BY p.id ORDER BY p.created_at DESC';
@@ -76,7 +72,6 @@ export async function POST(request: NextRequest) {
     const {
       submission_method = 'tablet',
       link_token,
-      clinic_slug,
       name, age, sex, address, phone, occupation, chief_complaint,
       jaundice, high_blood_pressure, heart_diseases, bleeding_disorders,
       hemophilia, allergy, anemia, fits, asthma_rs_disorders, thyroid,
@@ -86,19 +81,10 @@ export async function POST(request: NextRequest) {
       patient_signature, dentist_signature,
     } = body;
 
-    // Determine clinic_id
-    let clinicId: string | null = null;
-
-    // 1. Check if authenticated (dashboard submission)
-    const session = await getSession();
-    if (session) {
-      clinicId = session.clinicId;
-    }
-
-    // 2. If remote submission with link token, get clinic from link
-    if (!clinicId && submission_method === 'remote' && link_token) {
-      const link = await queryOne<{ id: number; clinic_id: string }>(
-        'SELECT id, clinic_id FROM registration_links WHERE token = $1 AND used_at IS NULL',
+    // For remote submissions, validate the link token
+    if (submission_method === 'remote' && link_token) {
+      const link = await queryOne<{ id: number; token: string }>(
+        'SELECT id, token FROM registration_links WHERE token = ? AND used_at IS NULL',
         [link_token]
       );
       if (!link) {
@@ -107,22 +93,6 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         );
       }
-      clinicId = link.clinic_id;
-    }
-
-    // 3. If tablet submission with clinic_slug
-    if (!clinicId && clinic_slug) {
-      const clinic = await queryOne<{ id: string }>('SELECT id FROM clinics WHERE slug = $1', [clinic_slug]);
-      if (clinic) {
-        clinicId = clinic.id;
-      }
-    }
-
-    if (!clinicId) {
-      return NextResponse.json(
-        { error: 'Could not determine clinic. Please provide a valid registration link or clinic identifier.' },
-        { status: 400 }
-      );
     }
 
     // Validate required fields
@@ -133,11 +103,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { opNumber, invoiceNumber, xrayIdNumber } = await getNextNumbers(clinicId);
+    const { opNumber, invoiceNumber, xrayIdNumber } = await getNextNumbers();
 
     const result = await execute(
       `INSERT INTO patients (
-        clinic_id, op_number, invoice_number, xray_id_number, submission_method,
+        op_number, invoice_number, xray_id_number, submission_method,
         name, age, sex, address, phone, occupation, chief_complaint,
         jaundice, high_blood_pressure, heart_diseases, bleeding_disorders,
         hemophilia, allergy, anemia, fits, asthma_rs_disorders, thyroid,
@@ -145,31 +115,31 @@ export async function POST(request: NextRequest) {
         previous_dental_history, diagnosis, treatment_plan,
         consent_agreed, patient_signature, dentist_signature
       ) VALUES (
-        $1, $2, $3, $4, $5,
-        $6, $7, $8, $9, $10, $11, $12,
-        $13, $14, $15, $16,
-        $17, $18, $19, $20, $21, $22,
-        $23, $24, $25,
-        $26, $27, $28,
-        $29, $30, $31
-      ) RETURNING id`,
+        ?, ?, ?, ?,
+        ?, ?, ?, ?, ?, ?, ?,
+        ?, ?, ?, ?,
+        ?, ?, ?, ?, ?, ?,
+        ?, ?, ?,
+        ?, ?, ?,
+        ?, ?, ?
+      )`,
       [
-        clinicId, opNumber, invoiceNumber, xrayIdNumber, submission_method,
+        opNumber, invoiceNumber, xrayIdNumber, submission_method,
         name, age, sex, address || '', phone, occupation || '', chief_complaint || '',
-        !!jaundice, !!high_blood_pressure, !!heart_diseases, !!bleeding_disorders,
-        !!hemophilia, !!allergy, !!anemia, !!fits, !!asthma_rs_disorders, !!thyroid,
-        !!diabetes, !!kidney_diseases, !!pregnancy_lactating,
+        jaundice ? 1 : 0, high_blood_pressure ? 1 : 0, heart_diseases ? 1 : 0, bleeding_disorders ? 1 : 0,
+        hemophilia ? 1 : 0, allergy ? 1 : 0, anemia ? 1 : 0, fits ? 1 : 0, asthma_rs_disorders ? 1 : 0, thyroid ? 1 : 0,
+        diabetes ? 1 : 0, kidney_diseases ? 1 : 0, pregnancy_lactating ? 1 : 0,
         previous_dental_history || '', diagnosis || '', treatment_plan || '',
-        !!consent_agreed, patient_signature || '', dentist_signature || '',
+        consent_agreed ? 1 : 0, patient_signature || '', dentist_signature || '',
       ]
     );
 
-    const patientId = result.rows[0]?.id;
+    const patientId = result.lastInsertRowid;
 
     // Mark link as used if remote
     if (submission_method === 'remote' && link_token) {
       await execute(
-        'UPDATE registration_links SET used_at = NOW(), patient_id = $1 WHERE token = $2',
+        "UPDATE registration_links SET used_at = datetime('now'), patient_id = ? WHERE token = ?",
         [patientId, link_token]
       );
     }

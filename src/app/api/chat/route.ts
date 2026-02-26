@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
-import { query } from '@/lib/db';
+import { getClinic } from '@/lib/db';
 import type { Clinic } from '@/lib/db';
 
 if (!process.env.GROQ_API_KEY) {
@@ -69,20 +69,8 @@ ${address ? `- **Address**: ${address}${city ? `, ${city}` : ''}${state ? `, ${s
 - If asked about emergency care, advise calling the clinic immediately${phone ? ` at ${phone}` : ''}`;
 }
 
-// Cache for clinic data used in chat
-let cachedClinic: { data: Clinic; fetchedAt: number } | null = null;
-const CACHE_TTL = 5 * 60_000; // 5 minutes
-
 async function getFirstClinic(): Promise<Clinic | null> {
-  if (cachedClinic && Date.now() - cachedClinic.fetchedAt < CACHE_TTL) {
-    return cachedClinic.data;
-  }
-  const clinics = await query<Clinic>('SELECT * FROM clinics LIMIT 1');
-  if (clinics.length > 0) {
-    cachedClinic = { data: clinics[0], fetchedAt: Date.now() };
-    return clinics[0];
-  }
-  return null;
+  return getClinic();
 }
 
 interface ChatMessage {

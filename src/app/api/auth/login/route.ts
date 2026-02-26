@@ -25,14 +25,14 @@ export async function POST(request: NextRequest) {
     }
 
     const token = await createToken({
-      userId: user.id,
-      clinicId: user.clinic_id,
-      email: user.email,
+      userId: String(user.id),
+      clinicId: 'single-tenant',
+      email: user.username,
       fullName: user.full_name,
     });
 
     const response = NextResponse.json({
-      user: { id: user.id, email: user.email, fullName: user.full_name },
+      user: { id: user.id, email: user.username, fullName: user.full_name },
     });
 
     response.cookies.set(COOKIE_NAME, token, {

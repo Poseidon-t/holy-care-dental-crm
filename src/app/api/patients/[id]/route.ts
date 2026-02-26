@@ -13,11 +13,10 @@ export async function GET(
     }
 
     const { id } = await params;
-    const { clinicId } = session;
 
     const patient = await queryOne<Record<string, unknown>>(
-      'SELECT * FROM patients WHERE id = $1 AND clinic_id = $2',
-      [id, clinicId]
+      'SELECT * FROM patients WHERE id = ?',
+      [id]
     );
 
     if (!patient) {
@@ -25,8 +24,8 @@ export async function GET(
     }
 
     const treatments = await query<Record<string, unknown>>(
-      'SELECT * FROM treatments WHERE patient_id = $1 AND clinic_id = $2 ORDER BY appointment_date ASC',
-      [id, clinicId]
+      'SELECT * FROM treatments WHERE patient_id = ? ORDER BY appointment_date ASC',
+      [id]
     );
 
     const totalBilling = treatments.reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
@@ -58,7 +57,6 @@ export async function PATCH(
     }
 
     const { id } = await params;
-    const { clinicId } = session;
     const body = await request.json();
     const { dentist_signature } = body;
 
@@ -67,16 +65,16 @@ export async function PATCH(
     }
 
     const patient = await queryOne<{ id: number }>(
-      'SELECT id FROM patients WHERE id = $1 AND clinic_id = $2',
-      [id, clinicId]
+      'SELECT id FROM patients WHERE id = ?',
+      [id]
     );
     if (!patient) {
       return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
     await execute(
-      'UPDATE patients SET dentist_signature = $1 WHERE id = $2 AND clinic_id = $3',
-      [dentist_signature, id, clinicId]
+      'UPDATE patients SET dentist_signature = ? WHERE id = ?',
+      [dentist_signature, id]
     );
 
     return NextResponse.json({ success: true });

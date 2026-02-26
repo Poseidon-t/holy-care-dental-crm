@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { queryOne, pool } from '@/lib/db';
+import { queryOne, getDb } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { clinicId } = session;
     const body = await request.json();
     const { patient_id, treatments, signature } = body;
 
@@ -20,34 +19,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verify patient exists and belongs to this clinic
+    // Verify patient exists
     const patient = await queryOne<{ id: number }>(
-      'SELECT id FROM patients WHERE id = $1 AND clinic_id = $2',
-      [patient_id, clinicId]
+      'SELECT id FROM patients WHERE id = ?',
+      [patient_id]
     );
     if (!patient) {
       return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
     // Use transaction for batch insert
-    const client = await pool.connect();
-    try {
-      await client.query('BEGIN');
+    const db = getDb();
+    const insertTreatment = db.prepare(
+      'INSERT INTO treatments (patient_id, appointment_date, description, amount, signature) VALUES (?, ?, ?, ?, ?)'
+    );
 
-      for (const entry of treatments as Array<{ appointment_date: string; description: string; amount: number }>) {
-        await client.query(
-          'INSERT INTO treatments (clinic_id, patient_id, appointment_date, description, amount, signature) VALUES ($1, $2, $3, $4, $5, $6)',
-          [clinicId, patient_id, entry.appointment_date, entry.description, entry.amount || 0, signature || '']
-        );
+    const insertMany = db.transaction((entries: Array<{ appointment_date: string; description: string; amount: number }>) => {
+      for (const entry of entries) {
+        insertTreatment.run(patient_id, entry.appointment_date, entry.description, entry.amount || 0, signature || '');
       }
+    });
 
-      await client.query('COMMIT');
-    } catch (err) {
-      await client.query('ROLLBACK');
-      throw err;
-    } finally {
-      client.release();
-    }
+    insertMany(treatments);
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {
