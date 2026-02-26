@@ -11,6 +11,8 @@ export function getDb(): Database.Database {
   if (!_db) {
     _db = new Database(DB_PATH);
     _db.pragma('journal_mode = WAL');
+    _db.pragma('synchronous = FULL');
+    _db.pragma('busy_timeout = 5000');
     _db.pragma('foreign_keys = ON');
     initDb(_db);
   }
@@ -83,10 +85,18 @@ function initDb(db: Database.Database) {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       token TEXT UNIQUE NOT NULL,
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      expires_at TEXT NOT NULL DEFAULT (datetime('now', '+24 hours')),
       used_at TEXT,
       patient_id INTEGER REFERENCES patients(id)
     )
   `);
+
+  // Add expires_at column to existing tables that don't have it
+  try {
+    db.exec(`ALTER TABLE registration_links ADD COLUMN expires_at TEXT NOT NULL DEFAULT (datetime('now', '+24 hours'))`);
+  } catch {
+    // Column already exists
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS settings (

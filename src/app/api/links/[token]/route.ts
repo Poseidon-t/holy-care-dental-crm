@@ -8,14 +8,14 @@ export async function GET(
   try {
     const { token } = await params;
 
-    const link = await queryOne<{ id: number; token: string; created_at: string }>(
-      'SELECT * FROM registration_links WHERE token = ? AND used_at IS NULL',
+    const link = await queryOne<{ id: number; token: string; created_at: string; expires_at: string }>(
+      "SELECT * FROM registration_links WHERE token = ? AND used_at IS NULL AND datetime(expires_at) > datetime('now')",
       [token]
     );
 
     if (!link) {
       return NextResponse.json(
-        { valid: false, error: 'This registration link is invalid or has already been used' },
+        { valid: false, error: 'This registration link is invalid, expired, or has already been used' },
         { status: 404 }
       );
     }

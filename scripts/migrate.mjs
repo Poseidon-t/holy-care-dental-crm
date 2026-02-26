@@ -89,10 +89,17 @@ function migrate() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       token TEXT UNIQUE NOT NULL,
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      expires_at TEXT NOT NULL DEFAULT (datetime('now', '+24 hours')),
       used_at TEXT,
       patient_id INTEGER REFERENCES patients(id)
     )
   `);
+  // Add expires_at column to existing tables
+  try {
+    db.exec(`ALTER TABLE registration_links ADD COLUMN expires_at TEXT NOT NULL DEFAULT (datetime('now', '+24 hours'))`);
+  } catch {
+    // Column already exists
+  }
   console.log('✓ registration_links table ready');
 
   db.exec(`

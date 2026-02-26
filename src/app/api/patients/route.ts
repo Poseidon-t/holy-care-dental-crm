@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { query, queryOne, execute, getNextNumbers, formatOpNumber } from '@/lib/db';
+import { query, queryOne, formatOpNumber, getDb } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
@@ -81,10 +81,10 @@ export async function POST(request: NextRequest) {
       patient_signature, dentist_signature,
     } = body;
 
-    // For remote submissions, validate the link token
+    // For remote submissions, validate the link token (with 24h expiry)
     if (submission_method === 'remote' && link_token) {
       const link = await queryOne<{ id: number; token: string }>(
-        'SELECT id, token FROM registration_links WHERE token = ? AND used_at IS NULL',
+        "SELECT id, token FROM registration_links WHERE token = ? AND used_at IS NULL AND datetime(expires_at) > datetime('now')",
         [link_token]
       );
       if (!link) {
@@ -103,46 +103,80 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { opNumber, invoiceNumber, xrayIdNumber } = await getNextNumbers();
+    // Input validation
+    const trimmedName = String(name).trim().slice(0, 255);
+    const parsedAge = Math.max(0, Math.min(150, Math.floor(Number(age))));
+    const trimmedSex = String(sex).trim().slice(0, 10);
+    const trimmedPhone = String(phone).trim().slice(0, 20);
+    const trimmedAddress = address ? String(address).trim().slice(0, 500) : '';
+    const trimmedOccupation = occupation ? String(occupation).trim().slice(0, 255) : '';
+    const trimmedChiefComplaint = chief_complaint ? String(chief_complaint).trim().slice(0, 2000) : '';
+    const trimmedPrevDental = previous_dental_history ? String(previous_dental_history).trim().slice(0, 2000) : '';
+    const trimmedDiagnosis = diagnosis ? String(diagnosis).trim().slice(0, 2000) : '';
+    const trimmedTreatmentPlan = treatment_plan ? String(treatment_plan).trim().slice(0, 2000) : '';
 
-    const result = await execute(
-      `INSERT INTO patients (
-        op_number, invoice_number, xray_id_number, submission_method,
-        name, age, sex, address, phone, occupation, chief_complaint,
-        jaundice, high_blood_pressure, heart_diseases, bleeding_disorders,
-        hemophilia, allergy, anemia, fits, asthma_rs_disorders, thyroid,
-        diabetes, kidney_diseases, pregnancy_lactating,
-        previous_dental_history, diagnosis, treatment_plan,
-        consent_agreed, patient_signature, dentist_signature
-      ) VALUES (
-        ?, ?, ?, ?,
-        ?, ?, ?, ?, ?, ?, ?,
-        ?, ?, ?, ?,
-        ?, ?, ?, ?, ?, ?,
-        ?, ?, ?,
-        ?, ?, ?,
-        ?, ?, ?
-      )`,
-      [
+    // Limit signature data to 2MB
+    const MAX_SIG_LEN = 2 * 1024 * 1024;
+    const trimmedPatientSig = patient_signature ? String(patient_signature).slice(0, MAX_SIG_LEN) : '';
+    const trimmedDentistSig = dentist_signature ? String(dentist_signature).slice(0, MAX_SIG_LEN) : '';
+
+    if (!trimmedName || isNaN(parsedAge) || !trimmedSex || !trimmedPhone) {
+      return NextResponse.json(
+        { error: 'Invalid input data' },
+        { status: 400 }
+      );
+    }
+
+    // Use transaction for atomic patient creation + link marking
+    const db = getDb();
+    const createPatient = db.transaction(() => {
+      const { opNumber, invoiceNumber, xrayIdNumber } = (() => {
+        const result = db.prepare('SELECT COALESCE(MAX(op_number), 0) + 1 as next FROM patients').get() as { next: number } | undefined;
+        const next = result?.next ?? 1;
+        return { opNumber: next, invoiceNumber: next, xrayIdNumber: next };
+      })();
+
+      const insertResult = db.prepare(
+        `INSERT INTO patients (
+          op_number, invoice_number, xray_id_number, submission_method,
+          name, age, sex, address, phone, occupation, chief_complaint,
+          jaundice, high_blood_pressure, heart_diseases, bleeding_disorders,
+          hemophilia, allergy, anemia, fits, asthma_rs_disorders, thyroid,
+          diabetes, kidney_diseases, pregnancy_lactating,
+          previous_dental_history, diagnosis, treatment_plan,
+          consent_agreed, patient_signature, dentist_signature
+        ) VALUES (
+          ?, ?, ?, ?,
+          ?, ?, ?, ?, ?, ?, ?,
+          ?, ?, ?, ?,
+          ?, ?, ?, ?, ?, ?,
+          ?, ?, ?,
+          ?, ?, ?,
+          ?, ?, ?
+        )`
+      ).run(
         opNumber, invoiceNumber, xrayIdNumber, submission_method,
-        name, age, sex, address || '', phone, occupation || '', chief_complaint || '',
+        trimmedName, parsedAge, trimmedSex, trimmedAddress, trimmedPhone, trimmedOccupation, trimmedChiefComplaint,
         jaundice ? 1 : 0, high_blood_pressure ? 1 : 0, heart_diseases ? 1 : 0, bleeding_disorders ? 1 : 0,
         hemophilia ? 1 : 0, allergy ? 1 : 0, anemia ? 1 : 0, fits ? 1 : 0, asthma_rs_disorders ? 1 : 0, thyroid ? 1 : 0,
         diabetes ? 1 : 0, kidney_diseases ? 1 : 0, pregnancy_lactating ? 1 : 0,
-        previous_dental_history || '', diagnosis || '', treatment_plan || '',
-        consent_agreed ? 1 : 0, patient_signature || '', dentist_signature || '',
-      ]
-    );
-
-    const patientId = result.lastInsertRowid;
-
-    // Mark link as used if remote
-    if (submission_method === 'remote' && link_token) {
-      await execute(
-        "UPDATE registration_links SET used_at = datetime('now'), patient_id = ? WHERE token = ?",
-        [patientId, link_token]
+        trimmedPrevDental, trimmedDiagnosis, trimmedTreatmentPlan,
+        consent_agreed ? 1 : 0, trimmedPatientSig, trimmedDentistSig,
       );
-    }
+
+      const patientId = Number(insertResult.lastInsertRowid);
+
+      // Mark link as used atomically
+      if (submission_method === 'remote' && link_token) {
+        db.prepare(
+          "UPDATE registration_links SET used_at = datetime('now'), patient_id = ? WHERE token = ?"
+        ).run(patientId, link_token);
+      }
+
+      return { patientId, opNumber };
+    });
+
+    const { patientId, opNumber } = createPatient();
 
     return NextResponse.json({
       success: true,
