@@ -21,7 +21,7 @@ function hashPassword(password) {
 }
 
 async function migrate() {
-  console.log('🔄 Running ClinicFlow database migration...\n');
+  console.log('🔄 Running Holy Care database migration...\n');
 
   // Enable UUID extension
   await pool.query('CREATE EXTENSION IF NOT EXISTS "pgcrypto"');
@@ -43,18 +43,10 @@ async function migrate() {
       state VARCHAR(100),
       pincode VARCHAR(10),
       logo_url TEXT,
-      plan VARCHAR(20) NOT NULL DEFAULT 'free',
-      patient_limit INT NOT NULL DEFAULT 50,
-      razorpay_subscription_id VARCHAR(255),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `);
-
-  // Add razorpay_subscription_id if it doesn't exist (for existing DBs)
-  await pool.query(`
-    ALTER TABLE clinics ADD COLUMN IF NOT EXISTS razorpay_subscription_id VARCHAR(255)
-  `).catch(() => {});
 
   console.log('✓ clinics table ready');
 
@@ -167,8 +159,8 @@ async function migrate() {
       console.log('\n⚠ No clinics exist. Set ADMIN_EMAIL and ADMIN_PASSWORD env vars to create the first clinic.');
     } else {
       const { rows: [clinic] } = await pool.query(
-        `INSERT INTO clinics (name, slug, doctor_name, specialization, registration_number, phone, email, address, city, state, pincode, plan, patient_limit)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+        `INSERT INTO clinics (name, slug, doctor_name, specialization, registration_number, phone, email, address, city, state, pincode)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
          RETURNING id`,
         [
           'Holy Care Dental & Orthodontics Clinic',
@@ -182,8 +174,6 @@ async function migrate() {
           'Kavalkinaru',
           'Tamil Nadu',
           '627105',
-          'annual',  // Holy Care gets the paid plan
-          999999,    // unlimited patients
         ]
       );
 
@@ -206,7 +196,7 @@ async function migrate() {
       console.log(`   Clinic: Holy Care Dental & Orthodontics Clinic`);
       console.log(`   ID: ${clinicId}`);
       console.log(`   Login: ${adminEmail}`);
-      console.log(`   Plan: annual (unlimited patients)`);
+      console.log(`   Login: use the email and password above`);
     }
   } else {
     console.log(`\n✓ ${clinics[0].count} clinic(s) already exist, skipping seed.`);

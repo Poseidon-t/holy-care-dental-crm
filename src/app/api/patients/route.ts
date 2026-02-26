@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { query, queryOne, execute, getNextNumbers, getPatientCount, getClinic, formatOpNumber } from '@/lib/db';
+import { query, queryOne, execute, getNextNumbers, formatOpNumber } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
@@ -11,13 +11,6 @@ export async function GET(request: NextRequest) {
 
     const { clinicId } = session;
     const url = new URL(request.url);
-
-    // Quick count-only mode for billing page
-    const countOnly = url.searchParams.get('countOnly');
-    if (countOnly) {
-      const count = await getPatientCount(clinicId);
-      return NextResponse.json({ total: count });
-    }
 
     const search = url.searchParams.get('search') || '';
     const dateFrom = url.searchParams.get('dateFrom') || '';
@@ -138,18 +131,6 @@ export async function POST(request: NextRequest) {
         { error: 'Name, age, sex, and phone are required' },
         { status: 400 }
       );
-    }
-
-    // Check freemium patient limit
-    const clinic = await getClinic(clinicId);
-    if (clinic && clinic.plan === 'free') {
-      const count = await getPatientCount(clinicId);
-      if (count >= clinic.patient_limit) {
-        return NextResponse.json(
-          { error: `Patient limit reached (${clinic.patient_limit}). Please upgrade your plan to add more patients.` },
-          { status: 403 }
-        );
-      }
     }
 
     const { opNumber, invoiceNumber, xrayIdNumber } = await getNextNumbers(clinicId);

@@ -52,8 +52,6 @@ export interface Clinic {
   state: string | null;
   pincode: string | null;
   logo_url: string | null;
-  plan: string;
-  patient_limit: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -93,14 +91,6 @@ export async function getNextNumbers(clinicId: string): Promise<{ opNumber: numb
   );
   const next = parseInt(result?.next ?? '1', 10);
   return { opNumber: next, invoiceNumber: next, xrayIdNumber: next };
-}
-
-export async function getPatientCount(clinicId: string): Promise<number> {
-  const result = await queryOne<{ count: string }>(
-    'SELECT COUNT(*) as count FROM patients WHERE clinic_id = $1',
-    [clinicId]
-  );
-  return parseInt(result?.count ?? '0', 10);
 }
 
 // ─── Settings Functions ───
