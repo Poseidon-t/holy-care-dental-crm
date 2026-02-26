@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import fs from 'fs';
 import path from 'path';
-import os from 'os';
 
 const GITHUB_REPO = 'Poseidon-t/holy-care-backups';
 const GITHUB_TOKEN = process.env.GITHUB_BACKUP_TOKEN;
 const BACKUP_SECRET = process.env.BACKUP_SECRET;
+const DB_PATH = process.env.DATABASE_PATH || path.join(process.cwd(), 'data', 'holycare.db');
 
 export async function POST(request: NextRequest) {
   // Verify secret token
@@ -25,9 +25,9 @@ export async function POST(request: NextRequest) {
     const db = getDb();
 
     // Use SQLite's safe backup API — creates a consistent snapshot
-    const tmpDir = os.tmpdir();
-    const backupPath = path.join(tmpDir, `holycare-backup-${Date.now()}.db`);
-    db.backup(backupPath);
+    // Use same directory as the database (guaranteed writable)
+    const backupPath = path.join(path.dirname(DB_PATH), `holycare-backup-${Date.now()}.db`);
+    await db.backup(backupPath);
 
     // Read the backup file
     const backupData = fs.readFileSync(backupPath);
