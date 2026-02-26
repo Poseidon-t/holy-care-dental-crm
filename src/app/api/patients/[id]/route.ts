@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb, formatOpNumber, formatInvoiceNumber, formatXrayId } from '@/lib/db';
+import { query, queryOne, execute, formatOpNumber, formatInvoiceNumber, formatXrayId } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 
 export async function GET(
@@ -7,20 +7,29 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
-    const db = getDb();
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
-    const patient = db.prepare('SELECT * FROM patients WHERE id = ?').get(id) as Record<string, unknown> | undefined;
+    const { id } = await params;
+    const { clinicId } = session;
+
+    const patient = await queryOne<Record<string, unknown>>(
+      'SELECT * FROM patients WHERE id = $1 AND clinic_id = $2',
+      [id, clinicId]
+    );
 
     if (!patient) {
       return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
-    const treatments = db.prepare(
-      'SELECT * FROM treatments WHERE patient_id = ? ORDER BY appointment_date ASC'
-    ).all(id) as Array<Record<string, unknown>>;
+    const treatments = await query<Record<string, unknown>>(
+      'SELECT * FROM treatments WHERE patient_id = $1 AND clinic_id = $2 ORDER BY appointment_date ASC',
+      [id, clinicId]
+    );
 
-    const totalBilling = treatments.reduce((sum: number, t: Record<string, unknown>) => sum + (t.amount as number || 0), 0);
+    const totalBilling = treatments.reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
 
     return NextResponse.json({
       patient: {
@@ -49,6 +58,7 @@ export async function PATCH(
     }
 
     const { id } = await params;
+    const { clinicId } = session;
     const body = await request.json();
     const { dentist_signature } = body;
 
@@ -56,16 +66,18 @@ export async function PATCH(
       return NextResponse.json({ error: 'Dentist signature is required' }, { status: 400 });
     }
 
-    const db = getDb();
-
-    const patient = db.prepare('SELECT id FROM patients WHERE id = ?').get(id);
+    const patient = await queryOne<{ id: number }>(
+      'SELECT id FROM patients WHERE id = $1 AND clinic_id = $2',
+      [id, clinicId]
+    );
     if (!patient) {
       return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
-    db.prepare(
-      'UPDATE patients SET dentist_signature = ? WHERE id = ?'
-    ).run(dentist_signature, id);
+    await execute(
+      'UPDATE patients SET dentist_signature = $1 WHERE id = $2 AND clinic_id = $3',
+      [dentist_signature, id, clinicId]
+    );
 
     return NextResponse.json({ success: true });
   } catch (error) {

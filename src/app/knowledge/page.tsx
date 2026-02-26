@@ -5,35 +5,26 @@ import { getAllArticles } from '@/lib/articles';
 import { ArticleNav } from '@/components/ArticleNav';
 
 export const metadata: Metadata = {
-  title: 'Dental Health Knowledge',
+  title: 'Health Knowledge',
   description:
-    'Expert dental health articles by Dr. Pinky Vijay. Learn about root canal treatment, dental implants, teeth whitening, cavity prevention, and more. Available in English and Tamil.',
+    'Expert health articles and guides. Learn about treatments, prevention, and health care tips.',
   openGraph: {
-    title: 'Dental Health Knowledge | Holy Care Dental',
+    title: 'Health Knowledge | ClinicFlow',
     description:
-      'Expert dental health articles and guides. Learn about treatments, prevention, and oral care tips.',
+      'Expert health articles and guides. Learn about treatments, prevention, and care tips.',
     type: 'website',
-    images: [
-      {
-        url: '/images/clinic-exterior-1.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Holy Care Dental & Orthodontics Clinic',
-      },
-    ],
   },
 };
 
-const SITE_URL = 'https://patient-rejoicing-production-8ead.up.railway.app';
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.holycareortho.com';
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: 'Dental Health Knowledge',
-  description: 'Expert dental health articles by Dr. Pinky Vijay',
+  name: 'Health Knowledge',
+  description: 'Expert health articles and guides',
   url: `${SITE_URL}/knowledge`,
   isPartOf: { '@id': `${SITE_URL}/#website` },
-  publisher: { '@id': `${SITE_URL}/#organization` },
 };
 
 export default function KnowledgePage() {
@@ -54,8 +45,7 @@ export default function KnowledgePage() {
             Dental Health Knowledge
           </h1>
           <p className="text-lg text-muted max-w-2xl mx-auto">
-            Expert articles on dental care, treatments, and oral health — by Dr. Pinky Vijay.
-            Available in English and Tamil.
+            Expert articles on health care, treatments, and wellness.
           </p>
         </div>
       </section>
@@ -146,21 +136,12 @@ export default function KnowledgePage() {
             Have dental questions?
           </h2>
           <p className="text-muted mb-6">
-            Chat with our AI assistant or book a consultation with Dr. Pinky Vijay.
+            Chat with our AI assistant or contact your clinic for a consultation.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href="tel:+917977257779"
-              className="bg-[var(--color-btn-dark)] text-ondeep px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity inline-flex items-center gap-2"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" />
-              </svg>
-              Call 079772 57779
-            </a>
             <Link
               href="/"
-              className="text-primary-600 border-2 border-primary-600 px-6 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
+              className="bg-[var(--color-btn-dark)] text-ondeep px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
               Back to Home
             </Link>
@@ -172,7 +153,7 @@ export default function KnowledgePage() {
       <footer className="bg-[var(--color-surface-deep)] text-[var(--color-text-on-deep)] py-8">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <p className="text-sm opacity-70">
-            &copy; {new Date().getFullYear()} Holy Care Dental & Orthodontics Clinic. All rights reserved.
+            &copy; {new Date().getFullYear()} ClinicFlow. All rights reserved.
           </p>
         </div>
       </footer>

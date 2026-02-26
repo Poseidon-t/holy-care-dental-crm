@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import PatientForm from '@/components/PatientForm';
+import type { ClinicInfo } from '@/components/ClinicHeader';
 
 function formatNumbersLocal(num: number) {
   return {
@@ -13,25 +14,33 @@ function formatNumbersLocal(num: number) {
 
 export default function TabletRegistrationPage() {
   const [autoNumbers, setAutoNumbers] = useState<{ opNumber: string; invoiceNumber: string; xrayId: string } | null>(null);
+  const [clinic, setClinic] = useState<ClinicInfo | undefined>(undefined);
 
   useEffect(() => {
-    async function fetchNumbers() {
+    async function fetchData() {
       try {
-        const response = await fetch('/api/patients');
-        const data = await response.json();
-        const nextNum = (data.patients?.length || 0) + 1;
+        const [patientsRes, clinicRes] = await Promise.all([
+          fetch('/api/patients'),
+          fetch('/api/clinic'),
+        ]);
+        const patientsData = await patientsRes.json();
+        const clinicData = await clinicRes.json();
+
+        const nextNum = (patientsData.patients?.length || 0) + 1;
         setAutoNumbers(formatNumbersLocal(nextNum));
+        if (clinicData.clinic) setClinic(clinicData.clinic);
       } catch {
         setAutoNumbers(formatNumbersLocal(1));
       }
     }
-    fetchNumbers();
+    fetchData();
   }, []);
 
   return (
     <PatientForm
       mode="tablet"
       autoNumbers={autoNumbers || undefined}
+      clinic={clinic}
     />
   );
 }

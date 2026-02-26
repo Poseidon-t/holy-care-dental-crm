@@ -817,8 +817,8 @@ export default function HomePage({ theme }: { theme: string }) {
                     <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                   </div>
                   <div className="text-sm">
-                    <p className="text-heading font-medium">Mon&ndash;Fri: 10:30 AM &ndash; 1:30 PM, 5:30 &ndash; 8 PM</p>
-                    <p className="text-muted mt-0.5">Sat: 10:30 AM &ndash; 1:30 PM &middot; Sun: Closed</p>
+                    <p className="text-heading font-medium">Mon&ndash;Sat: 10:30 AM &ndash; 1:30 PM, 5:30 &ndash; 8 PM</p>
+                    <p className="text-muted mt-0.5">Sun: Closed</p>
                   </div>
                 </div>
                 <div className="flex gap-3.5">
@@ -860,7 +860,7 @@ export default function HomePage({ theme }: { theme: string }) {
                     <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
                   </div>
                   <div>
-                    <p className="font-semibold text-heading text-sm">Dr. Ruby</p>
+                    <p className="font-semibold text-heading text-sm">Dr. Ruby BDS</p>
                     <p className="text-xs text-muted mt-0.5">Dentist</p>
                   </div>
                 </div>

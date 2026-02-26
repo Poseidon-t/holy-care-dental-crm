@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getAllArticles } from '@/lib/articles';
 
-const SITE_URL = 'https://www.holycareortho.com';
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.holycareortho.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const articles = getAllArticles();

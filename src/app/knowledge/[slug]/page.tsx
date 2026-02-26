@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { getArticleBySlug, getAllArticles, getRelatedArticles } from '@/lib/articles';
 import { ArticleNav } from '@/components/ArticleNav';
 
-const SITE_URL = 'https://patient-rejoicing-production-8ead.up.railway.app';
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.holycareortho.com';
 
 export function generateStaticParams() {
   return getAllArticles().map((article) => ({
@@ -82,7 +82,7 @@ export default function ArticlePage({
         },
         publisher: {
           '@type': 'Organization',
-          name: 'Holy Care Dental & Orthodontics Clinic',
+          name: 'ClinicFlow',
           logo: {
             '@type': 'ImageObject',
             url: `${SITE_URL}/images/logo.png`,
@@ -232,22 +232,13 @@ export default function ArticlePage({
             </h2>
             <p className="text-muted mb-6">
               {isTamil
-                ? 'எங்கள் AI உதவியாளரிடம் சாட் செய்யுங்கள் அல்லது Dr. Pinky Vijay உடன் ஆலோசனை பெறுங்கள்.'
-                : 'Chat with our AI assistant or book a consultation with Dr. Pinky Vijay.'}
+                ? 'எங்கள் AI உதவியாளரிடம் சாட் செய்யுங்கள் அல்லது மருத்துவரிடம் ஆலோசனை பெறுங்கள்.'
+                : 'Chat with our AI assistant or contact your clinic for a consultation.'}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href="tel:+917977257779"
-                className="bg-[var(--color-btn-dark)] text-ondeep px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity inline-flex items-center gap-2"
-              >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" />
-                </svg>
-                {isTamil ? 'அழைக்கவும்' : 'Call'} 079772 57779
-              </a>
               <Link
                 href="/knowledge"
-                className="text-primary-600 border-2 border-primary-600 px-6 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
+                className="bg-[var(--color-btn-dark)] text-ondeep px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
               >
                 {isTamil ? 'அனைத்து கட்டுரைகள்' : 'All Articles'}
               </Link>
@@ -311,7 +302,7 @@ export default function ArticlePage({
       <footer className="bg-[var(--color-surface-deep)] text-[var(--color-text-on-deep)] py-8">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <p className="text-sm opacity-70">
-            &copy; {new Date().getFullYear()} Holy Care Dental & Orthodontics Clinic. All rights reserved.
+            &copy; {new Date().getFullYear()} ClinicFlow. All rights reserved.
           </p>
         </div>
       </footer>

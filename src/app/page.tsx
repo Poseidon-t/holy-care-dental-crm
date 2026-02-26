@@ -1,30 +1,20 @@
 import type { Metadata } from 'next';
-import { getSetting } from '@/lib/db';
 import HomePage from '@/components/HomePage';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Holy Care Dental & Orthodontics Clinic | Kavalkinaru, Tamil Nadu',
+  title: 'ClinicFlow | Patient Management for Modern Clinics',
   description:
-    'Expert dental care by Dr. Pinky Vijay MDS in Kavalkinaru, Tamil Nadu. Offering orthodontics, root canal treatment, dental implants, teeth whitening, gum treatment, pediatric dentistry & more. Book your appointment today.',
+    'Simple, powerful patient management system for clinics and solo doctors across India. Register patients, manage treatments, generate reports. Start free today.',
   openGraph: {
-    title: 'Holy Care Dental & Orthodontics Clinic | Kavalkinaru',
+    title: 'ClinicFlow | Patient Management for Modern Clinics',
     description:
-      'Expert dental care by Dr. Pinky Vijay MDS. Orthodontics, implants, root canal, cosmetic dentistry & more.',
+      'Simple, powerful patient management for clinics and solo doctors. Start free today.',
     type: 'website',
-    images: [
-      {
-        url: '/images/clinic-exterior-1.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Holy Care Dental & Orthodontics Clinic',
-      },
-    ],
   },
 };
 
-export default function Page() {
-  const theme = getSetting('theme') || 'classic';
-  return <HomePage theme={theme} />;
+export default async function Page() {
+  return <HomePage theme="classic" />;
 }

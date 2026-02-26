@@ -1,13 +1,14 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { getSetting } from '@/lib/db';
+import { getSession } from '@/lib/auth';
 import { ThemeSelectorWrapper } from '@/components/ThemeSelectorWrapper';
 import { ChatWidget } from '@/components/ChatWidget';
 import { UpdateBanner } from '@/components/UpdateBanner';
 
 export const dynamic = 'force-dynamic';
 
-const SITE_URL = 'https://www.holycareortho.com';
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.holycareortho.com';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -17,51 +18,45 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Holy Care Dental & Orthodontics Clinic | Kavalkinaru, Tamil Nadu',
-    template: '%s | Holy Care Dental & Orthodontics Clinic',
+    default: 'ClinicFlow | Patient Management for Modern Clinics',
+    template: '%s | ClinicFlow',
   },
   description:
-    'Expert dental care in Kavalkinaru, Tamil Nadu. Dr. Pinky Vijay MDS offers orthodontics, root canal, dental implants, teeth whitening, pediatric dentistry & more. Book your appointment today.',
+    'Simple, powerful patient management system for clinics and solo doctors. Register patients, manage treatments, generate reports, and more. Start free today.',
   keywords: [
-    'dentist Kavalkinaru',
-    'dental clinic Tamil Nadu',
-    'orthodontist near me',
-    'root canal treatment',
-    'dental implants',
-    'teeth whitening',
-    'pediatric dentist',
-    'Holy Care Dental',
-    'Dr Pinky Vijay',
-    'braces',
-    'aligners',
-    'பல் மருத்துவர்',
-    'பல் சிகிச்சை',
+    'clinic management',
+    'patient management system',
+    'doctor software',
+    'medical practice management',
+    'patient records',
+    'treatment management',
+    'clinic software India',
+    'healthcare SaaS',
   ],
-  authors: [{ name: 'Dr. Pinky Vijay', url: SITE_URL }],
-  creator: 'Holy Care Dental & Orthodontics Clinic',
-  publisher: 'Holy Care Dental & Orthodontics Clinic',
+  creator: 'ClinicFlow',
+  publisher: 'ClinicFlow',
   openGraph: {
     type: 'website',
     locale: 'en_IN',
     url: SITE_URL,
-    siteName: 'Holy Care Dental & Orthodontics Clinic',
-    title: 'Holy Care Dental & Orthodontics Clinic | Kavalkinaru',
+    siteName: 'ClinicFlow',
+    title: 'ClinicFlow | Patient Management for Modern Clinics',
     description:
-      'Expert dental care by Dr. Pinky Vijay MDS. Orthodontics, implants, root canal, cosmetic dentistry & more in Kavalkinaru, Tamil Nadu.',
+      'Simple, powerful patient management system for clinics and solo doctors. Start free today.',
     images: [
       {
         url: '/images/clinic-exterior-1.jpg',
         width: 1200,
         height: 630,
-        alt: 'Holy Care Dental & Orthodontics Clinic - Kavalkinaru',
+        alt: 'ClinicFlow - Patient Management System',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Holy Care Dental & Orthodontics Clinic',
+    title: 'ClinicFlow | Patient Management for Modern Clinics',
     description:
-      'Expert dental care by Dr. Pinky Vijay MDS in Kavalkinaru, Tamil Nadu.',
+      'Simple, powerful patient management for clinics and solo doctors.',
     images: ['/images/clinic-exterior-1.jpg'],
   },
   robots: {
@@ -84,101 +79,28 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': ['Dentist', 'MedicalBusiness'],
-      '@id': `${SITE_URL}/#organization`,
-      name: 'Holy Care Dental & Orthodontics Clinic',
+      '@type': 'SoftwareApplication',
+      '@id': `${SITE_URL}/#application`,
+      name: 'ClinicFlow',
       url: SITE_URL,
-      telephone: '+917977257779',
-      email: 'holycareortho@gmail.com',
-      image: `${SITE_URL}/images/clinic-exterior-1.jpg`,
-      logo: `${SITE_URL}/images/logo.png`,
+      applicationCategory: 'HealthApplication',
+      operatingSystem: 'Web',
       description:
-        'Expert dental care in Kavalkinaru, Tamil Nadu & Mumbai, Maharashtra. Offering orthodontics, root canal, dental implants, cosmetic dentistry, and pediatric dental care.',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: '8/277, Rachel Enclave, Kavalkinaru Main Road',
-        addressLocality: 'Kavalkinaru',
-        addressRegion: 'Tamil Nadu',
-        postalCode: '627105',
-        addressCountry: 'IN',
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: 8.4395,
-        longitude: 77.4025,
-      },
-      department: {
-        '@type': ['Dentist', 'MedicalBusiness'],
-        name: 'Holy Care Dental Clinic - Mumbai',
-        telephone: '+918655632732',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: 'Shop no. 10, Nilkamal Co-op. Housing Society, 60 Feet Road, Matunga Labour Camp, Dharavi',
-          addressLocality: 'Mumbai',
-          addressRegion: 'Maharashtra',
-          postalCode: '400019',
-          addressCountry: 'IN',
-        },
-        geo: {
-          '@type': 'GeoCoordinates',
-          latitude: 19.0437,
-          longitude: 72.8544,
-        },
-        openingHoursSpecification: {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-          opens: '00:00',
-          closes: '23:59',
-        },
-      },
-      openingHoursSpecification: [
-        {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-          opens: '10:30',
-          closes: '13:30',
-        },
-        {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-          opens: '17:30',
-          closes: '20:00',
-        },
-        {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: 'Saturday',
-          opens: '10:30',
-          closes: '13:30',
-        },
-      ],
-      medicalSpecialty: [
-        'Orthodontics',
-        'Endodontics',
-        'Prosthodontics',
-        'Periodontics',
-        'PediatricDentistry',
-      ],
-      founder: {
-        '@type': 'Person',
-        name: 'Dr. Pinky Vijay',
-        jobTitle: 'MDS - Orthodontics & Dentofacial Orthopedics',
-        description:
-          'Dental surgeon with MDS specialization in Orthodontics & Dentofacial Orthopedics. Registration No: A-34195.',
-      },
-      priceRange: '$$',
-      areaServed: {
-        '@type': 'GeoCircle',
-        geoMidpoint: { '@type': 'GeoCoordinates', latitude: 8.4395, longitude: 77.4025 },
-        geoRadius: '50000',
+        'Patient management system for clinics and solo doctors. Manage patient records, treatments, billing, and reports.',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'INR',
+        description: 'Free plan with up to 50 patients',
       },
     },
     {
       '@type': 'WebSite',
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: 'Holy Care Dental & Orthodontics Clinic',
-      publisher: { '@id': `${SITE_URL}/#organization` },
-      inLanguage: ['en', 'ta'],
+      name: 'ClinicFlow',
+      publisher: { '@id': `${SITE_URL}/#application` },
+      inLanguage: 'en',
     },
   ],
 };
@@ -188,7 +110,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const theme = getSetting('theme') || 'classic';
+  let theme = 'classic';
+  try {
+    const session = await getSession();
+    if (session?.clinicId) {
+      theme = await getSetting(session.clinicId, 'theme') || 'classic';
+    }
+  } catch {
+    // No session or DB error — use default theme
+  }
 
   return (
     <html lang="en" data-theme={theme}>
@@ -201,7 +131,7 @@ export default async function RootLayout({
         <meta name="theme-color" content="#1a1a1a" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="HC Admin" />
+        <meta name="apple-mobile-web-app-title" content="ClinicFlow" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import PatientForm from '@/components/PatientForm';
+import type { ClinicInfo } from '@/components/ClinicHeader';
 
 export default function RemoteRegistrationPage({ params }: { params: { token: string } }) {
   const { token } = params;
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [error, setError] = useState('');
+  const [clinic, setClinic] = useState<ClinicInfo | undefined>(undefined);
 
   useEffect(() => {
     async function validateLink() {
@@ -15,6 +17,7 @@ export default function RemoteRegistrationPage({ params }: { params: { token: st
         const data = await response.json();
         if (data.valid) {
           setIsValid(true);
+          if (data.clinic) setClinic(data.clinic);
         } else {
           setIsValid(false);
           setError(data.error || 'This link is invalid or has already been used');
@@ -56,5 +59,5 @@ export default function RemoteRegistrationPage({ params }: { params: { token: st
     );
   }
 
-  return <PatientForm mode="remote" linkToken={token} />;
+  return <PatientForm mode="remote" linkToken={token} clinic={clinic} />;
 }

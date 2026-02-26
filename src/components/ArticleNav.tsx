@@ -8,8 +8,8 @@ export function ArticleNav({ breadcrumb }: { breadcrumb?: string }) {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <Image src="/images/logo.png" alt="Holy Care Dental & Orthodontics Clinic" width={32} height={32} className="w-8 h-8" />
-              <span className="font-bold font-heading text-heading text-base hidden sm:inline">Holy Care Dental & Orthodontics</span>
+              <Image src="/images/logo.png" alt="ClinicFlow" width={32} height={32} className="w-8 h-8" />
+              <span className="font-bold font-heading text-heading text-base hidden sm:inline">ClinicFlow</span>
             </Link>
             {breadcrumb && (
               <>

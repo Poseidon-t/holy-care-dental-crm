@@ -1,24 +1,49 @@
 import Image from 'next/image';
 
-export default function ClinicHeader({ size = 'normal' }: { size?: 'normal' | 'small' }) {
+export interface ClinicInfo {
+  name: string;
+  doctor_name?: string | null;
+  specialization?: string | null;
+  registration_number?: string | null;
+  phone?: string | null;
+  address?: string | null;
+  logo_url?: string | null;
+}
+
+export default function ClinicHeader({ size = 'normal', clinic }: { size?: 'normal' | 'small'; clinic?: ClinicInfo }) {
   const isSmall = size === 'small';
+  const clinicName = clinic?.name || 'Clinic';
+  const doctorName = clinic?.doctor_name;
+  const specialization = clinic?.specialization;
+  const regNumber = clinic?.registration_number;
+  const phone = clinic?.phone;
+  const address = clinic?.address;
+  const logoUrl = clinic?.logo_url || '/images/logo.png';
 
   return (
     <div className={`text-center ${isSmall ? 'py-3' : 'py-6'}`}>
-      <Image src="/images/logo.png" alt="Holy Care Dental" width={isSmall ? 40 : 56} height={isSmall ? 40 : 56} className={`mx-auto mb-2 ${isSmall ? 'w-10 h-10' : 'w-14 h-14'}`} />
+      <Image src={logoUrl} alt={clinicName} width={isSmall ? 40 : 56} height={isSmall ? 40 : 56} className={`mx-auto mb-2 ${isSmall ? 'w-10 h-10' : 'w-14 h-14'}`} />
       <h1 className={`${isSmall ? 'text-lg' : 'text-2xl'} font-bold font-heading text-primary-700`}>
-        HOLY CARE DENTAL &amp; ORTHODONTICS CLINIC
+        {clinicName.toUpperCase()}
       </h1>
-      <p className={`${isSmall ? 'text-xs' : 'text-sm'} text-body mt-1`}>
-        <span className="font-semibold">Dr. Pinky Vijay MDS</span>
-        {' '}| Orthodontics &amp; Dentofacial Orthopedics
-      </p>
-      <p className={`${isSmall ? 'text-xs' : 'text-sm'} text-muted`}>
-        Reg. No: A-34195 | Ph: +91 79772 57779
-      </p>
-      <p className={`${isSmall ? 'text-xs' : 'text-sm'} text-muted`}>
-        8/277, Rachel Enclave, Kavalkinaru Main Road, Kavalkinaru - 627105
-      </p>
+      {doctorName && (
+        <p className={`${isSmall ? 'text-xs' : 'text-sm'} text-body mt-1`}>
+          <span className="font-semibold">{doctorName}</span>
+          {specialization && <> | {specialization}</>}
+        </p>
+      )}
+      {(regNumber || phone) && (
+        <p className={`${isSmall ? 'text-xs' : 'text-sm'} text-muted`}>
+          {regNumber && <>Reg. No: {regNumber}</>}
+          {regNumber && phone && ' | '}
+          {phone && <>Ph: {phone}</>}
+        </p>
+      )}
+      {address && (
+        <p className={`${isSmall ? 'text-xs' : 'text-sm'} text-muted`}>
+          {address}
+        </p>
+      )}
     </div>
   );
 }

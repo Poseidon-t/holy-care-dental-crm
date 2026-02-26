@@ -9,14 +9,19 @@ interface TreatmentEntry {
   amount: string;
 }
 
+interface ClinicData {
+  doctor_name?: string | null;
+}
+
 interface TreatmentFormProps {
   patientId: number;
   patientName: string;
   opNumber: string;
   onSuccess?: () => void;
+  clinic?: ClinicData;
 }
 
-export default function TreatmentForm({ patientId, patientName, opNumber, onSuccess }: TreatmentFormProps) {
+export default function TreatmentForm({ patientId, patientName, opNumber, onSuccess, clinic }: TreatmentFormProps) {
   const [entries, setEntries] = useState<TreatmentEntry[]>([
     { id: 1, appointment_date: new Date().toISOString().split('T')[0], description: '', amount: '' },
   ]);
@@ -220,11 +225,11 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
           Doctor Signature <span className="tamil text-xs font-normal text-muted ml-1">(மருத்துவர் கையொப்பம்)</span>
         </h3>
         <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl">
-          <img src="/images/dr-pinky-signature.png" alt="Dr. Pinky Vijay Signature" className="h-12 object-contain" />
+          <img src="/images/dr-pinky-signature.png" alt="Doctor Signature" className="h-12 object-contain" />
           <div>
             <p className="text-sm font-medium text-green-700 flex items-center gap-1">
               <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-              Dr. Pinky Vijay MDS
+              {clinic?.doctor_name || 'Doctor'}
             </p>
             <p className="text-xs text-green-600 mt-0.5">Signature will be auto-applied on save</p>
           </div>

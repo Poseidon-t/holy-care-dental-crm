@@ -6,30 +6,37 @@ import TreatmentForm from '@/components/TreatmentForm';
 export default function AddTreatmentPage({ params }: { params: { patientId: string } }) {
   const { patientId } = params;
   const [patient, setPatient] = useState<{ id: number; name: string; op_number_formatted: string } | null>(null);
+  const [clinic, setClinic] = useState<{ doctor_name?: string | null }>({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    async function fetchPatient() {
+    async function fetchData() {
       try {
-        const response = await fetch(`/api/patients/${patientId}`);
-        const data = await response.json();
-        if (response.ok) {
+        const [patientRes, clinicRes] = await Promise.all([
+          fetch(`/api/patients/${patientId}`),
+          fetch('/api/clinic'),
+        ]);
+        const patientData = await patientRes.json();
+        const clinicData = await clinicRes.json();
+
+        if (patientRes.ok) {
           setPatient({
-            id: data.patient.id,
-            name: data.patient.name,
-            op_number_formatted: data.patient.op_number_formatted,
+            id: patientData.patient.id,
+            name: patientData.patient.name,
+            op_number_formatted: patientData.patient.op_number_formatted,
           });
         } else {
-          setError(data.error || 'Patient not found');
+          setError(patientData.error || 'Patient not found');
         }
+        if (clinicData.clinic) setClinic(clinicData.clinic);
       } catch {
         setError('Failed to fetch patient data');
       } finally {
         setIsLoading(false);
       }
     }
-    fetchPatient();
+    fetchData();
   }, [patientId]);
 
   if (isLoading) {
@@ -78,6 +85,7 @@ export default function AddTreatmentPage({ params }: { params: { patientId: stri
           patientId={patient.id}
           patientName={patient.name}
           opNumber={patient.op_number_formatted}
+          clinic={clinic}
         />
       </main>
     </div>

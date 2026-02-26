@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import SignatureCanvas from './SignatureCanvas';
 import ClinicHeader from './ClinicHeader';
+import type { ClinicInfo } from './ClinicHeader';
 
 interface PatientFormProps {
   mode: 'tablet' | 'remote';
   linkToken?: string;
   autoNumbers?: { opNumber: string; invoiceNumber: string; xrayId: string };
+  clinic?: ClinicInfo;
 }
 
 const MEDICAL_CONDITIONS = [
@@ -26,7 +28,7 @@ const MEDICAL_CONDITIONS = [
   { key: 'pregnancy_lactating', english: 'Pregnancy or lactating', tamil: 'கர்ப்பம் அல்லது பாலூட்டுதல்' },
 ];
 
-export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFormProps) {
+export default function PatientForm({ mode, linkToken, autoNumbers, clinic }: PatientFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     age: '',
@@ -126,7 +128,7 @@ export default function PatientForm({ mode, linkToken, autoNumbers }: PatientFor
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 py-6 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="card mb-6">
-          <ClinicHeader />
+          <ClinicHeader clinic={clinic} />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

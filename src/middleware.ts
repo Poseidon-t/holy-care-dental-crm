@@ -11,8 +11,9 @@ function isPublicPath(pathname: string, method: string): boolean {
   // Public website home page
   if (pathname === '/') return true;
 
-  // Exact matches
+  // Auth pages
   if (pathname === '/login' || pathname === '/api/auth/login') return true;
+  if (pathname === '/signup' || pathname === '/api/auth/signup') return true;
 
   // Registration paths (tablet and remote)
   if (pathname.startsWith('/register')) return true;
@@ -56,7 +57,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Check authentication
-  const token = request.cookies.get('holycare_session')?.value;
+  const token = request.cookies.get('clinicflow_session')?.value;
 
   if (!token) {
     if (!pathname.startsWith('/api/')) {
@@ -66,12 +67,17 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    await jwtVerify(token, secret);
-    return NextResponse.next();
+    const { payload } = await jwtVerify(token, secret);
+    const clinicId = payload.clinicId as string;
+
+    // Pass clinicId to downstream via request header
+    const response = NextResponse.next();
+    response.headers.set('x-clinic-id', clinicId);
+    return response;
   } catch {
     if (!pathname.startsWith('/api/')) {
       const response = NextResponse.redirect(new URL('/login', request.url));
-      response.cookies.delete('holycare_session');
+      response.cookies.delete('clinicflow_session');
       return response;
     }
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

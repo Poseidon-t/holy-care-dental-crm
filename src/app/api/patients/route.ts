@@ -1,54 +1,60 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb, getNextNumbers, formatOpNumber } from '@/lib/db';
+import { query, queryOne, execute, getNextNumbers, formatOpNumber } from '@/lib/db';
+import { getSession } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   try {
-    const db = getDb();
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { clinicId } = session;
     const url = new URL(request.url);
     const search = url.searchParams.get('search') || '';
     const dateFrom = url.searchParams.get('dateFrom') || '';
     const dateTo = url.searchParams.get('dateTo') || '';
 
-    let query = `
+    let sql = `
       SELECT p.*,
         COALESCE(SUM(t.amount), 0) as total_billing
       FROM patients p
       LEFT JOIN treatments t ON t.patient_id = p.id
+      WHERE p.clinic_id = $1
     `;
 
-    const conditions: string[] = [];
-    const params: (string | number)[] = [];
+    const params: unknown[] = [clinicId];
+    let paramIndex = 2;
 
     if (search) {
-      conditions.push(`(p.name LIKE ? OR p.phone LIKE ? OR CAST(p.op_number AS TEXT) LIKE ?)`);
-      const searchTerm = `%${search}%`;
-      params.push(searchTerm, searchTerm, searchTerm);
+      sql += ` AND (p.name ILIKE $${paramIndex} OR p.phone LIKE $${paramIndex} OR CAST(p.op_number AS TEXT) LIKE $${paramIndex})`;
+      params.push(`%${search}%`);
+      paramIndex++;
     }
 
     if (dateFrom) {
-      conditions.push('DATE(p.created_at) >= ?');
+      sql += ` AND DATE(p.created_at) >= $${paramIndex}`;
       params.push(dateFrom);
+      paramIndex++;
     }
 
     if (dateTo) {
-      conditions.push('DATE(p.created_at) <= ?');
+      sql += ` AND DATE(p.created_at) <= $${paramIndex}`;
       params.push(dateTo);
+      paramIndex++;
     }
 
-    if (conditions.length > 0) {
-      query += ' WHERE ' + conditions.join(' AND ');
-    }
+    sql += ' GROUP BY p.id ORDER BY p.created_at DESC';
 
-    query += ' GROUP BY p.id ORDER BY p.created_at DESC';
-
-    const patients = db.prepare(query).all(...params) as Array<{
+    const patients = await query<{
       id: number;
       op_number: number;
       name: string;
       phone: string;
       created_at: string;
       total_billing: number;
-    }>;
+      dentist_signature: string;
+    }>(sql, params);
 
     const formatted = patients.map((p) => ({
       ...p,
@@ -64,12 +70,12 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const db = getDb();
     const body = await request.json();
 
     const {
       submission_method = 'tablet',
       link_token,
+      clinic_slug,
       name, age, sex, address, phone, occupation, chief_complaint,
       jaundice, high_blood_pressure, heart_diseases, bleeding_disorders,
       hemophilia, allergy, anemia, fits, asthma_rs_disorders, thyroid,
@@ -79,6 +85,45 @@ export async function POST(request: NextRequest) {
       patient_signature, dentist_signature,
     } = body;
 
+    // Determine clinic_id
+    let clinicId: string | null = null;
+
+    // 1. Check if authenticated (dashboard submission)
+    const session = await getSession();
+    if (session) {
+      clinicId = session.clinicId;
+    }
+
+    // 2. If remote submission with link token, get clinic from link
+    if (!clinicId && submission_method === 'remote' && link_token) {
+      const link = await queryOne<{ id: number; clinic_id: string }>(
+        'SELECT id, clinic_id FROM registration_links WHERE token = $1 AND used_at IS NULL',
+        [link_token]
+      );
+      if (!link) {
+        return NextResponse.json(
+          { error: 'Invalid or expired registration link' },
+          { status: 400 }
+        );
+      }
+      clinicId = link.clinic_id;
+    }
+
+    // 3. If tablet submission with clinic_slug
+    if (!clinicId && clinic_slug) {
+      const clinic = await queryOne<{ id: string }>('SELECT id FROM clinics WHERE slug = $1', [clinic_slug]);
+      if (clinic) {
+        clinicId = clinic.id;
+      }
+    }
+
+    if (!clinicId) {
+      return NextResponse.json(
+        { error: 'Could not determine clinic. Please provide a valid registration link or clinic identifier.' },
+        { status: 400 }
+      );
+    }
+
     // Validate required fields
     if (!name || !age || !sex || !phone) {
       return NextResponse.json(
@@ -87,25 +132,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // If remote submission, validate and consume the link token
-    if (submission_method === 'remote' && link_token) {
-      const link = db.prepare('SELECT * FROM registration_links WHERE token = ? AND used_at IS NULL').get(link_token) as {
-        id: number;
-      } | undefined;
+    const { opNumber, invoiceNumber, xrayIdNumber } = await getNextNumbers(clinicId);
 
-      if (!link) {
-        return NextResponse.json(
-          { error: 'Invalid or expired registration link' },
-          { status: 400 }
-        );
-      }
-    }
-
-    const { opNumber, invoiceNumber, xrayIdNumber } = getNextNumbers();
-
-    const result = db.prepare(`
-      INSERT INTO patients (
-        op_number, invoice_number, xray_id_number, submission_method,
+    const result = await execute(
+      `INSERT INTO patients (
+        clinic_id, op_number, invoice_number, xray_id_number, submission_method,
         name, age, sex, address, phone, occupation, chief_complaint,
         jaundice, high_blood_pressure, heart_diseases, bleeding_disorders,
         hemophilia, allergy, anemia, fits, asthma_rs_disorders, thyroid,
@@ -113,34 +144,39 @@ export async function POST(request: NextRequest) {
         previous_dental_history, diagnosis, treatment_plan,
         consent_agreed, patient_signature, dentist_signature
       ) VALUES (
-        ?, ?, ?, ?,
-        ?, ?, ?, ?, ?, ?, ?,
-        ?, ?, ?, ?,
-        ?, ?, ?, ?, ?, ?,
-        ?, ?, ?,
-        ?, ?, ?,
-        ?, ?, ?
-      )
-    `).run(
-      opNumber, invoiceNumber, xrayIdNumber, submission_method,
-      name, age, sex, address || '', phone, occupation || '', chief_complaint || '',
-      jaundice ? 1 : 0, high_blood_pressure ? 1 : 0, heart_diseases ? 1 : 0, bleeding_disorders ? 1 : 0,
-      hemophilia ? 1 : 0, allergy ? 1 : 0, anemia ? 1 : 0, fits ? 1 : 0, asthma_rs_disorders ? 1 : 0, thyroid ? 1 : 0,
-      diabetes ? 1 : 0, kidney_diseases ? 1 : 0, pregnancy_lactating ? 1 : 0,
-      previous_dental_history || '', diagnosis || '', treatment_plan || '',
-      consent_agreed ? 1 : 0, patient_signature || '', dentist_signature || ''
+        $1, $2, $3, $4, $5,
+        $6, $7, $8, $9, $10, $11, $12,
+        $13, $14, $15, $16,
+        $17, $18, $19, $20, $21, $22,
+        $23, $24, $25,
+        $26, $27, $28,
+        $29, $30, $31
+      ) RETURNING id`,
+      [
+        clinicId, opNumber, invoiceNumber, xrayIdNumber, submission_method,
+        name, age, sex, address || '', phone, occupation || '', chief_complaint || '',
+        !!jaundice, !!high_blood_pressure, !!heart_diseases, !!bleeding_disorders,
+        !!hemophilia, !!allergy, !!anemia, !!fits, !!asthma_rs_disorders, !!thyroid,
+        !!diabetes, !!kidney_diseases, !!pregnancy_lactating,
+        previous_dental_history || '', diagnosis || '', treatment_plan || '',
+        !!consent_agreed, patient_signature || '', dentist_signature || '',
+      ]
     );
+
+    const patientId = result.rows[0]?.id;
 
     // Mark link as used if remote
     if (submission_method === 'remote' && link_token) {
-      db.prepare('UPDATE registration_links SET used_at = datetime(\'now\'), patient_id = ? WHERE token = ?')
-        .run(result.lastInsertRowid, link_token);
+      await execute(
+        'UPDATE registration_links SET used_at = NOW(), patient_id = $1 WHERE token = $2',
+        [patientId, link_token]
+      );
     }
 
     return NextResponse.json({
       success: true,
       patient: {
-        id: result.lastInsertRowid,
+        id: patientId,
         op_number: opNumber,
         op_number_formatted: formatOpNumber(opNumber),
       },

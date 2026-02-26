@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/db';
+import { queryOne } from '@/lib/db';
+import type { Clinic } from '@/lib/db';
 
 export async function GET(
   request: NextRequest,
@@ -7,11 +8,11 @@ export async function GET(
 ) {
   try {
     const { token } = await params;
-    const db = getDb();
 
-    const link = db.prepare(
-      'SELECT * FROM registration_links WHERE token = ? AND used_at IS NULL'
-    ).get(token) as { id: number; token: string; created_at: string } | undefined;
+    const link = await queryOne<{ id: number; token: string; clinic_id: string; created_at: string }>(
+      'SELECT * FROM registration_links WHERE token = $1 AND used_at IS NULL',
+      [token]
+    );
 
     if (!link) {
       return NextResponse.json(
@@ -20,7 +21,25 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ valid: true, token: link.token });
+    const clinic = await queryOne<Clinic>(
+      'SELECT * FROM clinics WHERE id = $1',
+      [link.clinic_id]
+    );
+
+    return NextResponse.json({
+      valid: true,
+      token: link.token,
+      clinicId: link.clinic_id,
+      clinic: clinic ? {
+        name: clinic.name,
+        doctor_name: clinic.doctor_name,
+        specialization: clinic.specialization,
+        registration_number: clinic.registration_number,
+        phone: clinic.phone,
+        address: clinic.address,
+        logo_url: clinic.logo_url,
+      } : null,
+    });
   } catch (error) {
     console.error('Validate link error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

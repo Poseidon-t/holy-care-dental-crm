@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import ClinicHeader from '@/components/ClinicHeader';
+import type { ClinicInfo } from '@/components/ClinicHeader';
 
 interface Patient {
   id: number;
@@ -68,6 +68,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
   const [patient, setPatient] = useState<Patient | null>(null);
   const [treatments, setTreatments] = useState<Treatment[]>([]);
   const [totalBilling, setTotalBilling] = useState(0);
+  const [clinic, setClinic] = useState<ClinicInfo | null>(null);
   const [activeTab, setActiveTab] = useState<'registration' | 'treatments'>('registration');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -98,24 +99,30 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
   }
 
   useEffect(() => {
-    async function fetchPatient() {
+    async function fetchData() {
       try {
-        const response = await fetch(`/api/patients/${id}`);
-        const data = await response.json();
-        if (response.ok) {
-          setPatient(data.patient);
-          setTreatments(data.treatments);
-          setTotalBilling(data.totalBilling);
+        const [patientRes, clinicRes] = await Promise.all([
+          fetch(`/api/patients/${id}`),
+          fetch('/api/clinic'),
+        ]);
+        const patientData = await patientRes.json();
+        const clinicData = await clinicRes.json();
+
+        if (patientRes.ok) {
+          setPatient(patientData.patient);
+          setTreatments(patientData.treatments);
+          setTotalBilling(patientData.totalBilling);
         } else {
-          setError(data.error || 'Patient not found');
+          setError(patientData.error || 'Patient not found');
         }
+        if (clinicData.clinic) setClinic(clinicData.clinic);
       } catch {
         setError('Failed to fetch patient data');
       } finally {
         setIsLoading(false);
       }
     }
-    fetchPatient();
+    fetchData();
   }, [id]);
 
   if (isLoading) {
@@ -295,10 +302,10 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                   <span className="text-sm text-muted block mb-2">Dentist Signature:</span>
                   {patient.dentist_signature ? (
                     <div>
-                      <img src={patient.dentist_signature.replace('.jpg', '.png')} alt="Dr. Pinky Vijay Signature" className="h-16 object-contain" />
+                      <img src={patient.dentist_signature.replace('.jpg', '.png')} alt="Doctor Signature" className="h-16 object-contain" />
                       <span className="text-xs text-green-600 mt-1 inline-flex items-center gap-1">
                         <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                        Approved by Dr. Pinky Vijay
+                        Approved{clinic?.doctor_name ? ` by ${clinic.doctor_name}` : ''}
                       </span>
                     </div>
                   ) : (

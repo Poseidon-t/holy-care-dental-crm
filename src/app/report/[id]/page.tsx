@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import type { ClinicInfo } from '@/components/ClinicHeader';
 
 interface Patient {
   id: number;
@@ -64,20 +65,29 @@ export default function PrintableReportPage({ params }: { params: { id: string }
   const [patient, setPatient] = useState<Patient | null>(null);
   const [treatments, setTreatments] = useState<Treatment[]>([]);
   const [totalBilling, setTotalBilling] = useState(0);
+  const [clinic, setClinic] = useState<ClinicInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`/api/patients/${id}`);
-        const data = await response.json();
-        if (response.ok) {
-          setPatient(data.patient);
-          setTreatments(data.treatments);
-          setTotalBilling(data.totalBilling);
+        const [patientRes, clinicRes] = await Promise.all([
+          fetch(`/api/patients/${id}`),
+          fetch('/api/clinic'),
+        ]);
+        const patientData = await patientRes.json();
+        const clinicData = await clinicRes.json();
+
+        if (patientRes.ok) {
+          setPatient(patientData.patient);
+          setTreatments(patientData.treatments);
+          setTotalBilling(patientData.totalBilling);
+        }
+        if (clinicData.clinic) {
+          setClinic(clinicData.clinic);
         }
       } catch (error) {
-        console.error('Failed to fetch patient data:', error);
+        console.error('Failed to fetch data:', error);
       } finally {
         setIsLoading(false);
       }
@@ -100,6 +110,13 @@ export default function PrintableReportPage({ params }: { params: { id: string }
       </div>
     );
   }
+
+  const clinicName = clinic?.name || 'Clinic';
+  const doctorName = clinic?.doctor_name || '';
+  const specialization = clinic?.specialization || '';
+  const regNumber = clinic?.registration_number || '';
+  const clinicAddress = clinic?.address || '';
+  const logoUrl = clinic?.logo_url || '/images/logo.png';
 
   return (
     <>
@@ -280,17 +297,23 @@ export default function PrintableReportPage({ params }: { params: { id: string }
       <div className="report-container" style={{ padding: '32px' }}>
         {/* Clinic Header */}
         <div className="report-header">
-          <img src="/images/logo.png" alt="Holy Care Dental" style={{ width: '48px', height: '48px', marginBottom: '8px', display: 'inline-block' }} />
+          <img src={logoUrl} alt={clinicName} style={{ width: '48px', height: '48px', marginBottom: '8px', display: 'inline-block' }} />
           <h1 style={{ fontSize: '20px', fontWeight: 700, color: '#1e40af', margin: '0 0 4px' }}>
-            HOLY CARE DENTAL &amp; ORTHODONTICS CLINIC
+            {clinicName.toUpperCase()}
           </h1>
-          <p style={{ fontSize: '13px', color: '#374151', margin: '2px 0' }}>
-            <strong>Dr. Pinky Vijay MDS</strong> | Orthodontics &amp; Dentofacial Orthopedics
-          </p>
-          <p style={{ fontSize: '11px', color: '#6b7280', margin: '2px 0' }}>Reg. No: A-34195</p>
-          <p style={{ fontSize: '11px', color: '#6b7280', margin: '2px 0' }}>
-            8/277, Rachel Enclave, Kavalkinaru Main Road, Kavalkinaru - 627105
-          </p>
+          {doctorName && (
+            <p style={{ fontSize: '13px', color: '#374151', margin: '2px 0' }}>
+              <strong>{doctorName}</strong>{specialization && <> | {specialization}</>}
+            </p>
+          )}
+          {regNumber && (
+            <p style={{ fontSize: '11px', color: '#6b7280', margin: '2px 0' }}>Reg. No: {regNumber}</p>
+          )}
+          {clinicAddress && (
+            <p style={{ fontSize: '11px', color: '#6b7280', margin: '2px 0' }}>
+              {clinicAddress}
+            </p>
+          )}
         </div>
 
         {/* ID Numbers */}
@@ -381,8 +404,8 @@ export default function PrintableReportPage({ params }: { params: { id: string }
             )}
             {patient.dentist_signature && (
               <div className="signature-block">
-                <img src={patient.dentist_signature.replace('.jpg', '.png')} alt="Dentist Signature" style={{ maxHeight: '60px', objectFit: 'contain' }} />
-                <p>Dentist Signature</p>
+                <img src={patient.dentist_signature.replace('.jpg', '.png')} alt="Doctor Signature" style={{ maxHeight: '60px', objectFit: 'contain' }} />
+                <p>Doctor Signature</p>
               </div>
             )}
           </div>
@@ -443,7 +466,7 @@ export default function PrintableReportPage({ params }: { params: { id: string }
         {/* Footer */}
         <div className="report-footer">
           <p>Report generated on {new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
-          <p>Holy Care Dental &amp; Orthodontics Clinic | Kavalkinaru - 627105</p>
+          <p>{clinicName}{clinicAddress && <> | {clinicAddress}</>}</p>
         </div>
       </div>
     </>

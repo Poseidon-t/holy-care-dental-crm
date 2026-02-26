@@ -7,7 +7,14 @@ if (!process.env.JWT_SECRET) {
 }
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-const COOKIE_NAME = 'holycare_session';
+const COOKIE_NAME = 'clinicflow_session';
+
+export interface SessionPayload {
+  userId: string;
+  clinicId: string;
+  email: string;
+  fullName: string;
+}
 
 export function hashPassword(password: string): string {
   const salt = randomBytes(16).toString('hex');
@@ -22,7 +29,7 @@ export function verifyPassword(password: string, stored: string): boolean {
   return timingSafeEqual(hashBuffer, testHash);
 }
 
-export async function createToken(payload: { userId: number; username: string; fullName: string }): Promise<string> {
+export async function createToken(payload: SessionPayload): Promise<string> {
   return new SignJWT(payload as unknown as Record<string, unknown>)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -30,16 +37,16 @@ export async function createToken(payload: { userId: number; username: string; f
     .sign(secret);
 }
 
-export async function verifyToken(token: string): Promise<{ userId: number; username: string; fullName: string } | null> {
+export async function verifyToken(token: string): Promise<SessionPayload | null> {
   try {
     const { payload } = await jwtVerify(token, secret);
-    return payload as unknown as { userId: number; username: string; fullName: string };
+    return payload as unknown as SessionPayload;
   } catch {
     return null;
   }
 }
 
-export async function getSession(): Promise<{ userId: number; username: string; fullName: string } | null> {
+export async function getSession(): Promise<SessionPayload | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
   if (!token) return null;

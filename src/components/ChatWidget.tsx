@@ -8,7 +8,7 @@ interface Message {
 }
 
 const GREETING =
-  'Hello! I\'m the Holy Care Dental assistant. How can I help you today?\n\nவணக்கம்! நான் Holy Care பல் மருத்துவமனையின் உதவியாளர். உங்களுக்கு எப்படி உதவ முடியும்?';
+  'Hello! I\'m your clinic assistant. How can I help you today?';
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -84,7 +84,7 @@ export function ChatWidget() {
           {
             role: 'assistant',
             content:
-              'Sorry, I\'m having trouble responding right now. Please call us at 079772 57779 for immediate help.',
+              'Sorry, I\'m having trouble responding right now. Please contact the clinic for immediate help.',
           },
         ]);
       }
@@ -94,7 +94,7 @@ export function ChatWidget() {
         {
           role: 'assistant',
           content:
-            'Sorry, something went wrong. Please call us at 079772 57779 for assistance.',
+            'Sorry, something went wrong. Please contact the clinic for assistance.',
         },
       ]);
     } finally {
@@ -163,8 +163,8 @@ export function ChatWidget() {
             </svg>
           </div>
           <div>
-            <p className="text-sm font-semibold">Holy Care Assistant</p>
-            <p className="text-[10px] opacity-70">Dental Health Support</p>
+            <p className="text-sm font-semibold">Clinic Assistant</p>
+            <p className="text-[10px] opacity-70">Health Support</p>
           </div>
         </div>
         <button

@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import ClinicHeader from '@/components/ClinicHeader';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +17,7 @@ export default function LoginPage() {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -38,25 +37,28 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 p-4">
       <div className="card max-w-md w-full">
-        <ClinicHeader />
+        <div className="text-center py-6">
+          <h1 className="text-2xl font-bold font-heading text-primary-700">ClinicFlow</h1>
+          <p className="text-sm text-muted mt-1">Patient Management System</p>
+        </div>
 
-        <div className="mt-6 mb-2">
-          <h2 className="text-center text-lg font-semibold font-heading text-body">Admin Login</h2>
+        <div className="mt-2 mb-2">
+          <h2 className="text-center text-lg font-semibold font-heading text-body">Sign In</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div>
-            <label htmlFor="username" className="label-field">Username</label>
+            <label htmlFor="email" className="label-field">Email</label>
             <input
-              id="username"
-              type="text"
+              id="email"
+              type="email"
               className="input-field"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              placeholder="Enter username"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Enter your email"
               required
               autoFocus
-              autoComplete="username"
+              autoComplete="email"
             />
           </div>
 
@@ -91,10 +93,10 @@ export default function LoginPage() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                Logging in...
+                Signing in...
               </span>
             ) : (
-              'Login'
+              'Sign In'
             )}
           </button>
         </form>

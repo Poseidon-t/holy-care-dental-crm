@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/dashboard/', '/api/', '/login/', '/register/', '/report/'],
       },
     ],
-    sitemap: 'https://www.holycareortho.com/sitemap.xml',
+    sitemap: `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.holycareortho.com'}/sitemap.xml`,
   };
 }
