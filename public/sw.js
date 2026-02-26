@@ -1,8 +1,8 @@
-const CACHE_NAME = 'holycare-v1';
+const CACHE_NAME = 'holycare-admin-v2';
 const OFFLINE_URL = '/offline.html';
 
 const PRECACHE_URLS = [
-  '/',
+  '/login',
   '/offline.html',
   '/favicon-192.png',
   '/icon-512.png',
@@ -32,14 +32,8 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET, API routes, auth routes
-  if (
-    request.method !== 'GET' ||
-    url.pathname.startsWith('/api/') ||
-    url.pathname.startsWith('/login') ||
-    url.pathname.startsWith('/register') ||
-    url.pathname.startsWith('/dashboard')
-  ) {
+  // Skip non-GET and API routes
+  if (request.method !== 'GET' || url.pathname.startsWith('/api/')) {
     return;
   }
 
