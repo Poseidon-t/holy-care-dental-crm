@@ -45,10 +45,17 @@ async function migrate() {
       logo_url TEXT,
       plan VARCHAR(20) NOT NULL DEFAULT 'free',
       patient_limit INT NOT NULL DEFAULT 50,
+      razorpay_subscription_id VARCHAR(255),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `);
+
+  // Add razorpay_subscription_id if it doesn't exist (for existing DBs)
+  await pool.query(`
+    ALTER TABLE clinics ADD COLUMN IF NOT EXISTS razorpay_subscription_id VARCHAR(255)
+  `).catch(() => {});
+
   console.log('✓ clinics table ready');
 
   await pool.query(`

@@ -11,6 +11,14 @@ export async function GET(request: NextRequest) {
 
     const { clinicId } = session;
     const url = new URL(request.url);
+
+    // Quick count-only mode for billing page
+    const countOnly = url.searchParams.get('countOnly');
+    if (countOnly) {
+      const count = await getPatientCount(clinicId);
+      return NextResponse.json({ total: count });
+    }
+
     const search = url.searchParams.get('search') || '';
     const dateFrom = url.searchParams.get('dateFrom') || '';
     const dateTo = url.searchParams.get('dateTo') || '';

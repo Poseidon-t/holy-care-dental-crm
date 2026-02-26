@@ -52,7 +52,7 @@ export default function PricingPage() {
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: 'ClinicFlow',
+        name: 'Holy Care Dental',
         description: 'Annual Plan - Unlimited Patients',
         order_id: orderData.orderId,
         prefill: {

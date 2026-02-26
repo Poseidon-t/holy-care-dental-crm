@@ -66,7 +66,7 @@ export default function SignupPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 p-4">
       <div className="card max-w-lg w-full">
         <div className="text-center py-4">
-          <h1 className="text-2xl font-bold font-heading text-primary-700">ClinicFlow</h1>
+          <h1 className="text-2xl font-bold font-heading text-primary-700">Holy Care Dental</h1>
           <p className="text-sm text-muted mt-1">Create your clinic account</p>
         </div>
 

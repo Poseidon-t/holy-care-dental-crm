@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     'Expert health articles and guides. Learn about treatments, prevention, and health care tips.',
   openGraph: {
-    title: 'Health Knowledge | ClinicFlow',
+    title: 'Health Knowledge | Holy Care Dental',
     description:
       'Expert health articles and guides. Learn about treatments, prevention, and care tips.',
     type: 'website',
@@ -153,7 +153,7 @@ export default function KnowledgePage() {
       <footer className="bg-[var(--color-surface-deep)] text-[var(--color-text-on-deep)] py-8">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <p className="text-sm opacity-70">
-            &copy; {new Date().getFullYear()} ClinicFlow. All rights reserved.
+            &copy; {new Date().getFullYear()} Holy Care Dental. All rights reserved.
           </p>
         </div>
       </footer>

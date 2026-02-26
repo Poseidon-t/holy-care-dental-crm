@@ -6,6 +6,11 @@ import { QRCodeSVG } from 'qrcode.react';
 import type { ClinicInfo } from '@/components/ClinicHeader';
 import { InstallPrompt } from '@/components/InstallPrompt';
 
+interface ClinicWithPlan extends ClinicInfo {
+  plan?: string;
+  patient_limit?: number;
+}
+
 interface Patient {
   id: number;
   op_number: number;
@@ -20,7 +25,7 @@ interface Patient {
 export default function DashboardPage() {
   const router = useRouter();
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [clinic, setClinic] = useState<ClinicInfo | null>(null);
+  const [clinic, setClinic] = useState<ClinicWithPlan | null>(null);
   const [search, setSearch] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
@@ -121,14 +126,40 @@ export default function DashboardPage() {
               {doctorName && <p className="text-xs text-muted">{doctorName}</p>}
             </div>
           </div>
-          <button onClick={handleLogout} className="text-sm text-body hover:text-red-600 font-medium px-4 py-2 rounded-lg hover:bg-red-50 transition-colors min-h-[44px]">
-            Logout
-          </button>
+          <div className="flex items-center gap-2">
+            <a href="/billing" className="text-sm text-muted hover:text-body font-medium px-3 py-2 rounded-lg hover:bg-surface-alt transition-colors min-h-[44px] inline-flex items-center">
+              Billing
+            </a>
+            <button onClick={handleLogout} className="text-sm text-body hover:text-red-600 font-medium px-4 py-2 rounded-lg hover:bg-red-50 transition-colors min-h-[44px]">
+              Logout
+            </button>
+          </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <InstallPrompt />
+
+        {/* Upgrade Banner for free plan users near limit */}
+        {clinic?.plan === 'free' && patients.length >= 40 && (
+          <div className={`rounded-lg p-4 mb-6 flex items-center justify-between ${
+            patients.length >= (clinic.patient_limit || 50)
+              ? 'bg-red-50 border border-red-200'
+              : 'bg-amber-50 border border-amber-200'
+          }`}>
+            <div>
+              <p className={`text-sm font-medium ${patients.length >= (clinic.patient_limit || 50) ? 'text-red-700' : 'text-amber-700'}`}>
+                {patients.length >= (clinic.patient_limit || 50)
+                  ? `Patient limit reached (${clinic.patient_limit || 50}). Upgrade to add more patients.`
+                  : `${patients.length} of ${clinic.patient_limit || 50} patients used. Upgrade for unlimited.`}
+              </p>
+            </div>
+            <a href="/pricing" className="btn-primary text-sm flex-shrink-0">
+              Upgrade
+            </a>
+          </div>
+        )}
+
         {/* Action Bar */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="flex-1">

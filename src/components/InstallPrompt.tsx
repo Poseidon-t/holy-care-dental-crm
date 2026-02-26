@@ -78,7 +78,7 @@ export function InstallPrompt() {
         </svg>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="font-semibold text-heading text-sm">Install ClinicFlow</p>
+        <p className="font-semibold text-heading text-sm">Install Holy Care Admin</p>
         {deferredPrompt ? (
           <p className="text-xs text-muted mt-0.5">Install the app for quick access from your home screen.</p>
         ) : (

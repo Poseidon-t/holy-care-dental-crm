@@ -98,7 +98,7 @@ export default function AdminPage() {
       <header className="bg-surface border-b border-line px-4 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold font-heading text-heading">ClinicFlow Admin</h1>
+            <h1 className="text-xl font-bold font-heading text-heading">Holy Care Admin</h1>
             <p className="text-sm text-muted">Super Admin Dashboard</p>
           </div>
           <a href="/dashboard" className="text-sm text-primary-600 hover:text-primary-700 font-medium">

@@ -30,6 +30,9 @@ function isPublicPath(pathname: string, method: string): boolean {
   // Chat API - POST only (public chatbot)
   if (pathname === '/api/chat' && method === 'POST') return true;
 
+  // Payment webhook - POST only (Razorpay server-to-server)
+  if (pathname === '/api/payments/webhook' && method === 'POST') return true;
+
   // Version check API - public (for update banner)
   if (pathname === '/api/version') return true;
 
