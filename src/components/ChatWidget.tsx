@@ -64,10 +64,12 @@ export function ChatWidget() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: updatedMessages.map((m) => ({
-            role: m.role,
-            content: m.content,
-          })),
+          messages: updatedMessages
+            .filter((m) => m.content !== GREETING)
+            .map((m) => ({
+              role: m.role,
+              content: m.content,
+            })),
         }),
       });
 
