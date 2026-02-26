@@ -350,10 +350,10 @@
     <h1>Holy Care Dental <span>CRM</span></h1>
     <p>A complete digital system for Holy Care Dental & Orthodontic Clinic &mdash; website, AI chatbot, patient management, and SEO in one tool.</p>
     <div class="hero-links">
-      <a href="https://patient-rejoicing-production-8ead.up.railway.app" class="primary" target="_blank">&#127760; Live Site</a>
+      <a href="https://www.holycareortho.com" class="primary" target="_blank">&#127760; Live Site</a>
       <a href="https://github.com/Poseidon-t/holy-care-dental-crm" class="secondary" target="_blank">&#128187; Source Code</a>
-      <a href="https://patient-rejoicing-production-8ead.up.railway.app/login" class="secondary" target="_blank">&#128274; Admin Dashboard</a>
-      <a href="https://patient-rejoicing-production-8ead.up.railway.app/knowledge" class="secondary" target="_blank">&#128218; Knowledge Articles</a>
+      <a href="https://www.holycareortho.com/login" class="secondary" target="_blank">&#128274; Admin Dashboard</a>
+      <a href="https://www.holycareortho.com/knowledge" class="secondary" target="_blank">&#128218; Knowledge Articles</a>
     </div>
   </div>
 
@@ -446,7 +446,7 @@
         <thead><tr><th>Feature</th><th>What It Solves</th></tr></thead>
         <tbody>
           <tr>
-            <td class="feat"><a href="https://patient-rejoicing-production-8ead.up.railway.app" target="_blank">Modern Website</a></td>
+            <td class="feat"><a href="https://www.holycareortho.com" target="_blank">Modern Website</a></td>
             <td class="desc">Professional first impression &mdash; hero, services, reviews carousel, gallery, hours, Google Maps.</td>
           </tr>
           <tr>
@@ -458,7 +458,7 @@
             <td class="desc">Scan in clinic, fill form on phone. No paper, no data entry errors. Saves 5&ndash;10 min per patient.</td>
           </tr>
           <tr>
-            <td class="feat"><a href="https://patient-rejoicing-production-8ead.up.railway.app/knowledge" target="_blank">Knowledge Articles</a></td>
+            <td class="feat"><a href="https://www.holycareortho.com/knowledge" target="_blank">Knowledge Articles</a></td>
             <td class="desc">6 expert articles (4 English, 2 Tamil). Drives Google traffic and educates patients before visits.</td>
           </tr>
           <tr>
@@ -479,7 +479,7 @@
         <thead><tr><th>Feature</th><th>What It Solves</th></tr></thead>
         <tbody>
           <tr>
-            <td class="feat"><a href="https://patient-rejoicing-production-8ead.up.railway.app/login" target="_blank">Patient Dashboard</a></td>
+            <td class="feat"><a href="https://www.holycareortho.com/login" target="_blank">Patient Dashboard</a></td>
             <td class="desc">Search any patient by name, OP number, or phone in 2 seconds. Date range filters.</td>
           </tr>
           <tr>
@@ -520,7 +520,7 @@
             <td class="desc">JSON-LD schemas (Dentist, MedicalBusiness, Article) power Google rich results.</td>
           </tr>
           <tr>
-            <td class="feat"><a href="https://patient-rejoicing-production-8ead.up.railway.app/sitemap.xml" target="_blank">Sitemap + Robots.txt</a></td>
+            <td class="feat"><a href="https://www.holycareortho.com/sitemap.xml" target="_blank">Sitemap + Robots.txt</a></td>
             <td class="desc">Google indexes the right pages and discovers new articles fast.</td>
           </tr>
           <tr>
@@ -530,6 +530,40 @@
           <tr>
             <td class="feat">Theme Customization</td>
             <td class="desc">Change the entire brand look from the admin panel. No code changes needed.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ DATA SAFETY & BACKUPS ═══ -->
+  <div class="section">
+    <div class="container">
+      <div class="section-label">Data Safety</div>
+      <div class="section-title">Medical Records Protected &amp; Backed Up</div>
+      <div class="section-desc">Patient medical records are critical. The system is built with multiple layers of protection to ensure data is never lost, corrupted, or accessed without authorization.</div>
+      <table class="feature-table">
+        <thead><tr><th>Protection</th><th>How It Works</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="feat">Automated Daily Backups</td>
+            <td class="desc">Full database snapshot uploaded to a private GitHub repository every 24 hours automatically. Last 30 daily backups retained, plus a latest copy for instant restore.</td>
+          </tr>
+          <tr>
+            <td class="feat">Persistent Volume Storage</td>
+            <td class="desc">Database lives on a dedicated persistent volume on Railway &mdash; survives server restarts, deployments, and container recycling.</td>
+          </tr>
+          <tr>
+            <td class="feat">Crash-Resistant Database</td>
+            <td class="desc">SQLite with WAL (Write-Ahead Logging) mode and <code>synchronous = FULL</code> &mdash; data is written to disk before confirming. Zero data loss even on unexpected shutdowns.</td>
+          </tr>
+          <tr>
+            <td class="feat">Atomic Transactions</td>
+            <td class="desc">Patient creation and related operations run inside database transactions &mdash; either everything saves or nothing does. No partial or corrupted records.</td>
+          </tr>
+          <tr>
+            <td class="feat">Off-Site Backup Storage</td>
+            <td class="desc">Backups stored in a private GitHub repo separate from the server. Even if the server is completely lost, all patient data can be restored from the latest backup.</td>
           </tr>
         </tbody>
       </table>
@@ -546,15 +580,31 @@
         <tbody>
           <tr>
             <td class="feat">JWT Auth + scrypt Passwords</td>
-            <td class="desc">Patient data behind login. Passwords cryptographically hashed with random salts.</td>
+            <td class="desc">Patient data behind login. Passwords cryptographically hashed with random salts and verified using timing-safe comparison.</td>
           </tr>
           <tr>
             <td class="feat">Middleware Route Protection</td>
-            <td class="desc">Every dashboard/API request verified server-side. No data leaks without valid session.</td>
+            <td class="desc">Every dashboard/API request verified server-side. No data leaks without a valid session cookie.</td>
+          </tr>
+          <tr>
+            <td class="feat">Login Rate Limiting</td>
+            <td class="desc">5 login attempts per 15 minutes per IP address. Prevents brute-force password attacks.</td>
           </tr>
           <tr>
             <td class="feat">Chat Rate Limiting</td>
             <td class="desc">10 messages/min per IP. Prevents spam and protects AI API quota.</td>
+          </tr>
+          <tr>
+            <td class="feat">Input Validation</td>
+            <td class="desc">All patient data validated with length limits, type checks, and sanitization before storage. Signatures capped at 2MB.</td>
+          </tr>
+          <tr>
+            <td class="feat">Registration Link Expiry</td>
+            <td class="desc">Remote patient registration links expire after 24 hours and can only be used once. Prevents stale or reused links.</td>
+          </tr>
+          <tr>
+            <td class="feat">Security Headers</td>
+            <td class="desc">HSTS, CSP, X-Frame-Options, and other headers prevent XSS, clickjacking, and content injection attacks.</td>
           </tr>
           <tr>
             <td class="feat">Env-based Secrets</td>
@@ -584,19 +634,19 @@
       <div class="section-label">Quick Links</div>
       <div class="section-title">Try It Out</div>
       <div class="links-grid">
-        <a href="https://patient-rejoicing-production-8ead.up.railway.app" class="link-card" target="_blank">
+        <a href="https://www.holycareortho.com" class="link-card" target="_blank">
           <div class="link-icon">&#127760;</div>
-          <div><div class="label">Website</div><div class="url">patient-rejoicing-production-8ead.up.railway.app</div></div>
+          <div><div class="label">Website</div><div class="url">www.holycareortho.com</div></div>
         </a>
-        <a href="https://patient-rejoicing-production-8ead.up.railway.app/knowledge" class="link-card" target="_blank">
+        <a href="https://www.holycareortho.com/knowledge" class="link-card" target="_blank">
           <div class="link-icon">&#128218;</div>
           <div><div class="label">Knowledge Hub</div><div class="url">.../knowledge</div></div>
         </a>
-        <a href="https://patient-rejoicing-production-8ead.up.railway.app/login" class="link-card" target="_blank">
+        <a href="https://www.holycareortho.com/login" class="link-card" target="_blank">
           <div class="link-icon">&#128274;</div>
           <div><div class="label">Admin Login</div><div class="url">.../login</div></div>
         </a>
-        <a href="https://patient-rejoicing-production-8ead.up.railway.app/register" class="link-card" target="_blank">
+        <a href="https://www.holycareortho.com/register" class="link-card" target="_blank">
           <div class="link-icon">&#128203;</div>
           <div><div class="label">Patient Registration</div><div class="url">.../register</div></div>
         </a>
@@ -604,7 +654,7 @@
           <div class="link-icon">&#128187;</div>
           <div><div class="label">GitHub Repo</div><div class="url">github.com/Poseidon-t/holy-care-dental-crm</div></div>
         </a>
-        <a href="https://search.google.com/test/rich-results?url=https://patient-rejoicing-production-8ead.up.railway.app" class="link-card" target="_blank">
+        <a href="https://search.google.com/test/rich-results?url=https%3A%2F%2Fwww.holycareortho.com" class="link-card" target="_blank">
           <div class="link-icon">&#9989;</div>
           <div><div class="label">SEO Validation</div><div class="url">Google Rich Results Test</div></div>
         </a>
