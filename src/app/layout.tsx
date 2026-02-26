@@ -7,7 +7,7 @@ import { UpdateBanner } from '@/components/UpdateBanner';
 
 export const dynamic = 'force-dynamic';
 
-const SITE_URL = 'https://patient-rejoicing-production-8ead.up.railway.app';
+const SITE_URL = 'https://www.holycareortho.com';
 
 export const viewport: Viewport = {
   width: 'device-width',

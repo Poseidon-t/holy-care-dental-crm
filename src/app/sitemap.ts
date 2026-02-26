@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getAllArticles } from '@/lib/articles';
 
-const SITE_URL = 'https://patient-rejoicing-production-8ead.up.railway.app';
+const SITE_URL = 'https://www.holycareortho.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const articles = getAllArticles();

@@ -156,7 +156,7 @@ const GOOGLE_REVIEWS = [
     name: 'Sutherson S',
     rating: 5,
     date: 'a year ago',
-    text: 'Had a great experience with my root canal at Holy Cross Dental Care. The environment was clean, the staff was caring, and the surgery was done professionally with clear guidance. Highly recommend!',
+    text: 'Had a great experience with my root canal at Holy Care Dental. The environment was clean, the staff was caring, and the surgery was done professionally with clear guidance. Highly recommend!',
   },
   {
     name: 'Arun Balaji',
@@ -264,6 +264,7 @@ const NAV_LINKS = [
 function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (v: boolean) => void }) {
   return (
     <nav className="bg-[var(--color-nav-bg)] backdrop-blur-md sticky top-0 z-50 border-b border-line/50">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-surface focus:text-heading focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:text-sm focus:font-semibold">Skip to main content</a>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
@@ -409,7 +410,7 @@ export default function HomePage({ theme }: { theme: string }) {
       <Navigation menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
       {/* ─── 1. Hero — Centered serif heading ─── */}
-      <section className="bg-surface">
+      <section id="main-content" className="bg-surface">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-6 md:pt-24 md:pb-10 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-heading leading-[1.15] animate-fade-in-up">
             A better <strong className="font-bold">dental</strong> experience,
