@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Holy Care Dental</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .container {
+      text-align: center;
+      max-width: 400px;
+    }
+    .icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: #fefce8;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon svg { width: 36px; height: 36px; color: #ca8a04; }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #6b7280;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .contact {
+      background: white;
+      border: 1px solid #e5e5e0;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .contact h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+    .phone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 0;
+    }
+    .phone + .phone { border-top: 1px solid #f3f3ee; }
+    .phone a {
+      color: #1a1a1a;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .phone .label {
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 400;
+    }
+    .retry {
+      margin-top: 24px;
+      display: inline-block;
+      padding: 12px 24px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+        <path d="M10.71 5.05A16 16 0 0 1 22.56 9"></path>
+        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+        <line x1="12" y1="20" x2="12.01" y2="20"></line>
+      </svg>
+    </div>
+    <h1>You're Offline</h1>
+    <p class="subtitle">It looks like you've lost your internet connection. You can still reach us by phone.</p>
+    <div class="contact">
+      <h2>Call Us</h2>
+      <div class="phone">
+        <div>
+          <a href="tel:+917977257779">079772 57779</a>
+          <div class="label">Kavalkinaru</div>
+        </div>
+      </div>
+      <div class="phone">
+        <div>
+          <a href="tel:+918655632732">086556 32732</a>
+          <div class="label">Mumbai</div>
+        </div>
+      </div>
+    </div>
+    <a href="/" class="retry" onclick="window.location.reload(); return false;">Try Again</a>
+  </div>
+</body>
+</html>
