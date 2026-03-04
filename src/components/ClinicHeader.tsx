@@ -12,12 +12,12 @@ export interface ClinicInfo {
 
 export default function ClinicHeader({ size = 'normal', clinic }: { size?: 'normal' | 'small'; clinic?: ClinicInfo }) {
   const isSmall = size === 'small';
-  const clinicName = clinic?.name || 'Clinic';
-  const doctorName = clinic?.doctor_name;
-  const specialization = clinic?.specialization;
-  const regNumber = clinic?.registration_number;
-  const phone = clinic?.phone;
-  const address = clinic?.address;
+  const clinicName = clinic?.name || 'Holy Care Dental & Orthodontics Clinic';
+  const doctorName = clinic?.doctor_name || 'Dr. Pinky Vijay MDS';
+  const specialization = clinic?.specialization || 'Orthodontics & Dentofacial Orthopedics';
+  const regNumber = clinic?.registration_number || 'A-34195';
+  const phone = clinic?.phone || '+91 79772 57779';
+  const address = clinic?.address || '8/277, Rachel Enclave, Kavalkinaru Main Road, Kavalkinaru - 627105';
   const logoUrl = clinic?.logo_url || '/images/logo.png';
 
   return (
