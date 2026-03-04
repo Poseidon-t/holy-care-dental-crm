@@ -72,27 +72,109 @@ export default function DashboardPage() {
     setTimeout(() => setLinkCopied(false), 2000);
   };
 
-  const downloadQr = () => {
+  const downloadQr = async () => {
     if (!qrRef.current) return;
     const svg = qrRef.current.querySelector('svg');
     if (!svg) return;
+
     const svgData = new XMLSerializer().serializeToString(svg);
-    const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 512;
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-    img.onload = () => {
-      ctx?.drawImage(img, 0, 0, 512, 512);
-      const a = document.createElement('a');
-      a.download = 'holy-care-clinic-qr.png';
-      a.href = canvas.toDataURL('image/png');
-      a.click();
-    };
-    img.onerror = () => {
-      console.error('Failed to generate QR image for download');
-    };
-    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    const svgBase64 = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+
+    const qrImg = new Image();
+    qrImg.src = svgBase64;
+    await new Promise(res => { qrImg.onload = res; });
+
+    // Draw QR to canvas
+    const qrCanvas = document.createElement('canvas');
+    qrCanvas.width = 400;
+    qrCanvas.height = 400;
+    const qrCtx = qrCanvas.getContext('2d')!;
+    qrCtx.fillStyle = '#ffffff';
+    qrCtx.fillRect(0, 0, 400, 400);
+    qrCtx.drawImage(qrImg, 0, 0, 400, 400);
+    const qrDataUrl = qrCanvas.toDataURL('image/png');
+
+    // Load logo
+    let logoDataUrl: string | null = null;
+    try {
+      const logoResp = await fetch('/images/logo.png');
+      const logoBlob = await logoResp.blob();
+      logoDataUrl = await new Promise(res => {
+        const r = new FileReader();
+        r.onload = () => res(r.result as string);
+        r.readAsDataURL(logoBlob);
+      });
+    } catch { /* no logo */ }
+
+    const { jsPDF } = await import('jspdf');
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+    const pageW = 210;
+    let y = 15;
+
+    // Logo
+    if (logoDataUrl) {
+      doc.addImage(logoDataUrl, 'PNG', pageW / 2 - 12, y, 24, 24);
+      y += 28;
+    }
+
+    // Clinic name
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(16);
+    doc.setTextColor(44, 82, 100);
+    doc.text('HOLY CARE DENTAL &', pageW / 2, y, { align: 'center' });
+    y += 8;
+    doc.text('ORTHODONTICS CLINIC', pageW / 2, y, { align: 'center' });
+    y += 9;
+
+    // Doctor & specialization
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(60, 60, 60);
+    doc.text('Dr. Pinky Vijay MDS', pageW / 2, y, { align: 'center' });
+    y += 5;
+    doc.setFont('helvetica', 'normal');
+    doc.text('Orthodontics & Dentofacial Orthopedics', pageW / 2, y, { align: 'center' });
+    y += 5;
+
+    // Reg & phone
+    doc.setFontSize(9);
+    doc.setTextColor(100, 100, 100);
+    doc.text('Reg. No: A-34195  |  Ph: +91 79772 57779', pageW / 2, y, { align: 'center' });
+    y += 5;
+
+    // Address
+    doc.text('8/277, Rachel Enclave, Kavalkinaru Main Road, Kavalkinaru - 627105', pageW / 2, y, { align: 'center' });
+    y += 10;
+
+    // Divider
+    doc.setDrawColor(200, 200, 200);
+    doc.line(20, y, pageW - 20, y);
+    y += 10;
+
+    // QR label
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(44, 82, 100);
+    doc.text('Patient Registration', pageW / 2, y, { align: 'center' });
+    y += 7;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text('Scan to fill your registration form', pageW / 2, y, { align: 'center' });
+    y += 8;
+
+    // QR code centered
+    const qrSize = 80;
+    doc.addImage(qrDataUrl, 'PNG', pageW / 2 - qrSize / 2, y, qrSize, qrSize);
+    y += qrSize + 8;
+
+    // URL below QR
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120);
+    doc.text(registerUrl, pageW / 2, y, { align: 'center' });
+
+    doc.save('holy-care-clinic-qr.pdf');
   };
 
   return (
