@@ -23,7 +23,24 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
   const [showQrModal, setShowQrModal] = useState(false);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
   const qrRef = useRef<HTMLDivElement>(null);
+
+  const deletePatient = async (id: number) => {
+    setDeletingId(id);
+    try {
+      const response = await fetch(`/api/patients/${id}`, { method: 'DELETE' });
+      if (response.ok) {
+        setPatients(prev => prev.filter(p => p.id !== id));
+      }
+    } catch (error) {
+      console.error('Failed to delete patient:', error);
+    } finally {
+      setDeletingId(null);
+      setConfirmDeleteId(null);
+    }
+  };
 
   const registerUrl = typeof window !== 'undefined' ? `${window.location.origin}/register` : '';
 
@@ -322,6 +339,34 @@ export default function DashboardPage() {
                           >
                             + Treatment
                           </a>
+                          {confirmDeleteId === patient.id ? (
+                            <div className="flex gap-1 items-center">
+                              <span className="text-xs text-red-600 font-medium hidden sm:inline">Delete?</span>
+                              <button
+                                onClick={() => deletePatient(patient.id)}
+                                disabled={deletingId === patient.id}
+                                className="text-xs text-white bg-red-600 hover:bg-red-700 font-medium px-2 py-2 rounded-lg transition-colors min-h-[44px] inline-flex items-center"
+                              >
+                                {deletingId === patient.id ? '...' : 'Yes'}
+                              </button>
+                              <button
+                                onClick={() => setConfirmDeleteId(null)}
+                                className="text-xs text-muted hover:text-body font-medium px-2 py-2 rounded-lg hover:bg-surface-alt transition-colors min-h-[44px] inline-flex items-center"
+                              >
+                                No
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => setConfirmDeleteId(patient.id)}
+                              className="text-sm text-red-500 hover:text-red-700 font-medium px-3 py-2 rounded-lg hover:bg-red-50 transition-colors min-h-[44px] inline-flex items-center"
+                              aria-label={`Delete ${patient.name}`}
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>

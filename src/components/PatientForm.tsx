@@ -127,6 +127,19 @@ export default function PatientForm({ mode, linkToken, autoNumbers, clinic }: Pa
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 py-6 px-4">
       <div className="max-w-3xl mx-auto">
+        {mode === 'tablet' && (
+          <div className="mb-4">
+            <a
+              href="/dashboard"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 hover:text-primary-700 bg-white px-4 py-2 rounded-lg shadow-sm border border-line hover:bg-primary-50 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Dashboard
+            </a>
+          </div>
+        )}
         <div className="card mb-6">
           <ClinicHeader clinic={clinic} />
         </div>
