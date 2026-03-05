@@ -63,6 +63,20 @@ const MEDICAL_CONDITIONS = [
   { key: 'pregnancy_lactating', english: 'Pregnancy or lactating', tamil: 'கர்ப்பம் அல்லது பாலூட்டுதல்' },
 ];
 
+type EditableFields = {
+  name: string;
+  age: number;
+  sex: string;
+  address: string;
+  phone: string;
+  occupation: string;
+  chief_complaint: string;
+  previous_dental_history: string;
+  diagnosis: string;
+  treatment_plan: string;
+  [key: string]: string | number;
+};
+
 export default function PatientDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const [patient, setPatient] = useState<Patient | null>(null);
@@ -74,6 +88,72 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
   const [error, setError] = useState('');
   const [isApproving, setIsApproving] = useState(false);
   const [approveError, setApproveError] = useState('');
+
+  // Edit mode state
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState<EditableFields | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
+
+  function startEditing() {
+    if (!patient) return;
+    setEditData({
+      name: patient.name,
+      age: patient.age,
+      sex: patient.sex,
+      address: patient.address || '',
+      phone: patient.phone,
+      occupation: patient.occupation || '',
+      chief_complaint: patient.chief_complaint || '',
+      previous_dental_history: patient.previous_dental_history || '',
+      diagnosis: patient.diagnosis || '',
+      treatment_plan: patient.treatment_plan || '',
+      // Medical conditions
+      ...Object.fromEntries(
+        MEDICAL_CONDITIONS.map(c => [c.key, patient[c.key as keyof Patient] as number])
+      ),
+    });
+    setIsEditing(true);
+    setSaveError('');
+  }
+
+  function cancelEditing() {
+    setIsEditing(false);
+    setEditData(null);
+    setSaveError('');
+  }
+
+  async function saveEdits() {
+    if (!editData || !patient) return;
+    setIsSaving(true);
+    setSaveError('');
+
+    try {
+      const response = await fetch(`/api/patients/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editData),
+      });
+
+      if (response.ok) {
+        // Update local patient state with edited data
+        setPatient(prev => prev ? { ...prev, ...editData } : prev);
+        setIsEditing(false);
+        setEditData(null);
+      } else {
+        const data = await response.json();
+        setSaveError(data.error || 'Failed to save changes');
+      }
+    } catch {
+      setSaveError('Failed to save. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  function updateField(field: string, value: string | number) {
+    setEditData(prev => prev ? { ...prev, [field]: value } : prev);
+  }
 
   async function approveWithSignature() {
     setIsApproving(true);
@@ -140,7 +220,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
     return (
       <div className="min-h-screen flex items-center justify-center bg-surface-alt">
         <div className="card text-center py-12">
-          <div className="text-4xl mb-4">❌</div>
+          <div className="text-4xl mb-4">&#x274C;</div>
           <p className="text-red-600 font-medium">{error || 'Patient not found'}</p>
           <a href="/dashboard" className="btn-primary mt-4 inline-block">Back to Dashboard</a>
         </div>
@@ -166,7 +246,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                 Registered: {new Date(patient.created_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             </div>
-            <div className="flex gap-2 flex-shrink-0">
+            <div className="flex gap-2 flex-shrink-0 flex-wrap mt-2 sm:mt-0">
               <a
                 href={`/report/${patient.id}`}
                 target="_blank"
@@ -196,7 +276,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
         <div className="flex border-b border-line-strong mt-4 mb-6">
           <button
             onClick={() => setActiveTab('registration')}
-            className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors min-h-[44px] ${
+            className={`px-3 sm:px-6 py-3 text-sm font-medium border-b-2 transition-colors min-h-[44px] ${
               activeTab === 'registration'
                 ? 'border-primary-600 text-primary-600'
                 : 'border-transparent text-muted hover:text-body'
@@ -206,7 +286,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
           </button>
           <button
             onClick={() => setActiveTab('treatments')}
-            className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors min-h-[44px] ${
+            className={`px-3 sm:px-6 py-3 text-sm font-medium border-b-2 transition-colors min-h-[44px] ${
               activeTab === 'treatments'
                 ? 'border-primary-600 text-primary-600'
                 : 'border-transparent text-muted hover:text-body'
@@ -219,9 +299,61 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
         {/* Registration Tab */}
         {activeTab === 'registration' && (
           <div className="space-y-6">
+            {/* Edit Controls */}
+            <div className="flex items-center justify-between">
+              <div />
+              {!isEditing ? (
+                <button
+                  onClick={startEditing}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-line-strong text-sm font-medium text-heading hover:bg-surface-alt transition-colors"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg>
+                  Edit Patient
+                </button>
+              ) : (
+                <div className="flex items-center gap-2">
+                  {saveError && (
+                    <span className="text-red-600 text-sm mr-2">{saveError}</span>
+                  )}
+                  <button
+                    onClick={cancelEditing}
+                    disabled={isSaving}
+                    className="px-4 py-2 rounded-lg border border-line-strong text-sm font-medium text-muted hover:text-heading hover:bg-surface-alt transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={saveEdits}
+                    disabled={isSaving}
+                    className="btn-primary text-sm inline-flex items-center gap-2"
+                  >
+                    {isSaving ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        Save Changes
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
+            </div>
+
             {/* IDs */}
             <div className="card">
-              <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-center">
                 <div>
                   <span className="text-xs text-muted block">O.P. No.</span>
                   <span className="font-bold text-primary-700 text-lg">{patient.op_number_formatted}</span>
@@ -240,16 +372,57 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
             {/* Personal Info */}
             <div className="card">
               <h3 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">Personal Information</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div><span className="text-sm text-muted">Name:</span><p className="font-medium">{patient.name}</p></div>
-                <div><span className="text-sm text-muted">Age:</span><p className="font-medium">{patient.age}</p></div>
-                <div><span className="text-sm text-muted">Sex:</span><p className="font-medium">{patient.sex}</p></div>
-                <div><span className="text-sm text-muted">Phone:</span><p className="font-medium">{patient.phone}</p></div>
-                <div><span className="text-sm text-muted">Occupation:</span><p className="font-medium">{patient.occupation || '-'}</p></div>
-                <div><span className="text-sm text-muted">Submission Method:</span><p className="font-medium capitalize">{patient.submission_method}</p></div>
-                <div className="md:col-span-2"><span className="text-sm text-muted">Address:</span><p className="font-medium">{patient.address || '-'}</p></div>
-                <div className="md:col-span-2"><span className="text-sm text-muted">Chief Complaint:</span><p className="font-medium">{patient.chief_complaint || '-'}</p></div>
-              </div>
+              {isEditing && editData ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="label-field">Name</label>
+                    <input className="input-field" value={editData.name} onChange={e => updateField('name', e.target.value)} />
+                  </div>
+                  <div>
+                    <label className="label-field">Age</label>
+                    <input className="input-field" type="number" min="0" max="150" value={editData.age} onChange={e => updateField('age', parseInt(e.target.value) || 0)} />
+                  </div>
+                  <div>
+                    <label className="label-field">Sex</label>
+                    <select className="input-field" value={editData.sex} onChange={e => updateField('sex', e.target.value)}>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="label-field">Phone</label>
+                    <input className="input-field" value={editData.phone} onChange={e => updateField('phone', e.target.value)} />
+                  </div>
+                  <div>
+                    <label className="label-field">Occupation</label>
+                    <input className="input-field" value={editData.occupation} onChange={e => updateField('occupation', e.target.value)} />
+                  </div>
+                  <div>
+                    <label className="label-field">Submission Method</label>
+                    <p className="font-medium capitalize mt-1">{patient.submission_method}</p>
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="label-field">Address</label>
+                    <input className="input-field" value={editData.address} onChange={e => updateField('address', e.target.value)} />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="label-field">Chief Complaint</label>
+                    <textarea className="input-field min-h-[80px]" value={editData.chief_complaint as string} onChange={e => updateField('chief_complaint', e.target.value)} />
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div><span className="text-sm text-muted">Name:</span><p className="font-medium">{patient.name}</p></div>
+                  <div><span className="text-sm text-muted">Age:</span><p className="font-medium">{patient.age}</p></div>
+                  <div><span className="text-sm text-muted">Sex:</span><p className="font-medium">{patient.sex}</p></div>
+                  <div><span className="text-sm text-muted">Phone:</span><p className="font-medium">{patient.phone}</p></div>
+                  <div><span className="text-sm text-muted">Occupation:</span><p className="font-medium">{patient.occupation || '-'}</p></div>
+                  <div><span className="text-sm text-muted">Submission Method:</span><p className="font-medium capitalize">{patient.submission_method}</p></div>
+                  <div className="md:col-span-2"><span className="text-sm text-muted">Address:</span><p className="font-medium">{patient.address || '-'}</p></div>
+                  <div className="md:col-span-2"><span className="text-sm text-muted">Chief Complaint:</span><p className="font-medium">{patient.chief_complaint || '-'}</p></div>
+                </div>
+              )}
             </div>
 
             {/* Medical History */}
@@ -257,10 +430,27 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
               <h3 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">Medical History</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {MEDICAL_CONDITIONS.map((condition) => {
-                  const value = patient[condition.key as keyof Patient] as number;
+                  const value = isEditing && editData
+                    ? editData[condition.key] as number
+                    : patient[condition.key as keyof Patient] as number;
                   return (
-                    <div key={condition.key} className={`flex items-center gap-2 p-2 rounded ${value ? 'bg-red-50' : 'bg-surface-alt'}`}>
-                      <span className={value ? 'text-red-500' : 'text-green-500'}>{value ? '!' : '✓'}</span>
+                    <div
+                      key={condition.key}
+                      className={`flex items-center gap-2 p-2 rounded ${
+                        isEditing ? 'cursor-pointer hover:bg-surface' : ''
+                      } ${value ? 'bg-red-50' : 'bg-surface-alt'}`}
+                      onClick={isEditing ? () => updateField(condition.key, value ? 0 : 1) : undefined}
+                    >
+                      {isEditing ? (
+                        <input
+                          type="checkbox"
+                          checked={!!value}
+                          onChange={() => updateField(condition.key, value ? 0 : 1)}
+                          className="w-4 h-4 accent-red-500"
+                        />
+                      ) : (
+                        <span className={value ? 'text-red-500' : 'text-green-500'}>{value ? '!' : '\u2713'}</span>
+                      )}
                       <span className={`text-sm ${value ? 'text-red-700 font-medium' : 'text-body'}`}>
                         {condition.english}
                         <span className="tamil text-xs text-faint ml-1">({condition.tamil})</span>
@@ -274,11 +464,28 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
             {/* Additional Info */}
             <div className="card">
               <h3 className="text-lg font-bold font-heading text-primary-700 mb-4 pb-2 border-b">Additional Information</h3>
-              <div className="space-y-4">
-                <div><span className="text-sm text-muted">Previous Dental History:</span><p className="font-medium mt-1">{patient.previous_dental_history || '-'}</p></div>
-                <div><span className="text-sm text-muted">Diagnosis:</span><p className="font-medium mt-1">{patient.diagnosis || '-'}</p></div>
-                <div><span className="text-sm text-muted">Treatment Plan:</span><p className="font-medium mt-1">{patient.treatment_plan || '-'}</p></div>
-              </div>
+              {isEditing && editData ? (
+                <div className="space-y-4">
+                  <div>
+                    <label className="label-field">Previous Dental History</label>
+                    <textarea className="input-field min-h-[80px]" value={editData.previous_dental_history as string} onChange={e => updateField('previous_dental_history', e.target.value)} />
+                  </div>
+                  <div>
+                    <label className="label-field">Diagnosis</label>
+                    <textarea className="input-field min-h-[80px]" value={editData.diagnosis as string} onChange={e => updateField('diagnosis', e.target.value)} />
+                  </div>
+                  <div>
+                    <label className="label-field">Treatment Plan</label>
+                    <textarea className="input-field min-h-[80px]" value={editData.treatment_plan as string} onChange={e => updateField('treatment_plan', e.target.value)} />
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div><span className="text-sm text-muted">Previous Dental History:</span><p className="font-medium mt-1">{patient.previous_dental_history || '-'}</p></div>
+                  <div><span className="text-sm text-muted">Diagnosis:</span><p className="font-medium mt-1">{patient.diagnosis || '-'}</p></div>
+                  <div><span className="text-sm text-muted">Treatment Plan:</span><p className="font-medium mt-1">{patient.treatment_plan || '-'}</p></div>
+                </div>
+              )}
             </div>
 
             {/* Signatures */}
@@ -310,20 +517,32 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                     </div>
                   ) : (
                     <div>
-                      <div className="border-2 border-dashed border-amber-200 bg-amber-50 rounded-lg h-32 flex flex-col items-center justify-center gap-2">
+                      <div className="border-2 border-dashed border-amber-200 bg-amber-50 rounded-lg p-4 flex flex-col items-center justify-center gap-3 min-h-[8rem]">
                         <span className="text-sm text-amber-600 font-medium">Awaiting doctor approval</span>
-                        <button
-                          onClick={approveWithSignature}
-                          disabled={isApproving}
-                          className="btn-primary text-sm inline-flex items-center gap-2"
-                        >
-                          {isApproving ? 'Approving...' : (
-                            <>
-                              <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                              Approve &amp; Sign
-                            </>
-                          )}
-                        </button>
+                        <div className="flex gap-2 flex-wrap justify-center">
+                          <button
+                            onClick={startEditing}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-line-strong text-sm font-medium text-heading bg-white hover:bg-surface-alt transition-colors"
+                          >
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                            </svg>
+                            Edit Form
+                          </button>
+                          <button
+                            onClick={approveWithSignature}
+                            disabled={isApproving}
+                            className="btn-primary text-sm inline-flex items-center gap-2"
+                          >
+                            {isApproving ? 'Approving...' : (
+                              <>
+                                <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                                Approve &amp; Sign
+                              </>
+                            )}
+                          </button>
+                        </div>
                       </div>
                       {approveError && (
                         <div className="bg-red-50 border border-red-200 text-red-700 p-2.5 rounded-lg text-sm mt-2">
@@ -343,7 +562,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
           <div className="space-y-6">
             {treatments.length === 0 ? (
               <div className="card text-center py-12">
-                <div className="text-4xl mb-2">📋</div>
+                <div className="text-4xl mb-2">&#x1F4CB;</div>
                 <p className="text-muted">No treatment records yet</p>
                 <a href={`/dashboard/treatment/${patient.id}`} className="btn-primary mt-4 inline-block">
                   Add First Treatment
@@ -367,7 +586,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                           {new Date(t.appointment_date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}
                         </td>
                         <td className="p-4 text-sm">{t.description}</td>
-                        <td className="p-4 text-sm text-right font-medium">₹ {t.amount.toLocaleString('en-IN')}</td>
+                        <td className="p-4 text-sm text-right font-medium">&#x20B9; {t.amount.toLocaleString('en-IN')}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -375,7 +594,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                     <tr className="bg-primary-50 border-t-2 border-primary-200">
                       <td colSpan={2} className="p-4 text-sm font-bold text-primary-700">Grand Total</td>
                       <td className="p-4 text-right text-lg font-bold text-primary-700">
-                        ₹ {totalBilling.toLocaleString('en-IN')}
+                        &#x20B9; {totalBilling.toLocaleString('en-IN')}
                       </td>
                     </tr>
                   </tfoot>
