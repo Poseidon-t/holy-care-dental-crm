@@ -89,11 +89,67 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
   const [isApproving, setIsApproving] = useState(false);
   const [approveError, setApproveError] = useState('');
 
-  // Edit mode state
+  // Edit mode state (patient form)
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<EditableFields | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
+
+  // Treatment edit/delete state
+  const [editingTreatmentId, setEditingTreatmentId] = useState<number | null>(null);
+  const [treatmentEditData, setTreatmentEditData] = useState<{ appointment_date: string; description: string; amount: number } | null>(null);
+  const [savingTreatmentId, setSavingTreatmentId] = useState<number | null>(null);
+  const [confirmDeleteTreatmentId, setConfirmDeleteTreatmentId] = useState<number | null>(null);
+
+  function startEditingTreatment(t: Treatment) {
+    setEditingTreatmentId(t.id);
+    setTreatmentEditData({
+      appointment_date: t.appointment_date.slice(0, 10),
+      description: t.description,
+      amount: t.amount,
+    });
+  }
+
+  function cancelEditingTreatment() {
+    setEditingTreatmentId(null);
+    setTreatmentEditData(null);
+  }
+
+  async function saveTreatment(id: number) {
+    if (!treatmentEditData) return;
+    setSavingTreatmentId(id);
+    try {
+      const res = await fetch(`/api/treatments/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(treatmentEditData),
+      });
+      if (res.ok) {
+        const updated = treatments.map(t =>
+          t.id === id ? { ...t, ...treatmentEditData } : t
+        );
+        setTreatments(updated);
+        setTotalBilling(updated.reduce((s, t) => s + t.amount, 0));
+        setEditingTreatmentId(null);
+        setTreatmentEditData(null);
+      }
+    } catch { /* ignore */ } finally {
+      setSavingTreatmentId(null);
+    }
+  }
+
+  async function deleteTreatment(id: number) {
+    try {
+      const res = await fetch(`/api/treatments/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        const updated = treatments.filter(t => t.id !== id);
+        setTreatments(updated);
+        setTotalBilling(updated.reduce((s, t) => s + t.amount, 0));
+      }
+    } catch { /* ignore */ } finally {
+      setConfirmDeleteTreatmentId(null);
+    }
+  }
 
   function startEditing() {
     if (!patient) return;
@@ -577,22 +633,107 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                       <th className="text-left p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Date</th>
                       <th className="text-left p-4 text-sm font-semibold text-primary-700">Description</th>
                       <th className="text-right p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Amount</th>
+                      <th className="text-right p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {treatments.map((t) => (
                       <tr key={t.id} className="border-b border-line-subtle">
-                        <td className="p-4 text-sm">
-                          {new Date(t.appointment_date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}
-                        </td>
-                        <td className="p-4 text-sm">{t.description}</td>
-                        <td className="p-4 text-sm text-right font-medium">&#x20B9; {t.amount.toLocaleString('en-IN')}</td>
+                        {editingTreatmentId === t.id && treatmentEditData ? (
+                          <>
+                            <td className="p-2">
+                              <input
+                                type="date"
+                                className="input-field text-sm py-1.5"
+                                value={treatmentEditData.appointment_date}
+                                onChange={e => setTreatmentEditData(d => d ? { ...d, appointment_date: e.target.value } : d)}
+                              />
+                            </td>
+                            <td className="p-2">
+                              <input
+                                type="text"
+                                className="input-field text-sm py-1.5 w-full"
+                                value={treatmentEditData.description}
+                                onChange={e => setTreatmentEditData(d => d ? { ...d, description: e.target.value } : d)}
+                              />
+                            </td>
+                            <td className="p-2">
+                              <input
+                                type="number"
+                                min="0"
+                                className="input-field text-sm py-1.5 text-right w-24"
+                                value={treatmentEditData.amount}
+                                onChange={e => setTreatmentEditData(d => d ? { ...d, amount: Number(e.target.value) } : d)}
+                              />
+                            </td>
+                            <td className="p-2 text-right whitespace-nowrap">
+                              <div className="flex gap-1 justify-end">
+                                <button
+                                  onClick={() => saveTreatment(t.id)}
+                                  disabled={savingTreatmentId === t.id}
+                                  className="text-xs font-medium px-3 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-colors min-h-[36px]"
+                                >
+                                  {savingTreatmentId === t.id ? '...' : 'Save'}
+                                </button>
+                                <button
+                                  onClick={cancelEditingTreatment}
+                                  className="text-xs font-medium px-3 py-2 rounded-lg border border-line-strong text-muted hover:text-heading hover:bg-surface-alt transition-colors min-h-[36px]"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </td>
+                          </>
+                        ) : (
+                          <>
+                            <td className="p-4 text-sm whitespace-nowrap">
+                              {new Date(t.appointment_date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}
+                            </td>
+                            <td className="p-4 text-sm">{t.description}</td>
+                            <td className="p-4 text-sm text-right font-medium whitespace-nowrap">&#x20B9; {t.amount.toLocaleString('en-IN')}</td>
+                            <td className="p-4 text-right whitespace-nowrap">
+                              <div className="flex gap-1 justify-end">
+                                <button
+                                  onClick={() => startEditingTreatment(t)}
+                                  className="text-xs text-primary-600 hover:text-primary-700 font-medium px-2 py-1.5 rounded hover:bg-primary-50 transition-colors"
+                                  title="Edit"
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                  </svg>
+                                </button>
+                                {confirmDeleteTreatmentId === t.id ? (
+                                  <div className="flex gap-1 items-center">
+                                    <button
+                                      onClick={() => deleteTreatment(t.id)}
+                                      className="text-xs text-white bg-red-600 hover:bg-red-700 px-2 py-1.5 rounded transition-colors"
+                                    >Yes</button>
+                                    <button
+                                      onClick={() => setConfirmDeleteTreatmentId(null)}
+                                      className="text-xs text-muted hover:text-heading px-2 py-1.5 rounded hover:bg-surface-alt transition-colors"
+                                    >No</button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    onClick={() => setConfirmDeleteTreatmentId(t.id)}
+                                    className="text-xs text-red-400 hover:text-red-600 font-medium px-2 py-1.5 rounded hover:bg-red-50 transition-colors"
+                                    title="Delete"
+                                  >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                  </button>
+                                )}
+                              </div>
+                            </td>
+                          </>
+                        )}
                       </tr>
                     ))}
                   </tbody>
                   <tfoot>
                     <tr className="bg-primary-50 border-t-2 border-primary-200">
-                      <td colSpan={2} className="p-4 text-sm font-bold text-primary-700">Grand Total</td>
+                      <td colSpan={3} className="p-4 text-sm font-bold text-primary-700">Grand Total</td>
                       <td className="p-4 text-right text-lg font-bold text-primary-700">
                         &#x20B9; {totalBilling.toLocaleString('en-IN')}
                       </td>
