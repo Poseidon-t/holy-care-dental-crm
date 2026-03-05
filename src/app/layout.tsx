@@ -3,7 +3,6 @@ import './globals.css';
 import { getSetting } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { ThemeSelectorWrapper } from '@/components/ThemeSelectorWrapper';
-import { ChatWidgetWrapper } from '@/components/ChatWidgetWrapper';
 import { UpdateBanner } from '@/components/UpdateBanner';
 
 export const dynamic = 'force-dynamic';
@@ -139,7 +138,7 @@ export default async function RootLayout({
         />
         {children}
         <ThemeSelectorWrapper currentTheme={theme} />
-        <ChatWidgetWrapper />
+        {/* ChatWidget is added per public page, not here */}
         <UpdateBanner />
       </body>
     </html>
