@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
+
+export const dynamic = 'force-dynamic';
 import { getSession } from '@/lib/auth';
 import { query } from '@/lib/db';
 
