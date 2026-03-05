@@ -25,7 +25,28 @@ export default function DashboardPage() {
   const [showQrModal, setShowQrModal] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
   const qrRef = useRef<HTMLDivElement>(null);
+
+  const downloadReport = async () => {
+    setIsExporting(true);
+    try {
+      const response = await fetch('/api/export/patients');
+      if (!response.ok) throw new Error('Export failed');
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const date = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `holycare-patients-${date}.xlsx`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Failed to export:', error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const deletePatient = async (id: number) => {
     setDeletingId(id);
@@ -259,6 +280,28 @@ export default function DashboardPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
             </svg>
             Registration QR Code
+          </button>
+          <button
+            onClick={downloadReport}
+            disabled={isExporting}
+            className="btn-secondary"
+          >
+            {isExporting ? (
+              <>
+                <svg className="animate-spin w-5 h-5 mr-2 text-primary-600" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Generating...
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Download Report
+              </>
+            )}
           </button>
         </div>
 
