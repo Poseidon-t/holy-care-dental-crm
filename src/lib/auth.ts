@@ -2,10 +2,16 @@ import { SignJWT, jwtVerify } from 'jose';
 import { scryptSync, randomBytes, timingSafeEqual } from 'crypto';
 import { cookies } from 'next/headers';
 
-if (!process.env.JWT_SECRET) {
-  throw new Error('JWT_SECRET environment variable is required');
+let _secret: Uint8Array | null = null;
+function getSecret(): Uint8Array {
+  if (!_secret) {
+    if (!process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET environment variable is required');
+    }
+    _secret = new TextEncoder().encode(process.env.JWT_SECRET);
+  }
+  return _secret;
 }
-const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 const COOKIE_NAME = 'holycare_session';
 
@@ -34,12 +40,12 @@ export async function createToken(payload: SessionPayload): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('24h')
-    .sign(secret);
+    .sign(getSecret());
 }
 
 export async function verifyToken(token: string): Promise<SessionPayload | null> {
   try {
-    const { payload } = await jwtVerify(token, secret);
+    const { payload } = await jwtVerify(token, getSecret());
     return payload as unknown as SessionPayload;
   } catch {
     return null;

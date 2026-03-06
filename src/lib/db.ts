@@ -1,5 +1,7 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import { mkdirSync } from 'fs';
+import { scryptSync, randomBytes } from 'crypto';
 
 // ─── Database Connection ───
 
@@ -9,6 +11,8 @@ let _db: Database.Database | null = null;
 
 export function getDb(): Database.Database {
   if (!_db) {
+    // Ensure the data directory exists (Railway has ephemeral filesystem)
+    mkdirSync(path.dirname(DB_PATH), { recursive: true });
     _db = new Database(DB_PATH);
     _db.pragma('journal_mode = WAL');
     _db.pragma('synchronous = FULL');
@@ -17,6 +21,18 @@ export function getDb(): Database.Database {
     initDb(_db);
   }
   return _db;
+}
+
+function seedAdmin(db: Database.Database) {
+  const count = db.prepare('SELECT COUNT(*) as count FROM admin_users').get() as { count: number };
+  if (count.count > 0) return;
+  const password = process.env.ADMIN_PASSWORD || 'holycareortho2026';
+  const salt = randomBytes(16).toString('hex');
+  const hash = scryptSync(password, salt, 64).toString('hex');
+  const passwordHash = `${salt}:${hash}`;
+  db.prepare(
+    'INSERT INTO admin_users (username, password_hash, full_name, role) VALUES (?, ?, ?, ?)'
+  ).run('holycareortho@gmail.com', passwordHash, 'Holy Care Admin', 'admin');
 }
 
 function initDb(db: Database.Database) {
@@ -110,6 +126,9 @@ function initDb(db: Database.Database) {
   db.exec('CREATE INDEX IF NOT EXISTS idx_patients_op ON patients(op_number)');
   db.exec('CREATE INDEX IF NOT EXISTS idx_treatments_patient ON treatments(patient_id)');
   db.exec('CREATE INDEX IF NOT EXISTS idx_registration_links_token ON registration_links(token)');
+
+  // Seed default admin if none exist
+  seedAdmin(db);
 }
 
 // ─── Query Helpers (async-compatible wrappers) ───
