@@ -44,6 +44,7 @@ interface Treatment {
   appointment_date: string;
   description: string;
   amount: number;
+  amount_paid: number;
   signature: string;
 }
 
@@ -99,7 +100,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
 
   // Treatment edit/delete state
   const [editingTreatmentId, setEditingTreatmentId] = useState<number | null>(null);
-  const [treatmentEditData, setTreatmentEditData] = useState<{ appointment_date: string; description: string; amount: number } | null>(null);
+  const [treatmentEditData, setTreatmentEditData] = useState<{ appointment_date: string; description: string; amount: number; amount_paid: number } | null>(null);
   const [savingTreatmentId, setSavingTreatmentId] = useState<number | null>(null);
   const [confirmDeleteTreatmentId, setConfirmDeleteTreatmentId] = useState<number | null>(null);
 
@@ -109,6 +110,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
       appointment_date: t.appointment_date.slice(0, 10),
       description: t.description,
       amount: t.amount,
+      amount_paid: t.amount_paid || 0,
     });
   }
 
@@ -837,7 +839,9 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                     <tr className="bg-primary-50 border-b border-primary-100">
                       <th className="text-left p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Date</th>
                       <th className="text-left p-4 text-sm font-semibold text-primary-700">Description</th>
-                      <th className="text-right p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Amount</th>
+                      <th className="text-right p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Cost</th>
+                      <th className="text-right p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Paid</th>
+                      <th className="text-right p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Balance</th>
                       <th className="text-right p-4 text-sm font-semibold text-primary-700 whitespace-nowrap">Actions</th>
                     </tr>
                   </thead>
@@ -871,6 +875,18 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                                 onChange={e => setTreatmentEditData(d => d ? { ...d, amount: Number(e.target.value) } : d)}
                               />
                             </td>
+                            <td className="p-2">
+                              <input
+                                type="number"
+                                min="0"
+                                className="input-field text-sm py-1.5 text-right w-24"
+                                value={treatmentEditData.amount_paid}
+                                onChange={e => setTreatmentEditData(d => d ? { ...d, amount_paid: Number(e.target.value) } : d)}
+                              />
+                            </td>
+                            <td className="p-2 text-right text-sm font-medium whitespace-nowrap">
+                              &#x20B9; {((treatmentEditData.amount || 0) - (treatmentEditData.amount_paid || 0)).toLocaleString('en-IN')}
+                            </td>
                             <td className="p-2 text-right whitespace-nowrap">
                               <div className="flex gap-1 justify-end">
                                 <button
@@ -896,6 +912,10 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                             </td>
                             <td className="p-4 text-sm">{t.description}</td>
                             <td className="p-4 text-sm text-right font-medium whitespace-nowrap">&#x20B9; {t.amount.toLocaleString('en-IN')}</td>
+                            <td className="p-4 text-sm text-right font-medium whitespace-nowrap text-green-600">&#x20B9; {(t.amount_paid || 0).toLocaleString('en-IN')}</td>
+                            <td className={`p-4 text-sm text-right font-medium whitespace-nowrap ${(t.amount - (t.amount_paid || 0)) > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                              &#x20B9; {(t.amount - (t.amount_paid || 0)).toLocaleString('en-IN')}
+                            </td>
                             <td className="p-4 text-right whitespace-nowrap">
                               <div className="flex gap-1 justify-end">
                                 <button
@@ -938,10 +958,17 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                   </tbody>
                   <tfoot>
                     <tr className="bg-primary-50 border-t-2 border-primary-200">
-                      <td colSpan={3} className="p-4 text-sm font-bold text-primary-700">Grand Total</td>
-                      <td className="p-4 text-right text-lg font-bold text-primary-700">
+                      <td colSpan={2} className="p-4 text-sm font-bold text-primary-700">Grand Total</td>
+                      <td className="p-4 text-right font-bold text-primary-700">
                         &#x20B9; {totalBilling.toLocaleString('en-IN')}
                       </td>
+                      <td className="p-4 text-right font-bold text-green-600">
+                        &#x20B9; {treatments.reduce((s, t) => s + (t.amount_paid || 0), 0).toLocaleString('en-IN')}
+                      </td>
+                      <td className={`p-4 text-right font-bold ${(totalBilling - treatments.reduce((s, t) => s + (t.amount_paid || 0), 0)) > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                        &#x20B9; {(totalBilling - treatments.reduce((s, t) => s + (t.amount_paid || 0), 0)).toLocaleString('en-IN')}
+                      </td>
+                      <td></td>
                     </tr>
                   </tfoot>
                 </table>

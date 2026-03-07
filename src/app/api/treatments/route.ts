@@ -31,12 +31,12 @@ export async function POST(request: NextRequest) {
     // Use transaction for batch insert
     const db = getDb();
     const insertTreatment = db.prepare(
-      'INSERT INTO treatments (patient_id, appointment_date, description, amount, signature) VALUES (?, ?, ?, ?, ?)'
+      'INSERT INTO treatments (patient_id, appointment_date, description, amount, amount_paid, signature) VALUES (?, ?, ?, ?, ?, ?)'
     );
 
-    const insertMany = db.transaction((entries: Array<{ appointment_date: string; description: string; amount: number }>) => {
+    const insertMany = db.transaction((entries: Array<{ appointment_date: string; description: string; amount: number; amount_paid?: number }>) => {
       for (const entry of entries) {
-        insertTreatment.run(patient_id, entry.appointment_date, entry.description, entry.amount || 0, signature || '');
+        insertTreatment.run(patient_id, entry.appointment_date, entry.description, entry.amount || 0, entry.amount_paid || 0, signature || '');
       }
     });
 

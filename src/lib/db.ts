@@ -91,10 +91,18 @@ function initDb(db: Database.Database) {
       appointment_date TEXT NOT NULL,
       description TEXT NOT NULL,
       amount REAL NOT NULL DEFAULT 0,
+      amount_paid REAL NOT NULL DEFAULT 0,
       signature TEXT,
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     )
   `);
+
+  // Add amount_paid column to existing tables that don't have it
+  try {
+    db.exec('ALTER TABLE treatments ADD COLUMN amount_paid REAL NOT NULL DEFAULT 0');
+  } catch {
+    // Column already exists
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS registration_links (

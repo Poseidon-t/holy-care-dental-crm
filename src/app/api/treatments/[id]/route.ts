@@ -21,14 +21,15 @@ export async function PATCH(
     const date = String(body.appointment_date || '').trim();
     const description = String(body.description || '').trim().slice(0, 2000);
     const amount = Math.max(0, Number(body.amount) || 0);
+    const amountPaid = Math.max(0, Number(body.amount_paid) || 0);
 
     if (!date || !description) {
       return NextResponse.json({ error: 'Date and description are required' }, { status: 400 });
     }
 
     await execute(
-      'UPDATE treatments SET appointment_date = ?, description = ?, amount = ? WHERE id = ?',
-      [date, description, amount, id]
+      'UPDATE treatments SET appointment_date = ?, description = ?, amount = ?, amount_paid = ? WHERE id = ?',
+      [date, description, amount, amountPaid, id]
     );
 
     return NextResponse.json({ success: true });

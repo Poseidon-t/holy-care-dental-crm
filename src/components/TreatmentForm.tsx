@@ -7,6 +7,7 @@ interface TreatmentEntry {
   appointment_date: string;
   description: string;
   amount: string;
+  amount_paid: string;
 }
 
 interface ClinicData {
@@ -23,7 +24,7 @@ interface TreatmentFormProps {
 
 export default function TreatmentForm({ patientId, patientName, opNumber, onSuccess, clinic }: TreatmentFormProps) {
   const [entries, setEntries] = useState<TreatmentEntry[]>([
-    { id: 1, appointment_date: new Date().toISOString().split('T')[0], description: '', amount: '' },
+    { id: 1, appointment_date: new Date().toISOString().split('T')[0], description: '', amount: '', amount_paid: '' },
   ]);
   const signature = '/images/dr-pinky-signature.png';
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,7 +36,7 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
     const id = nextIdRef.current++;
     setEntries(prev => [
       ...prev,
-      { id, appointment_date: new Date().toISOString().split('T')[0], description: '', amount: '' },
+      { id, appointment_date: new Date().toISOString().split('T')[0], description: '', amount: '', amount_paid: '' },
     ]);
   };
 
@@ -72,6 +73,7 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
             appointment_date: e.appointment_date,
             description: e.description,
             amount: parseFloat(e.amount) || 0,
+            amount_paid: parseFloat(e.amount_paid) || 0,
           })),
           signature,
         }),
@@ -135,9 +137,13 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
                   Description<br />
                   <span className="tamil text-xs font-normal text-muted">விவரம்</span>
                 </th>
-                <th className="text-left p-3 text-sm font-semibold text-primary-700 w-32">
-                  Amount (₹)<br />
-                  <span className="tamil text-xs font-normal text-muted">தொகை</span>
+                <th className="text-left p-3 text-sm font-semibold text-primary-700 w-28">
+                  Cost (₹)<br />
+                  <span className="tamil text-xs font-normal text-muted">செலவு</span>
+                </th>
+                <th className="text-left p-3 text-sm font-semibold text-primary-700 w-28">
+                  Paid (₹)<br />
+                  <span className="tamil text-xs font-normal text-muted">செலுத்தியது</span>
                 </th>
                 <th className="p-3 w-12 rounded-tr-lg"></th>
               </tr>
@@ -179,6 +185,20 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
                     </div>
                   </td>
                   <td className="p-2">
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-faint font-medium">₹</span>
+                      <input
+                        type="number"
+                        className="input-field pl-8"
+                        value={entry.amount_paid}
+                        onChange={e => updateEntry(entry.id, 'amount_paid', e.target.value)}
+                        placeholder="0"
+                        min="0"
+                        step="0.01"
+                      />
+                    </div>
+                  </td>
+                  <td className="p-2">
                     {entries.length > 1 && (
                       <button
                         type="button"
@@ -212,9 +232,21 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
 
         {/* Grand Total */}
         <div className="flex justify-end mt-4 pt-4 border-t-2 border-primary-200">
-          <div className="text-right">
-            <span className="text-sm text-muted mr-4">Grand Total:</span>
-            <span className="text-2xl font-bold text-primary-700">₹ {grandTotal.toLocaleString('en-IN')}</span>
+          <div className="flex gap-6 items-center">
+            <div className="text-right">
+              <span className="text-xs text-muted block">Total Cost</span>
+              <span className="text-lg font-bold text-primary-700">₹ {grandTotal.toLocaleString('en-IN')}</span>
+            </div>
+            <div className="text-right">
+              <span className="text-xs text-muted block">Total Paid</span>
+              <span className="text-lg font-bold text-green-600">₹ {entries.reduce((s, e) => s + (parseFloat(e.amount_paid) || 0), 0).toLocaleString('en-IN')}</span>
+            </div>
+            <div className="text-right">
+              <span className="text-xs text-muted block">Balance</span>
+              <span className={`text-lg font-bold ${(grandTotal - entries.reduce((s, e) => s + (parseFloat(e.amount_paid) || 0), 0)) > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                ₹ {(grandTotal - entries.reduce((s, e) => s + (parseFloat(e.amount_paid) || 0), 0)).toLocaleString('en-IN')}
+              </span>
+            </div>
           </div>
         </div>
       </div>
