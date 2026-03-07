@@ -247,11 +247,11 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
       const PW = 210, M = 14, CW = PW - 2 * M;
       let y = 14;
 
-      function checkPage(need = 20) {
+      const checkPage = (need = 20) => {
         if (y + need > 282) { doc.addPage(); y = 14; }
-      }
+      };
 
-      function sectionTitle(title: string) {
+      const sectionTitle = (title: string) => {
         checkPage(12);
         doc.setFontSize(9.5); doc.setFont('helvetica', 'bold'); doc.setTextColor(30, 80, 160);
         doc.text(title, M, y);
@@ -259,20 +259,20 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
         doc.setDrawColor(180, 200, 230); doc.setLineWidth(0.3);
         doc.line(M, y, PW - M, y);
         y += 4;
-      }
+      };
 
-      async function imgBase64(src: string): Promise<string | null> {
+      const imgBase64 = async (src: string): Promise<string | null> => {
         try {
           const r = await fetch(src);
           const b = await r.blob();
-          return await new Promise<string>((res) => {
+          return await new Promise<string | null>((res) => {
             const rd = new FileReader();
             rd.onload = () => res(rd.result as string);
             rd.onerror = () => res(null);
             rd.readAsDataURL(b);
           });
         } catch { return null; }
-      }
+      };
 
       // ── Clinic Header ──
       doc.setFontSize(13); doc.setFont('helvetica', 'bold'); doc.setTextColor(180, 110, 20);
