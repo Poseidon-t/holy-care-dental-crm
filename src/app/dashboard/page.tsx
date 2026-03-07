@@ -315,14 +315,13 @@ export default function DashboardPage() {
                   <th className="text-left p-4 text-sm font-semibold text-primary-700">Name</th>
                   <th className="text-left p-4 text-sm font-semibold text-primary-700 hidden sm:table-cell">Phone</th>
                   <th className="text-left p-4 text-sm font-semibold text-primary-700 hidden md:table-cell">Registration Date</th>
-                  <th className="text-right p-4 text-sm font-semibold text-primary-700 hidden sm:table-cell">Total Billing</th>
                   <th className="text-right p-4 text-sm font-semibold text-primary-700">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
-                    <td colSpan={6} className="text-center py-12 text-faint">
+                    <td colSpan={5} className="text-center py-12 text-faint">
                       <svg className="animate-spin h-8 w-8 mx-auto mb-2 text-primary-400" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -332,7 +331,7 @@ export default function DashboardPage() {
                   </tr>
                 ) : patients.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center py-12 text-faint">
+                    <td colSpan={5} className="text-center py-12 text-faint">
                       <div className="text-4xl mb-2">📋</div>
                       No patients found
                     </td>
@@ -362,9 +361,6 @@ export default function DashboardPage() {
                         {new Date(patient.created_at).toLocaleDateString('en-IN', {
                           year: 'numeric', month: 'short', day: 'numeric',
                         })}
-                      </td>
-                      <td className="p-4 text-right font-semibold hidden sm:table-cell">
-                        ₹ {patient.total_billing.toLocaleString('en-IN')}
                       </td>
                       <td className="p-4 text-right">
                         <div className="flex gap-2 justify-end">
