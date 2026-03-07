@@ -95,6 +95,8 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
 
+  const [isSavingPDF, setIsSavingPDF] = useState(false);
+
   // Treatment edit/delete state
   const [editingTreatmentId, setEditingTreatmentId] = useState<number | null>(null);
   const [treatmentEditData, setTreatmentEditData] = useState<{ appointment_date: string; description: string; amount: number } | null>(null);
@@ -231,6 +233,187 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
       setApproveError('Failed to approve. Please try again.');
     } finally {
       setIsApproving(false);
+    }
+  }
+
+  async function saveAsPDF() {
+    if (!patient) return;
+    setIsSavingPDF(true);
+    try {
+      const { jsPDF } = await import('jspdf');
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const PW = 210, M = 14, CW = PW - 2 * M;
+      let y = 14;
+
+      function checkPage(need = 20) {
+        if (y + need > 282) { doc.addPage(); y = 14; }
+      }
+
+      function sectionTitle(title: string) {
+        checkPage(12);
+        doc.setFontSize(9.5); doc.setFont('helvetica', 'bold'); doc.setTextColor(30, 80, 160);
+        doc.text(title, M, y);
+        y += 3.5;
+        doc.setDrawColor(180, 200, 230); doc.setLineWidth(0.3);
+        doc.line(M, y, PW - M, y);
+        y += 4;
+      }
+
+      async function imgBase64(src: string): Promise<string | null> {
+        try {
+          const r = await fetch(src);
+          const b = await r.blob();
+          return await new Promise<string>((res) => {
+            const rd = new FileReader();
+            rd.onload = () => res(rd.result as string);
+            rd.onerror = () => res(null);
+            rd.readAsDataURL(b);
+          });
+        } catch { return null; }
+      }
+
+      // ── Clinic Header ──
+      doc.setFontSize(13); doc.setFont('helvetica', 'bold'); doc.setTextColor(180, 110, 20);
+      doc.text('HOLY CARE DENTAL & ORTHODONTICS CLINIC', PW / 2, y, { align: 'center' });
+      y += 6;
+      doc.setFontSize(8.5); doc.setFont('helvetica', 'normal'); doc.setTextColor(60, 60, 60);
+      doc.text('Dr. Pinky Vijay MDS  |  Orthodontics & Dentofacial Orthopedics', PW / 2, y, { align: 'center' });
+      y += 4.5;
+      doc.text('Reg. No.: A-34195  |  Ph: +91 79772 57779', PW / 2, y, { align: 'center' });
+      y += 4.5;
+      doc.text('8/277, Rachel Enclave, Kavalkinaru Main Road, Kavalkinaru - 627105', PW / 2, y, { align: 'center' });
+      y += 5;
+      doc.setDrawColor(180, 110, 20); doc.setLineWidth(0.6);
+      doc.line(M, y, PW - M, y);
+      y += 5;
+
+      // ── Form Title ──
+      doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(30, 30, 30);
+      doc.text('PATIENT REGISTRATION FORM', PW / 2, y, { align: 'center' });
+      y += 8;
+
+      // ── IDs ──
+      const idCW = CW / 3;
+      doc.setFillColor(240, 245, 255);
+      doc.roundedRect(M, y - 3, CW, 13, 1.5, 1.5, 'F');
+      [
+        { label: 'O.P. No.', val: patient.op_number_formatted },
+        { label: 'Invoice No.', val: patient.invoice_number_formatted },
+        { label: 'X-ray ID', val: patient.xray_id_formatted },
+      ].forEach((item, i) => {
+        const cx = M + i * idCW + idCW / 2;
+        doc.setFontSize(7); doc.setFont('helvetica', 'normal'); doc.setTextColor(120, 120, 120);
+        doc.text(item.label, cx, y + 1, { align: 'center' });
+        doc.setFontSize(10); doc.setFont('helvetica', 'bold'); doc.setTextColor(30, 80, 160);
+        doc.text(item.val, cx, y + 8, { align: 'center' });
+      });
+      y += 16;
+
+      // ── Personal Information ──
+      sectionTitle('Personal Information');
+      doc.setFontSize(8.5); doc.setTextColor(50, 50, 50);
+      const halfW = CW / 2 - 5;
+      const pairs: [string, string, string, string][] = [
+        ['Name', patient.name, 'Age', String(patient.age)],
+        ['Sex', patient.sex, 'Phone', patient.phone],
+        ['Occupation', patient.occupation || '\u2014', 'Method', patient.submission_method],
+      ];
+      pairs.forEach(([l1, v1, l2, v2]) => {
+        checkPage(6);
+        doc.setFont('helvetica', 'bold'); doc.text(l1 + ':', M, y);
+        doc.setFont('helvetica', 'normal');
+        const lines1 = doc.splitTextToSize(v1, halfW - 20);
+        doc.text(lines1, M + 22, y);
+        doc.setFont('helvetica', 'bold'); doc.text(l2 + ':', M + halfW + 5, y);
+        doc.setFont('helvetica', 'normal'); doc.text(v2, M + halfW + 5 + 22, y);
+        y += Math.max(lines1.length, 1) * 5;
+      });
+      checkPage(8);
+      doc.setFont('helvetica', 'bold'); doc.text('Address:', M, y);
+      doc.setFont('helvetica', 'normal');
+      const addrLines = doc.splitTextToSize(patient.address || '\u2014', CW - 22);
+      doc.text(addrLines, M + 22, y);
+      y += Math.max(addrLines.length, 1) * 5;
+      checkPage(8);
+      doc.setFont('helvetica', 'bold'); doc.text('Chief Complaint:', M, y);
+      doc.setFont('helvetica', 'normal');
+      const ccLines = doc.splitTextToSize(patient.chief_complaint || '\u2014', CW - 38);
+      doc.text(ccLines, M + 38, y);
+      y += Math.max(ccLines.length, 1) * 5 + 3;
+
+      // ── Medical History ──
+      sectionTitle('Medical History');
+      doc.setFontSize(8);
+      const condCW = CW / 2;
+      MEDICAL_CONDITIONS.forEach((cond, i) => {
+        const col = i % 2;
+        if (col === 0) { checkPage(6); if (i > 0) y += 5; }
+        const x = M + col * condCW;
+        const positive = !!(patient[cond.key as keyof Patient]);
+        if (positive) {
+          doc.setFillColor(255, 235, 235);
+          doc.rect(x, y - 3.5, condCW - 2, 5, 'F');
+          doc.setTextColor(190, 40, 40); doc.setFont('helvetica', 'bold');
+          doc.text('[YES] ' + cond.english, x + 2, y);
+        } else {
+          doc.setTextColor(80, 80, 80); doc.setFont('helvetica', 'normal');
+          doc.text('[NO]   ' + cond.english, x + 2, y);
+        }
+      });
+      y += 8;
+
+      // ── Clinical Information ──
+      sectionTitle('Clinical Information');
+      doc.setFontSize(8.5);
+      [
+        { label: 'Previous Dental History', val: patient.previous_dental_history || '\u2014' },
+        { label: 'Diagnosis', val: patient.diagnosis || '\u2014' },
+        { label: 'Treatment Plan', val: patient.treatment_plan || '\u2014' },
+      ].forEach(({ label, val }) => {
+        checkPage(12);
+        doc.setFont('helvetica', 'bold'); doc.setTextColor(50, 50, 50); doc.text(label + ':', M, y);
+        y += 4;
+        doc.setFont('helvetica', 'normal');
+        const lines = doc.splitTextToSize(val, CW - 4);
+        doc.text(lines, M + 4, y);
+        y += lines.length * 4.5 + 4;
+      });
+
+      // ── Signatures ──
+      checkPage(55);
+      sectionTitle('Signatures');
+      const sigW = CW / 2 - 5;
+      const sigH = 30;
+      doc.setFontSize(8); doc.setFont('helvetica', 'bold'); doc.setTextColor(60, 60, 60);
+      doc.text('Patient Signature', M, y);
+      doc.text('Dentist Signature', M + sigW + 10, y);
+      y += 4;
+      doc.setDrawColor(190, 190, 190); doc.setLineWidth(0.3);
+      doc.rect(M, y, sigW, sigH);
+      doc.rect(M + sigW + 10, y, sigW, sigH);
+
+      if (patient.patient_signature) {
+        const img = await imgBase64(patient.patient_signature);
+        if (img) { try { doc.addImage(img, 'PNG', M + 2, y + 2, sigW - 4, sigH - 4, '', 'FAST'); } catch { /* skip */ } }
+      }
+      const dSrc = patient.dentist_signature?.replace('.jpg', '.png') || '';
+      if (dSrc) {
+        const img = await imgBase64(dSrc);
+        if (img) { try { doc.addImage(img, 'PNG', M + sigW + 12, y + 4, sigW - 4, sigH - 8, '', 'FAST'); } catch { /* skip */ } }
+      }
+      y += sigH + 6;
+
+      doc.setFontSize(8); doc.setFont('helvetica', 'normal'); doc.setTextColor(40, 130, 40);
+      const approvedDate = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+      doc.text(`Approved by ${clinic?.doctor_name || 'Dr. Pinky Vijay MDS'} on ${approvedDate}`, M, y);
+
+      // ── Save ──
+      const safeName = patient.name.replace(/[^a-zA-Z0-9 ]/g, '').trim().replace(/\s+/g, '_');
+      doc.save(`${patient.op_number_formatted}_${safeName}.pdf`);
+    } catch (err) {
+      console.error('PDF generation failed:', err);
+    } finally {
+      setIsSavingPDF(false);
     }
   }
 
@@ -564,12 +747,34 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                 <div>
                   <span className="text-sm text-muted block mb-2">Dentist Signature:</span>
                   {patient.dentist_signature ? (
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <img src={patient.dentist_signature.replace('.jpg', '.png')} alt="Doctor Signature" className="h-16 object-contain" />
-                      <span className="text-xs text-green-600 mt-1 inline-flex items-center gap-1">
+                      <span className="text-xs text-green-600 inline-flex items-center gap-1">
                         <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                         Approved{clinic?.doctor_name ? ` by ${clinic.doctor_name}` : ''}
                       </span>
+                      <button
+                        onClick={saveAsPDF}
+                        disabled={isSavingPDF}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 disabled:opacity-60 transition-colors self-start"
+                      >
+                        {isSavingPDF ? (
+                          <>
+                            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                            </svg>
+                            Generating PDF...
+                          </>
+                        ) : (
+                          <>
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Save as PDF
+                          </>
+                        )}
+                      </button>
                     </div>
                   ) : (
                     <div>
