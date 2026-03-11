@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
-import { query, queryOne } from '@/lib/db';
+import { query, queryOne, formatOpNumber } from '@/lib/db';
 
 export async function GET() {
   try {
@@ -64,10 +64,10 @@ export async function GET() {
     `);
 
     // ── Outstanding by patient (top 5) ──
-    const topOutstanding = await query<{ name: string; op_number_formatted: string; outstanding: number }>(`
+    const topOutstanding = await query<{ name: string; op_number: number; outstanding: number }>(`
       SELECT
         p.name,
-        p.op_number_formatted,
+        p.op_number,
         ROUND(SUM(t.amount - t.amount_paid), 2) as outstanding
       FROM patients p
       JOIN treatments t ON t.patient_id = p.id
@@ -95,7 +95,10 @@ export async function GET() {
       lastMonth,
       monthlyRevenue,
       monthlyPatients,
-      topOutstanding,
+      topOutstanding: topOutstanding.map(p => ({
+        ...p,
+        op_number_formatted: formatOpNumber(p.op_number),
+      })),
       dailyRevenue,
     });
   } catch (err) {
