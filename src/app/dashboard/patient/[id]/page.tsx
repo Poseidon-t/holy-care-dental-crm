@@ -262,6 +262,8 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
       };
 
       const imgBase64 = async (src: string): Promise<string | null> => {
+        if (!src) return null;
+        if (src.startsWith('data:')) return src;
         try {
           const r = await fetch(src);
           const b = await r.blob();

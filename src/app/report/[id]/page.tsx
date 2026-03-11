@@ -123,12 +123,20 @@ export default function PrintableReportPage({ params }: { params: { id: string }
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap');
 
+        .theme-selector-root { display: none !important; }
+
         @media print {
           .no-print { display: none !important; }
           body { background: white !important; margin: 0; font-size: 11pt; }
           .report-container { padding: 0 !important; max-width: none !important; box-shadow: none !important; }
           @page { margin: 1.5cm; size: A4; }
           .page-break { page-break-before: always; }
+          .signature-block img {
+            display: block !important;
+            max-height: 80px !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
         }
 
         .report-container {
@@ -165,9 +173,13 @@ export default function PrintableReportPage({ params }: { params: { id: string }
 
         .info-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr;
           gap: 8px;
           padding: 0 12px;
+        }
+
+        @media (min-width: 480px) {
+          .info-grid { grid-template-columns: 1fr 1fr; }
         }
 
         .info-item label {
@@ -186,9 +198,13 @@ export default function PrintableReportPage({ params }: { params: { id: string }
 
         .medical-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr;
           gap: 4px;
           padding: 0 12px;
+        }
+
+        @media (min-width: 480px) {
+          .medical-grid { grid-template-columns: 1fr 1fr; }
         }
 
         .medical-item {
@@ -204,6 +220,9 @@ export default function PrintableReportPage({ params }: { params: { id: string }
           width: 100%;
           border-collapse: collapse;
           font-size: 12px;
+          display: block;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
         }
 
         .treatment-table th {
@@ -230,8 +249,12 @@ export default function PrintableReportPage({ params }: { params: { id: string }
 
         .signature-block {
           display: inline-block;
-          margin: 12px 24px;
+          margin: 12px 8px;
           text-align: center;
+        }
+
+        @media (min-width: 480px) {
+          .signature-block { margin: 12px 24px; }
         }
 
         .signature-block img {
@@ -258,11 +281,16 @@ export default function PrintableReportPage({ params }: { params: { id: string }
         .ids-bar {
           display: flex;
           justify-content: center;
-          gap: 32px;
+          gap: 12px;
           margin-bottom: 16px;
           padding: 8px;
           background: #f8fafc;
           border-radius: 6px;
+          flex-wrap: wrap;
+        }
+
+        @media (min-width: 480px) {
+          .ids-bar { gap: 32px; }
         }
 
         .ids-bar span {
@@ -273,28 +301,28 @@ export default function PrintableReportPage({ params }: { params: { id: string }
       `}</style>
 
       {/* Action Buttons */}
-      <div className="no-print bg-surface-alt py-3 px-4 flex gap-3 items-center justify-center sticky top-0 z-10 shadow-sm">
+      <div className="no-print bg-surface-alt py-3 px-4 flex flex-wrap gap-2 sm:gap-3 items-center justify-center sticky top-0 z-10 shadow-sm">
         <button
           onClick={() => window.print()}
-          className="bg-primary-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors"
+          className="bg-primary-600 text-white px-4 sm:px-6 py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors text-sm"
         >
           Print Report
         </button>
         <a
           href={`/dashboard/patient/${patient.id}`}
-          className="bg-card text-body px-6 py-2 rounded-lg font-medium hover:bg-surface-alt border border-line transition-colors"
+          className="bg-card text-body px-4 sm:px-6 py-2 rounded-lg font-medium hover:bg-surface-alt border border-line transition-colors text-sm"
         >
           Back to Patient
         </a>
         <a
           href="/dashboard"
-          className="bg-card text-body px-6 py-2 rounded-lg font-medium hover:bg-surface-alt border border-line transition-colors"
+          className="bg-card text-body px-4 sm:px-6 py-2 rounded-lg font-medium hover:bg-surface-alt border border-line transition-colors text-sm"
         >
           Dashboard
         </a>
       </div>
 
-      <div className="report-container" style={{ padding: '32px' }}>
+      <div className="report-container" style={{ padding: 'clamp(16px, 4vw, 32px)' }}>
         {/* Clinic Header */}
         <div className="report-header">
           <img src={logoUrl} alt={clinicName} style={{ width: '48px', height: '48px', marginBottom: '8px', display: 'inline-block' }} />
