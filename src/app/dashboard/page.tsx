@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { InstallPrompt } from '@/components/InstallPrompt';
 
-const GOOGLE_REVIEW_URL = 'https://g.page/r/REPLACE_WITH_HOLY_CARE_REVIEW_ID/review';
+const GOOGLE_REVIEW_URL = 'https://share.google/YHuwsMYqjXFfvmrwg';
 
 function buildWhatsAppUrl(phone: string, patientName: string): string {
   const cleaned = phone.replace(/\D/g, '').replace(/^0/, '');

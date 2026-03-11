@@ -223,7 +223,7 @@ const HARDCODED_CLINIC: Clinic = {
   state: 'Tamil Nadu',
   pincode: '627105',
   logo_url: null,
-  google_review_url: 'https://g.page/r/REPLACE_WITH_HOLY_CARE_REVIEW_ID/review',
+  google_review_url: 'https://share.google/YHuwsMYqjXFfvmrwg',
   created_at: '',
   updated_at: '',
 };
