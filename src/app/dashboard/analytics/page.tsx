@@ -79,11 +79,17 @@ export default function AnalyticsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [activeView, setActiveView] = useState<'6m' | '30d'>('6m');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     fetch('/api/analytics')
       .then(r => r.json())
-      .then(d => { setData(d); setIsLoading(false); })
+      .then(d => {
+        if (d && !d.error && d.summary) setData(d);
+        setIsLoading(false);
+      })
       .catch(() => setIsLoading(false));
   }, []);
 
@@ -271,7 +277,7 @@ export default function AnalyticsPage() {
           </div>
           {chartData.length === 0 ? (
             <div className="h-64 flex items-center justify-center text-gray-400 text-sm">No data yet for this period</div>
-          ) : (
+          ) : mounted ? (
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={chartData} barCategoryGap="30%" barGap={4}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
@@ -287,7 +293,7 @@ export default function AnalyticsPage() {
                 <Bar dataKey="collected" name="Collected" fill={COLORS.collected} radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
-          )}
+          ) : <div className="h-64" />}
         </div>
 
         {/* ── Bottom Row: Pie + Patients + Outstanding ── */}
@@ -298,7 +304,7 @@ export default function AnalyticsPage() {
             <h2 className="text-base font-bold text-gray-900 mb-1">Collection Rate</h2>
             <p className="text-xs text-gray-400 mb-4">Overall collected vs outstanding</p>
             <div className="relative">
-              <ResponsiveContainer width="100%" height={200}>
+              {mounted ? <ResponsiveContainer width="100%" height={200}>
                 <PieChart>
                   <Pie
                     data={pieData}
@@ -316,7 +322,7 @@ export default function AnalyticsPage() {
                   </Pie>
                   <Tooltip formatter={(v) => fmtFull(Number(v))} />
                 </PieChart>
-              </ResponsiveContainer>
+              </ResponsiveContainer> : <div className="h-[200px]" />}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                 <p className="text-3xl font-bold text-gray-900">{collectionRate}%</p>
                 <p className="text-xs text-gray-400">collected</p>
@@ -340,7 +346,7 @@ export default function AnalyticsPage() {
             <p className="text-xs text-gray-400 mb-4">Monthly registrations</p>
             {patientChartData.length === 0 ? (
               <div className="h-[200px] flex items-center justify-center text-gray-400 text-sm">No data yet</div>
-            ) : (
+            ) : mounted ? (
               <ResponsiveContainer width="100%" height={200}>
                 <AreaChart data={patientChartData}>
                   <defs>
@@ -356,7 +362,7 @@ export default function AnalyticsPage() {
                   <Area type="monotone" dataKey="patients" name="Patients" stroke={COLORS.patients} strokeWidth={2.5} fill="url(#patientGrad)" dot={{ fill: COLORS.patients, r: 4 }} activeDot={{ r: 6 }} />
                 </AreaChart>
               </ResponsiveContainer>
-            )}
+            ) : <div className="h-[200px]" />}
           </div>
 
           {/* Top Outstanding */}
@@ -395,7 +401,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* ── Daily Revenue Sparkline ── */}
-        {dailyRevenue.length > 0 && (
+        {dailyRevenue.length > 0 && mounted && (
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="mb-4">
               <h2 className="text-base font-bold text-gray-900">Daily Revenue — Last 30 Days</h2>
