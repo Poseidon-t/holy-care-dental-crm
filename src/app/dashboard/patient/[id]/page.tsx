@@ -227,6 +227,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
       });
       if (response.ok) {
         setPatient(prev => prev ? { ...prev, dentist_signature: signatureValue } : prev);
+        await saveAsPDF(signatureValue);
       } else {
         const data = await response.json();
         setApproveError(data.error || 'Failed to approve');
@@ -238,7 +239,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
     }
   }
 
-  async function saveAsPDF() {
+  async function saveAsPDF(overrideDentistSig?: string) {
     if (!patient) return;
     setIsSavingPDF(true);
     try {
@@ -400,7 +401,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
         const img = await imgBase64(patient.patient_signature);
         if (img) { try { doc.addImage(img, 'PNG', M + 2, y + 2, sigW - 4, sigH - 4, '', 'FAST'); } catch { /* skip */ } }
       }
-      const dSrc = patient.dentist_signature?.replace('.jpg', '.png') || '';
+      const dSrc = (overrideDentistSig || patient.dentist_signature)?.replace('.jpg', '.png') || '';
       if (dSrc) {
         const img = await imgBase64(dSrc);
         if (img) { try { doc.addImage(img, 'PNG', M + sigW + 12, y + 4, sigW - 4, sigH - 8, '', 'FAST'); } catch { /* skip */ } }
@@ -758,7 +759,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                         Approved{clinic?.doctor_name ? ` by ${clinic.doctor_name}` : ''}
                       </span>
                       <button
-                        onClick={saveAsPDF}
+                        onClick={() => saveAsPDF()}
                         disabled={isSavingPDF}
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 disabled:opacity-60 transition-colors self-start"
                       >
@@ -800,10 +801,10 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                             disabled={isApproving}
                             className="btn-primary text-sm inline-flex items-center gap-2"
                           >
-                            {isApproving ? 'Approving...' : (
+                            {isApproving ? 'Approving & Saving PDF...' : (
                               <>
                                 <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                                Approve &amp; Sign
+                                Approve, Sign &amp; Save PDF
                               </>
                             )}
                           </button>
