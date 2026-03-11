@@ -187,6 +187,7 @@ export interface Clinic {
   state: string | null;
   pincode: string | null;
   logo_url: string | null;
+  google_review_url: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -222,6 +223,7 @@ const HARDCODED_CLINIC: Clinic = {
   state: 'Tamil Nadu',
   pincode: '627105',
   logo_url: null,
+  google_review_url: 'https://g.page/r/REPLACE_WITH_HOLY_CARE_REVIEW_ID/review',
   created_at: '',
   updated_at: '',
 };
