@@ -9,7 +9,7 @@ const GOOGLE_REVIEW_URL = 'https://share.google/YHuwsMYqjXFfvmrwg';
 function buildWhatsAppUrl(phone: string, patientName: string): string {
   const cleaned = phone.replace(/\D/g, '').replace(/^0/, '');
   const number = cleaned.startsWith('91') ? cleaned : `91${cleaned}`;
-  const msg = `நமஸ்காரம் ${patientName} அவர்களே! 🙏\n\nHoly Care Dental & Orthodontics Clinic-ல் சிகிச்சை பெற்றதற்கு மிக்க நன்றி.\n\nஉங்களுக்கு சேவை செய்வதில் மகிழ்ச்சி. ஒரு நிமிடம் செலவிட்டு Google-ல் உங்கள் அனுபவத்தை பதிவிடவும்:\n\n${GOOGLE_REVIEW_URL}\n\nஉங்கள் கருத்து எங்களுக்கு மிகவும் உதவியாக இருக்கும்! 😊`;
+  const msg = `வணக்கம் ${patientName},\n\nHoly Care Dental & Orthodontics Clinic-ல் சிகிச்சை பெற்றதற்கு மிக்க நன்றி.\n\nஉங்களுக்கு சேவை செய்வதில் மகிழ்ச்சி. ஒரு நிமிடம் செலவிட்டு Google-ல் உங்கள் அனுபவத்தை பதிவிடவும்:\n\n${GOOGLE_REVIEW_URL}\n\nஉங்கள் கருத்து எங்களுக்கு மிகவும் உதவியாக இருக்கும்! 😊`;
   return `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
 }
 

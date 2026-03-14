@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -11,6 +12,7 @@ const GREETING =
   'Hello! I\'m your clinic assistant. How can I help you today?';
 
 export function ChatWidget() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -111,13 +113,17 @@ export function ChatWidget() {
     }
   };
 
+  // Hide on admin/dashboard and registration pages
+  const isHiddenPage = pathname.startsWith('/dashboard') || pathname.startsWith('/login') || pathname.startsWith('/register');
+  if (isHiddenPage) return null;
+
   // Collapsed: chat bubble + prompt
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-[9999] no-print flex items-end gap-3">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] no-print flex items-end gap-3">
         {showPrompt && (
           <div
-            className="bg-card border border-line rounded-2xl shadow-xl px-4 py-3 max-w-[220px] animate-fade-in-up cursor-pointer relative"
+            className="bg-card border border-line rounded-2xl shadow-xl px-4 py-3 max-w-[180px] sm:max-w-[220px] animate-fade-in-up cursor-pointer relative"
             onClick={() => setIsOpen(true)}
           >
             <button
@@ -155,7 +161,7 @@ export function ChatWidget() {
 
   // Expanded: chat panel
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] no-print w-[min(360px,calc(100vw-48px))] sm:w-[400px] max-h-[min(600px,80vh)] bg-card rounded-2xl shadow-2xl border border-line flex flex-col overflow-hidden animate-chat-open">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] no-print w-[min(340px,calc(100vw-32px))] sm:w-[400px] max-h-[min(600px,75vh)] bg-card rounded-2xl shadow-2xl border border-line flex flex-col overflow-hidden animate-chat-open">
       {/* Header */}
       <div className="px-4 py-3 bg-[var(--color-surface-deep)] text-[var(--color-text-on-deep)] flex items-center justify-between rounded-t-2xl flex-shrink-0">
         <div className="flex items-center gap-2.5">
@@ -188,7 +194,7 @@ export function ChatWidget() {
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[85%] px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
+              className={`max-w-[85%] px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words ${
                 msg.role === 'user'
                   ? 'bg-primary-500 text-white rounded-2xl rounded-br-sm'
                   : 'bg-card text-body border border-line rounded-2xl rounded-bl-sm'

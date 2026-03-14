@@ -290,7 +290,7 @@ export default function TreatmentForm({ patientId, patientName, opNumber, onSucc
               Saving...
             </span>
           ) : (
-            'Save Treatment Records'
+            'Sign, Approve & Save'
           )}
         </button>
       </div>

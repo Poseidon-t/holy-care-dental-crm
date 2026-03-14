@@ -270,7 +270,7 @@ function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen:
           <div className="flex items-center gap-2">
             <Image src="/images/logo.png" alt="Holy Care Dental & Orthodontics Clinic" width={36} height={36} className="w-9 h-9" />
             <div>
-              <span className="font-bold font-heading text-heading text-lg leading-tight block">Holy Care Dental & Orthodontics</span>
+              <span className="font-bold font-heading text-heading text-base sm:text-lg leading-tight block">Holy Care Dental &amp; Orthodontics</span>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-8">
@@ -410,12 +410,12 @@ export default function HomePage({ theme }: { theme: string }) {
       {/* ─── 1. Hero — Centered serif heading ─── */}
       <section id="main-content" className="bg-surface">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-6 md:pt-24 md:pb-10 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-heading leading-[1.15] animate-fade-in-up">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-heading leading-[1.15] animate-fade-in-up">
             A better <strong className="font-bold">dental</strong> experience,
             <br />
             by <em>design.</em>
           </h1>
-          <div className="mt-4 flex justify-center gap-6 text-base text-muted animate-fade-in-up animation-delay-100">
+          <div className="mt-4 flex flex-wrap justify-center gap-3 sm:gap-6 text-sm sm:text-base text-muted animate-fade-in-up animation-delay-100">
             <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary-500 flex-shrink-0" />Kavalkinaru, Tamil Nadu</div>
             <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary-500 flex-shrink-0" />Mumbai, Maharashtra</div>
           </div>
@@ -442,7 +442,7 @@ export default function HomePage({ theme }: { theme: string }) {
       <section id="specialties" className="py-16 md:py-24 bg-surface-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
               Dental Services at <em>Holy Care</em>
             </h2>
             <p className="mt-4 text-lg text-muted max-w-2xl mx-auto">
@@ -453,7 +453,7 @@ export default function HomePage({ theme }: { theme: string }) {
             {FEATURED_SERVICES.map((service) => (
               <div
                 key={service.title}
-                className="rounded-3xl overflow-hidden flex flex-col justify-between min-h-[420px] p-7 md:p-8 group hover:shadow-2xl transition-all duration-300"
+                className="rounded-3xl overflow-hidden flex flex-col justify-between min-h-[320px] sm:min-h-[420px] p-5 sm:p-7 md:p-8 group hover:shadow-2xl transition-all duration-300"
                 style={{ backgroundColor: service.bg }}
               >
                 <div>
@@ -466,7 +466,7 @@ export default function HomePage({ theme }: { theme: string }) {
                 </div>
                 <div className="mt-6">
                   <div className="rounded-2xl overflow-hidden">
-                    <Image src={service.image} alt={service.title} width={400} height={250} className="object-cover w-full h-[200px] group-hover:scale-105 transition-transform duration-500" />
+                    <Image src={service.image} alt={service.title} width={400} height={250} className="object-cover w-full h-[160px] sm:h-[200px] group-hover:scale-105 transition-transform duration-500" />
                   </div>
                 </div>
               </div>
@@ -479,7 +479,7 @@ export default function HomePage({ theme }: { theme: string }) {
       <section id="reviews" className="py-16 md:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
               Trusted by <em>Patients</em>
             </h2>
             <p className="mt-4 text-lg text-muted max-w-2xl mx-auto">
@@ -572,7 +572,7 @@ export default function HomePage({ theme }: { theme: string }) {
       <section className="py-16 md:py-24 bg-surface-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
               Why Choose <em>Holy Care?</em>
             </h2>
           </div>
@@ -600,9 +600,9 @@ export default function HomePage({ theme }: { theme: string }) {
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="relative">
               <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <Image src="/images/dr-pinky-checkup.jpg" alt="Dr. Pinky Vijay performing dental care" width={600} height={500} className="object-cover w-full h-[420px]" />
+                <Image src="/images/dr-pinky-checkup.jpg" alt="Dr. Pinky Vijay performing dental care" width={600} height={500} className="object-cover w-full h-[280px] sm:h-[350px] md:h-[420px]" />
               </div>
-              <div className="absolute -bottom-5 right-4 bg-card rounded-2xl shadow-lg p-4 border border-line">
+              <div className="absolute -bottom-5 right-2 sm:right-4 bg-card rounded-2xl shadow-lg p-3 sm:p-4 border border-line">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-surface-alt rounded-full flex items-center justify-center text-heading">
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10l-10-5L2 10l10 5 10-5z" /><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5" /></svg>
@@ -615,7 +615,7 @@ export default function HomePage({ theme }: { theme: string }) {
               </div>
             </div>
             <div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading leading-tight">
                 A Fresh Approach to <em>Dentistry</em>
               </h2>
               <div className="mt-6 space-y-4 text-body text-base leading-relaxed">
@@ -647,7 +647,7 @@ export default function HomePage({ theme }: { theme: string }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10">
             <div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
                 Other <em>Services</em>
               </h2>
               <p className="mt-3 text-lg text-muted">More specialized care for every need.</p>
@@ -681,7 +681,7 @@ export default function HomePage({ theme }: { theme: string }) {
       <section id="results" className="py-16 md:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
               Smile <em>Transformations</em>
             </h2>
             <p className="mt-4 text-lg text-muted max-w-xl mx-auto">Real results from our orthodontic and restorative treatments.</p>
@@ -731,7 +731,7 @@ export default function HomePage({ theme }: { theme: string }) {
       <section id="gallery" className="py-16 md:py-24 bg-surface-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
               Our <em>Clinic</em>
             </h2>
             <p className="mt-4 text-lg text-muted max-w-xl mx-auto">
@@ -748,11 +748,11 @@ export default function HomePage({ theme }: { theme: string }) {
             ))}
           </div>
           <div className="mt-6">
-            <div className="relative rounded-3xl overflow-hidden group aspect-[3/1]">
+            <div className="relative rounded-3xl overflow-hidden group aspect-[16/9] sm:aspect-[3/1]">
               <Image src="/images/community-service-2.jpg" alt="Community dental health camp" width={1200} height={400} className="object-cover w-full h-full group-hover:scale-[1.02] transition-transform duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <p className="text-white font-bold text-xl font-heading">Community Dental Health Camps</p>
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8">
+                <p className="text-white font-bold text-base sm:text-xl font-heading">Community Dental Health Camps</p>
                 <p className="text-white/70 text-sm mt-1.5 max-w-xl">Dr. Pinky Vijay actively conducts free dental health camps, bringing quality care to the community.</p>
               </div>
             </div>
@@ -764,10 +764,10 @@ export default function HomePage({ theme }: { theme: string }) {
       <section id="hours" className="py-16 md:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-heading">
               Find <em>Us</em>
             </h2>
-            <div className="mt-4 flex justify-center gap-6 text-base text-muted">
+            <div className="mt-4 flex flex-wrap justify-center gap-3 sm:gap-6 text-sm sm:text-base text-muted">
               <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary-500 flex-shrink-0" />Kavalkinaru, Tamil Nadu</div>
               <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-primary-500 flex-shrink-0" />Mumbai, Maharashtra</div>
             </div>
@@ -775,13 +775,12 @@ export default function HomePage({ theme }: { theme: string }) {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Kavalkinaru Branch */}
             <div className="bg-card rounded-3xl overflow-hidden border border-line shadow-sm hover:shadow-lg transition-shadow">
-              <div className="bg-surface-deep px-7 py-5 flex items-center justify-between">
+              <div className="bg-surface-deep px-4 sm:px-7 py-4 sm:py-5 flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2.5">
                     <span className="bg-white/20 text-ondeep text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">HQ</span>
                     <h3 className="font-bold font-heading text-ondeep text-xl">Kavalkinaru</h3>
                   </div>
-                  <p className="text-ondeep/70 text-xs mt-1">Tamil Nadu 627105</p>
                 </div>
                 <div className="text-right">
                   <div className="flex items-center gap-1 text-ondeep">
@@ -836,13 +835,12 @@ export default function HomePage({ theme }: { theme: string }) {
 
             {/* Mumbai Branch */}
             <div className="bg-card rounded-3xl overflow-hidden border border-line shadow-sm hover:shadow-lg transition-shadow">
-              <div className="bg-surface-deep px-7 py-5 flex items-center justify-between">
+              <div className="bg-surface-deep px-4 sm:px-7 py-4 sm:py-5 flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2.5">
                     <span className="bg-white/20 text-ondeep text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Branch</span>
                     <h3 className="font-bold font-heading text-ondeep text-xl">Mumbai</h3>
                   </div>
-                  <p className="text-ondeep/70 text-xs mt-1">Maharashtra 400019</p>
                 </div>
                 <div className="text-right">
                   <div className="flex items-center gap-1 text-ondeep">
